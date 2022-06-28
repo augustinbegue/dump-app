@@ -1,38 +1,11 @@
-# create-svelte
+# FKIT / PKIT Template
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Before starting developement
 
-## Creating a project
+- Connect to firebase
+  - Edit `$lib/components/firebase/Init.svelte` by adding the firebase web client credentials
+  - Edit `$lib/modules/firebase/init.ts` by adding the firebase admin sdk credentials
 
-If you're seeing this, you've probably already done this step. Congrats!
+_AND/OR_
 
-```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [Configure prisma with the database](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases-typescript-postgres)
