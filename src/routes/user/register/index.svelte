@@ -73,6 +73,10 @@
 		passwordError = '';
 		emailPasswordLoading = false;
 		googleLoading = false;
+
+		if ($userStore != null) {
+			goto('/');
+		}
 	});
 </script>
 
