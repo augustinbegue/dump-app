@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { auth, userStore } from '$lib/modules/firebase/client';
+	import { auth, firebaseUser } from '$lib/modules/firebase/client';
 </script>
 
 <header class="navbar bg-base-300">
@@ -7,8 +7,8 @@
 		<a class="btn btn-ghost uppercase font-bold" href="/">dump</a>
 	</div>
 	<div class="navbar-end">
-		{#if !!$userStore}
-			<a class="btn btn-ghost uppercase font-bold" href="/user">{$userStore.displayName}</a>
+		{#if $firebaseUser != null}
+			<a class="btn btn-ghost uppercase font-bold" href="/user">{auth.currentUser?.displayName}</a>
 			<button
 				class="btn btn-ghost uppercase"
 				on:click={() => {
@@ -18,7 +18,7 @@
 				Logout
 			</button>
 		{:else}
-			<a class="btn btn-ghost uppercase font-bold" href="/user/login">login</a>
+			<a class="btn btn-ghost uppercase font-bold" href="/auth/login">login</a>
 		{/if}
 	</div>
 </header>

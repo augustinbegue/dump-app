@@ -20,9 +20,9 @@ if (browser) {
     analytics = getAnalytics(app);
 }
 
-export const userStore = writable<User | null>(null);
 export const auth = getAuth(app);
-auth.onAuthStateChanged(user => {
-    userStore.set(user);
-});
 export const googleProvider = new GoogleAuthProvider();
+export const firebaseUser = writable<User | null>(null);
+auth.onAuthStateChanged(user => {
+    firebaseUser.set(user);
+});
