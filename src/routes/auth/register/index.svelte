@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import { auth, googleProvider, userStore } from '$lib/modules/firebase/client';
+	import { auth, firebaseUser, googleProvider } from '$lib/modules/firebase/client';
 	import { FirebaseError } from 'firebase/app';
 	import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 	import { onMount } from 'svelte';
@@ -36,8 +36,7 @@
 		try {
 			emailPasswordLoading = true;
 			let credentials = await createUserWithEmailAndPassword(auth, email, password);
-			userStore.set(credentials.user);
-			return goto('/');
+			return goto('./register/next');
 		} catch (error) {
 			emailPasswordLoading = false;
 			if (error instanceof FirebaseError) {
@@ -60,8 +59,7 @@
 		try {
 			googleLoading = true;
 			let credentials = await signInWithPopup(auth, googleProvider);
-			userStore.set(credentials.user);
-			return goto('/');
+			return goto('./register/next');
 		} catch (error) {
 			googleLoading = false;
 			console.error(error);
@@ -69,14 +67,16 @@
 	}
 
 	onMount(() => {
+		firebaseUser.subscribe((user) => {
+			if (user != null) {
+				return goto('./register/next');
+			}
+		});
+
 		emailError = '';
 		passwordError = '';
 		emailPasswordLoading = false;
 		googleLoading = false;
-
-		if ($userStore != null) {
-			goto('/');
-		}
 	});
 </script>
 
@@ -86,12 +86,9 @@
 
 <div class="hero min-h-screen bg-base-200">
 	<div class="hero-content flex-col lg:flex-row-reverse">
-		<div class="text-center lg:text-left">
+		<div class="text-center lg:text-left lg:min-w-max">
 			<h1 class="text-5xl font-bold">Register now!</h1>
-			<p class="py-6">
-				Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-				quasi. In deleniti eaque aut repudiandae et a id nisi.
-			</p>
+			<p class="py-6">Provident cupiditate voluptatem et in.</p>
 		</div>
 		<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
 			<div class="card-body">
@@ -106,6 +103,7 @@
 							type="email"
 							placeholder="email"
 							class="input input-bordered"
+							autocomplete="email"
 							class:input-error={emailError}
 						/>
 						{#if emailError}
@@ -163,11 +161,12 @@
 				<div class="divider">OR</div>
 				<div class="form-control">
 					<button
-						class="btn btn-secondary"
+						class="btn btn-secondary  gap-2"
 						on:click={registerWithGoogle}
 						class:loading={googleLoading}
 						disabled={emailPasswordLoading}
 					>
+						<i class="fa-brands fa-google" />
 						Sign in with Google
 					</button>
 				</div>

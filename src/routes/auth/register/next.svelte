@@ -1,0 +1,144 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+
+	import { auth, firebaseUser } from '$lib/modules/firebase/client';
+
+	import { onMount } from 'svelte';
+
+	let username: string;
+	let usernameError: string;
+	let name: string;
+	let nameError: string;
+	let finishLoading: boolean = false;
+	async function finish(e: Event) {
+		e.preventDefault();
+
+		if (!username) {
+			usernameError = 'Username is required';
+			finishLoading = false;
+			return;
+		}
+
+		if (!name) {
+			nameError = 'Name is required';
+			finishLoading = false;
+			return;
+		}
+
+		try {
+			finishLoading = true;
+			let res = await fetch(`/api/user/${auth.currentUser?.uid}`, {
+				method: 'POST',
+				mode: 'same-origin',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					username,
+					name
+				})
+			});
+
+			if (res.ok) {
+				return goto(`/${username}`);
+			} else {
+				usernameError = 'Username is already in use';
+				finishLoading = false;
+			}
+		} catch (error) {
+			usernameError = 'An unknown error occurred';
+			console.error(error);
+			finishLoading = false;
+			return;
+		}
+	}
+
+	onMount(async () => {
+		firebaseUser.subscribe(async (fbuser) => {
+			if (fbuser == null) {
+				return goto('/user/register');
+			}
+
+			try {
+				let res = await fetch(`/api/user/${fbuser.uid}`);
+				let json = await res.json();
+				if (res.status === 200) {
+					goto(`/${json.user.username}`);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		});
+	});
+</script>
+
+<div class="hero min-h-screen bg-base-200">
+	<div class="hero-content flex-col lg:flex-row-reverse">
+		<div class="text-center lg:text-left lg:min-w-max">
+			<h1 class="text-5xl font-bold">One more thing...</h1>
+			<p class="py-6">We need a few more information before you'll be ready to dump.</p>
+		</div>
+		<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+			<div class="card-body">
+				<form on:submit={finish}>
+					<div class="form-control">
+						<label for="username" class="label">
+							<span class="label-text">Username</span>
+						</label>
+						<input
+							bind:value={username}
+							id="username"
+							type="text"
+							placeholder="username"
+							class="input input-bordered"
+							autocomplete="username"
+							class:input-error={usernameError}
+						/>
+						{#if usernameError}
+							<label class="label" for="username">
+								<span class="label-text-alt text-error">{usernameError}</span>
+							</label>
+						{:else}
+							<label class="label" for="username">
+								<span class="label-text-alt opacity-50"
+									>This is what you'll use to share your profile.</span
+								>
+							</label>
+						{/if}
+					</div>
+					<div class="form-control">
+						<label for="name" class="label">
+							<span class="label-text">Name</span>
+						</label>
+						<input
+							bind:value={name}
+							id="name"
+							type="text"
+							placeholder="name"
+							class="input input-bordered"
+							autocomplete="name"
+							class:input-error={nameError}
+						/>
+						{#if nameError}
+							<label class="label" for="name">
+								<span class="label-text-alt text-error">{nameError}</span>
+							</label>
+						{:else}
+							<label class="label" for="name">
+								<span class="label-text-alt opacity-50">This is what you'll be called.</span>
+							</label>
+						{/if}
+					</div>
+					<div class="form-control mt-6">
+						<input
+							type="submit"
+							value="Finish"
+							class="btn btn-primary"
+							class:loading={finishLoading}
+						/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

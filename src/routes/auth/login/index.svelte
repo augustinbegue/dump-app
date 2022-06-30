@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 	import { onMount } from 'svelte';
-	import { auth, googleProvider, userStore } from '$lib/modules/firebase/client';
+	import { auth, googleProvider } from '$lib/modules/firebase/client';
 	import { goto } from '$app/navigation';
 	import { FirebaseError } from 'firebase/app';
 
@@ -29,7 +29,6 @@
 		try {
 			emailPasswordLoading = true;
 			let credentials = await signInWithEmailAndPassword(auth, email, password);
-			userStore.set(credentials.user);
 			return goto('/');
 		} catch (error) {
 			emailPasswordLoading = false;
@@ -53,7 +52,6 @@
 		try {
 			googleLoading = true;
 			let credentials = await signInWithPopup(auth, googleProvider);
-			userStore.set(credentials.user);
 			return goto('/');
 		} catch (error) {
 			googleLoading = false;
@@ -61,14 +59,24 @@
 		}
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		emailError = '';
 		passwordError = '';
 		emailPasswordLoading = false;
 		googleLoading = false;
 
-		if ($userStore != null) {
-			goto('/');
+		if (auth.currentUser != null) {
+			try {
+				let res = await fetch(`/api/user/${auth.currentUser.uid}`);
+				let user = await res.json();
+				if (res.status === 200) {
+					goto(`/${user.username}`);
+				} else {
+					goto('/auth/register/next');
+				}
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	});
 </script>
