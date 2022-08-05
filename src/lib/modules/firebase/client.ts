@@ -1,8 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
-import { getAuth, GoogleAuthProvider, type User } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { browser } from "$app/env";
-import { writable } from "svelte/store";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCaS20d8AgpxidNfKQEzAi4NUWB0Bp1QKU",
@@ -22,7 +21,3 @@ if (browser) {
 
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
-export const firebaseUser = writable<User | null>(null);
-auth.onAuthStateChanged(user => {
-    firebaseUser.set(user);
-});

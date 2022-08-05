@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { auth, firebaseUser } from '$lib/modules/firebase/client';
+	import { auth } from '$lib/modules/firebase/client';
+	import { currentUser } from '$lib/modules/auth';
 </script>
 
 <header class="navbar bg-base-300">
@@ -7,8 +8,10 @@
 		<a class="btn btn-ghost uppercase font-bold" href="/">dump</a>
 	</div>
 	<div class="navbar-end">
-		{#if $firebaseUser != null}
-			<a class="btn btn-ghost uppercase font-bold" href="/user">{auth.currentUser?.displayName}</a>
+		{#if $currentUser != null}
+			<a class="btn btn-ghost uppercase font-bold" href="/{$currentUser?.username}">
+				@{$currentUser?.username}
+			</a>
 			<button
 				class="btn btn-ghost uppercase"
 				on:click={() => {

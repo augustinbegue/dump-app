@@ -152,6 +152,9 @@
 						Sign in with Google
 					</button>
 				</div>
+				<a href="/auth/register" class="label-text-alt link link-hover">
+					Don't have an account yet?
+				</a>
 			</div>
 		</div>
 	</div>

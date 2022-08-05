@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import { auth, firebaseUser, googleProvider } from '$lib/modules/firebase/client';
-	import { FirebaseError } from 'firebase/app';
+	import { auth, firebaseUsider } from '$lib/modules/firebase/client';
+	import {import { firebaseUser } from "$lib/modules/firebase/firebaseUser";
+ FirebaseError } from 'firebase/app';
 	import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 	import { onMount } from 'svelte';
 

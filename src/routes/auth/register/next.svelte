@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-
-	import { auth, firebaseUser } from '$lib/modules/firebase/client';
-
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { auth } from '$lib/modules/firebase/client';
+	import { firebaseUser } from '$lib/modules/auth';
 
 	let username: string;
 	let usernameError: string;

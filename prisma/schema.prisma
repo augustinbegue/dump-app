@@ -14,5 +14,17 @@ model User {
   uid       String   @id @unique
   username  String   @unique
   name      String
+  photoUrl  String   @default("/static/images/default-user-photo.png")
   createdAt DateTime @default(now())
+  Posts     Post[]
+}
+
+model Post {
+  pid         String   @id @unique
+  title       String   @unique
+  description String
+  imageUrl    String
+  authorUid   String
+  author      User     @relation(fields: [authorUid], references: [uid])
+  createdAt   DateTime @default(now())
 }
