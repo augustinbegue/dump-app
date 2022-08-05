@@ -1,7 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, type User as FbUser } from "firebase/auth";
 import { browser } from "$app/env";
+import { writable } from "svelte/store";
+import type { User } from "@prisma/client";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCaS20d8AgpxidNfKQEzAi4NUWB0Bp1QKU",
@@ -21,3 +23,17 @@ if (browser) {
 
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
+export const currentUser = writable<User | null>(null);
+export const firebaseUser = writable<FbUser | null>(null);
+
+auth.onAuthStateChanged(async user => {
+    firebaseUser.set(user);
+
+    if (user) {
+        document.cookie = `authorization=Bearer ${await user.getIdToken()}`;
+        let res = await fetch(`/api/user/${user.uid}`);
+        currentUser.set((await res.json()).user);
+    } else {
+        currentUser.set(null);
+    }
+});

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { auth } from '$lib/modules/firebase/client';
-	import { currentUser } from '$lib/modules/auth';
+	import { auth, currentUser } from '$lib/modules/firebase/client';
 </script>
 
 <header class="navbar bg-base-300">

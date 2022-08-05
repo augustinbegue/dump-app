@@ -1,9 +1,8 @@
 <script lang="ts">
 	import PostPreview from '$lib/components/posts/PostPreview.svelte';
-	import { firebaseUser } from '$lib/modules/auth';
+	import { firebaseUser } from '$lib/modules/firebase/client';
 	import type { User } from '@prisma/client';
 	import { onMount } from 'svelte';
-
 	export let user: User;
 
 	$: isLoggedInUser = user.uid === $firebaseUser?.uid;
