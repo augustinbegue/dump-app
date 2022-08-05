@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { auth } from '$lib/modules/firebase/client';
+	import { auth, firebaseUser } from '$lib/modules/firebase/client';
 </script>
 
 <svelte:head>
@@ -7,7 +7,7 @@
 	<meta name="description" content="Content sharing app" />
 </svelte:head>
 
-{#if auth.currentUser}
+{#if $firebaseUser}
 	FEED
 {:else}
 	<div class="hero bg-base-300 min-h-full">

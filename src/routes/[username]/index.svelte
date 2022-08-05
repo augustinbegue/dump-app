@@ -9,26 +9,44 @@
 </script>
 
 <div class="flex flex-col md:flex-row gap-4 justify-center">
-	<div class="card shadow-2xl bg-base-100 min-w-max h-max m-4">
-		<div class="card-body">
-			<div class="avatar">
-				<div class="w-24 rounded-full">
-					<img src={user.photoUrl} alt="{user.username}'s profile picture" />
+	<div class="m-4">
+		<div class="card shadow-2xl bg-base-100 min-w-max h-max">
+			<div class="card-body">
+				<div class="avatar">
+					<div class="w-24 rounded-full">
+						<img src={user.photoUrl} alt="{user.username}'s profile picture" />
+					</div>
 				</div>
+				<div class="card-title flex-col items-start gap-0">
+					<p class="text-lg font-normal">@{user.username}</p>
+					<p>{user.name}</p>
+				</div>
+				{#if isLoggedInUser}
+					<a class="btn btn-sm" href="{user.username}/edit">Edit</a>
+				{/if}
+				<p>Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
 			</div>
-			<div class="card-title flex-col items-start gap-0">
-				<p class="text-lg font-normal">@{user.username}</p>
-				<p>{user.name}</p>
-			</div>
-			{#if isLoggedInUser}
-				<a class="btn btn-sm" href="{user.username}/edit">Edit</a>
-			{/if}
-			<p>Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
 		</div>
+		{#if isLoggedInUser}
+			<div class="">
+				<a class="btn btn-primary gap-2 mt-4" href="{user.username}/new">
+					<i class="fa-solid fa-plus" />
+					New Post
+				</a>
+			</div>
+		{/if}
 	</div>
-	<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 m-4">
-		{#each Array(20) as i}
-			<PostPreview />
-		{/each}
+	<div class="m-4">
+		<div class="flex flex-row justify-between my-4">
+			<div class="tabs tabs-boxed bg-base-300">
+				<a class="tab tab-lg tab-active">Posts</a>
+				<a class="tab tab-lg">Collections</a>
+			</div>
+		</div>
+		<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+			{#each Array(20) as i}
+				<PostPreview />
+			{/each}
+		</div>
 	</div>
 </div>
