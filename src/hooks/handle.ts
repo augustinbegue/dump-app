@@ -7,12 +7,21 @@ export const handle: Handle = async ({ event, resolve }) => {
     let token = parse(event.request.headers.get('cookie') ?? "")['authorization'];
 
     if (token) {
-        token = token.replace('Bearer ', '');
+        try {
+            token = token.replace('Bearer ', '');
 
-        let decoded = await auth.verifyIdToken(token);
-        let { uid } = decoded;
+            let decoded = await auth.verifyIdToken(token);
+            let { uid } = decoded;
 
-        event.locals.user = await prisma.user.findUnique({ where: { uid } });
+            event.locals.user = await prisma.user.findUnique({ where: { uid } });
+        } catch (error) {
+            console.error(error);
+
+            let response = await resolve(event);
+            response.headers.set('Set-Cookie', 'authorization=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;');
+
+            return response;
+        }
     }
 
     return await resolve(event);
