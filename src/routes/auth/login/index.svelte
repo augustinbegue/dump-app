@@ -68,9 +68,10 @@
 		if (auth.currentUser != null) {
 			try {
 				let res = await fetch(`/api/user/${auth.currentUser.uid}`);
-				let user = await res.json();
+				let data = await res.json();
+
 				if (res.status === 200) {
-					goto(`/${user.username}`);
+					goto(`/${data.user.username}`);
 				} else {
 					goto('/auth/register/next');
 				}
