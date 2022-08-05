@@ -10,7 +10,7 @@
 	<meta name="description" content="Content sharing app" />
 </svelte:head>
 
-<div class="hero p-64 bg-base-300">
+<div class="hero bg-base-300 min-h-full">
 	<div class="hero-content text-center">
 		<div class="max-w-md">
 			<h1 class="text-5xl font-bold">DUMP</h1>

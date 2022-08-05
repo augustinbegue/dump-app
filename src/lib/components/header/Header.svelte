@@ -2,7 +2,7 @@
 	import { auth, currentUser } from '$lib/modules/firebase/client';
 </script>
 
-<header class="navbar bg-base-300">
+<header class="navbar bg-base-300 shrink-0">
 	<div class="navbar-start">
 		<a class="btn btn-ghost uppercase font-bold" href="/">dump</a>
 	</div>
@@ -24,6 +24,3 @@
 		{/if}
 	</div>
 </header>
-
-<style>
-</style>

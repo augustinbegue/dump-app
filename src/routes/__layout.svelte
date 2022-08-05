@@ -8,13 +8,15 @@
 	<script defer src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
 </svelte:head>
 
-<Header />
+<div class="flex flex-col justify-between h-full">
+	<Header />
 
-<main>
-	<slot />
-</main>
+	<main class="grow shrink-0 overflow-auto">
+		<slot />
+	</main>
 
-<Footer />
+	<Footer />
+</div>
 
 <style>
 </style>
