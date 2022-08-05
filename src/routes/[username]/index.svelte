@@ -6,10 +6,6 @@
 	export let user: User;
 
 	$: isLoggedInUser = user.uid === $firebaseUser?.uid;
-
-	onMount(() => {
-		console.log(user);
-	});
 </script>
 
 <div class="flex flex-col md:flex-row gap-4 justify-center">
@@ -24,6 +20,9 @@
 				<p class="text-lg font-normal">@{user.username}</p>
 				<p>{user.name}</p>
 			</div>
+			{#if isLoggedInUser}
+				<a class="btn btn-sm" href="{user.username}/edit">Edit</a>
+			{/if}
 			<p>Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
 		</div>
 	</div>
