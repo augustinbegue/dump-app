@@ -1,19 +1,19 @@
 import { prisma } from "$lib/modules/database/prisma";
 
-/** @type {import('./__types/[uid]').RequestHandler} */
-export async function get({ params }: { params: { uid: string; }; }) {
-    let uid = params.uid;
+/** @type {import('./__types/[id]').RequestHandler} */
+export async function get({ params }: { params: { id: string; }; }) {
+    let id = params.id;
 
-    const user = await prisma.user.findUnique({
+    const post = await prisma.post.findUnique({
         where: {
-            uid: uid,
+            pid: id,
         },
     });
 
-    if (user) {
+    if (post) {
         return {
             body: {
-                user,
+                post,
             }
         };
     }

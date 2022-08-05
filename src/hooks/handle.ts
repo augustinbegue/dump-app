@@ -1,23 +1,20 @@
+import { prisma } from '$lib/modules/database/prisma';
+import { auth } from '$lib/modules/firebase/client';
 import type { Handle } from '@sveltejs/kit';
-import * as cookie from 'cookie';
+import { signInWithCustomToken } from 'firebase/auth';
 
 export const handle: Handle = async ({ event, resolve }) => {
-    const cookies = cookie.parse(event.request.headers.get('cookie') || '');
-    event.locals.userid = cookies['userid'] || crypto.randomUUID();
+    let token = event.request.headers.get('Authorization');
 
-    const response = await resolve(event);
+    if (token) {
+        token = token.replace('Bearer ', '');
 
-    if (!cookies['userid']) {
-        // if this is the first time the user has visited this app,
-        // set a cookie so that we recognise them when they return
-        response.headers.set(
-            'set-cookie',
-            cookie.serialize('userid', event.locals.userid, {
-                path: '/',
-                httpOnly: true
-            })
-        );
+        let credentials = await signInWithCustomToken(auth, token);
+        let { user } = credentials;
+        let { uid } = user;
+
+        event.locals.user = await prisma.user.findUnique({ where: { uid } });
     }
 
-    return response;
+    return await resolve(event);
 };
