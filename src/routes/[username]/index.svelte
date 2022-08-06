@@ -11,8 +11,6 @@
 	$: isLoggedInUser = user.uid === $firebaseUser?.uid;
 
 	onMount(async () => {
-		console.log(`/api/user/username/${user.username}/posts`);
-
 		let res = await fetch(`/api/user/username/${user.username}/posts`);
 		const data = await res.json();
 
@@ -59,7 +57,7 @@
 		<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
 			{#if posts}
 				{#each posts as post}
-					<PostPreview {post} />
+					<PostPreview {post} author={user} />
 				{/each}
 			{:else}
 				<Spinner />

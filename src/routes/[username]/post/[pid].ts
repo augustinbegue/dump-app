@@ -1,0 +1,1 @@
+export * from '../../api/post/[pid]/get';

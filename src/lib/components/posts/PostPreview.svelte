@@ -1,7 +1,10 @@
 <script lang="ts">
-	import type { Post } from '@prisma/client';
+	import { goto } from '$app/navigation';
+
+	import type { Post, User } from '@prisma/client';
 	import { onMount } from 'svelte';
 	export let post: Post;
+	export let author: User;
 
 	let container: HTMLElement;
 
@@ -14,6 +17,10 @@
 
 		container.onmouseleave = () => {
 			(container.childNodes[2] as HTMLElement).style.opacity = '0';
+		};
+
+		container.onclick = () => {
+			goto(`${author.username}/post/${post.pid}`);
 		};
 	});
 </script>
