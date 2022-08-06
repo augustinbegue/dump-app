@@ -5,6 +5,7 @@
 	let fileInput: HTMLDivElement;
 	export let file: File;
 	export let dataUrl: string;
+	export let onchange: (file: File) => void;
 	let loading: boolean = false;
 	$: validFile = file?.type.startsWith('image/');
 
@@ -25,6 +26,7 @@
 			file = inputFile;
 			dataUrl = await getFileDataUrl(file);
 			loading = false;
+			onchange?.(file);
 		};
 
 		fileInput.onmouseenter = () => {

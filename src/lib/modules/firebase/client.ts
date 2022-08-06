@@ -30,7 +30,7 @@ auth.onAuthStateChanged(async user => {
     firebaseUser.set(user);
 
     if (user) {
-        document.cookie = `authorization=Bearer ${await user.getIdToken()}`;
+        document.cookie = `authorization=Bearer ${await user.getIdToken()}; Path=/;`;
         let res = await fetch(`/api/user/${user.uid}`);
         currentUser.set((await res.json()).user);
     } else {
