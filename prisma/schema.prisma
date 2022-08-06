@@ -21,7 +21,7 @@ model User {
 
 model Post {
   pid         String   @id @unique
-  title       String   @unique
+  title       String
   description String
   imageUrl    String
   authorUid   String

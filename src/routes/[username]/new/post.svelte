@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	import ImagePicker from '$lib/components/inputs/ImagePicker.svelte';
+	import Spinner from '$lib/components/utils/Spinner.svelte';
 	import { currentUser } from '$lib/modules/firebase/client';
 	import { Steps } from '$lib/modules/interaction/steps';
 	import { onMount } from 'svelte';
@@ -41,6 +44,9 @@
 				uploadError = 'Please select a picture to upload.';
 				uploadDisabled = true;
 				return;
+			} else {
+				uploadError = '';
+				uploadDisabled = false;
 			}
 		}
 	}
@@ -68,6 +74,7 @@
 	let metadata: Map<string, string> = new Map();
 	$: notAddedMetatypes = metatype.filter((metatype) => !metadata.has(metatype));
 
+	let uploading = false;
 	async function upload() {
 		const body = {
 			title,
@@ -77,6 +84,7 @@
 		};
 
 		try {
+			uploading = true;
 			let res = await fetch('/api/post/new', {
 				method: 'POST',
 				body: JSON.stringify(body)
@@ -85,7 +93,7 @@
 			if (res.status === 200) {
 				let json = await res.json();
 				if (json.success) {
-					window.location.href = '/';
+					goto(`/${$currentUser?.username}`);
 				} else {
 					uploadError = json.error;
 				}
@@ -93,7 +101,9 @@
 				uploadError =
 					'An error occurred while uploading your image. Please try again or contact us if the problem persists.';
 			}
+			uploading = false;
 		} catch (error) {
+			uploading = false;
 			console.error(error);
 			uploadError =
 				'An error occurred while uploading your image. Please try again or contact us if the problem persists.';
@@ -101,11 +111,6 @@
 	}
 
 	onMount(() => {
-		if (!$currentUser) {
-			uploadError = 'You must be logged in to upload a picture.';
-			uploadDisabled = true;
-		}
-
 		steps = new Steps(stepsContainer, sectionsContainer);
 		steps.currentStep.subscribe((currentStep) => {
 			updateButtonsState(currentStep);
@@ -207,7 +212,18 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<button class="btn btn-primary" name="upload" on:click={upload}>Upload</button>
+					<button
+						class="btn btn-primary"
+						name="upload"
+						on:click={upload}
+						disabled={uploading || uploadDisabled}
+					>
+						{#if uploading}
+							<progress class="progress w-full" />
+						{:else}
+							Upload
+						{/if}
+					</button>
 					{#if uploadError}
 						<label class="label" for="upload">
 							<span class="label-text-alt text-red-600">{uploadError}</span>

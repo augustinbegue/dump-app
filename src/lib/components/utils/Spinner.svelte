@@ -15,7 +15,7 @@
 		height: 50px;
 	}
 	.spinner .path {
-		@apply stroke-primary;
+		@apply stroke-primary-content;
 		stroke-linecap: round;
 		-webkit-animation: dash 1.5s ease-in-out infinite;
 		animation: dash 1.5s ease-in-out infinite;
