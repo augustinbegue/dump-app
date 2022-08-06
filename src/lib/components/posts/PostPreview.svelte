@@ -1,19 +1,45 @@
 <script lang="ts">
-	let urls = [
-		'https://placeimg.com/1000/400/arch',
-		'https://placeimg.com/512/512/arch',
-		'https://placeimg.com/400/500/arch',
-		'https://placeimg.com/500/400/arch'
-	];
-	let url = urls[Math.floor(Math.random() * urls.length)];
+	import type { Post } from '@prisma/client';
+	import { onMount } from 'svelte';
+	export let post: Post;
+
+	let container: HTMLElement;
+
+	onMount(() => {
+		(container.childNodes[2] as HTMLElement).style.opacity = '0';
+
+		container.onmouseenter = () => {
+			(container.childNodes[2] as HTMLElement).style.opacity = '1';
+		};
+
+		container.onmouseleave = () => {
+			(container.childNodes[2] as HTMLElement).style.opacity = '0';
+		};
+	});
 </script>
 
-<div class="card bg-base-100 shadow-xl image-full h-fit max-w-1/4">
+<div bind:this={container} class="card bg-base-100 shadow-xl image-full h-fit max-w-1/4">
 	<figure>
-		<img src={url} alt="Post Title" style="height: auto !important;" class="w-full object-center" />
+		<img
+			src={post.imageUrl}
+			alt={post.title}
+			style="height: auto !important;"
+			class="w-full object-center"
+		/>
 	</figure>
 	<div class="card-body">
-		<h2 class="card-title">Post Title</h2>
-		<p>{url}</p>
+		<h2 class="card-title">{post.title}</h2>
+		<p>{post.description}</p>
 	</div>
 </div>
+
+<style lang="postcss">
+	.card.image-full:before {
+		@apply transition-all;
+		opacity: 0;
+	}
+
+	.card.image-full:hover:before {
+		opacity: 0.5;
+	}
+</style>

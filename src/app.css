@@ -9,3 +9,19 @@ html, body {
 .hidden {
   display: none !important;
 }
+
+.btn {
+  @apply rounded-none;
+}
+
+.card, .card-body, .card.image-full:before {
+  @apply rounded-none;
+}
+
+.input {
+  @apply rounded-none;
+}
+
+.tabs.tabs-boxed, .tab.tab-active {
+  @apply rounded-none;
+}

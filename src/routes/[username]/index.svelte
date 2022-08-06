@@ -1,11 +1,24 @@
 <script lang="ts">
 	import PostPreview from '$lib/components/posts/PostPreview.svelte';
+	import Spinner from '$lib/components/utils/Spinner.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
-	import type { User } from '@prisma/client';
+	import type { Post, User } from '@prisma/client';
 	import { onMount } from 'svelte';
+
 	export let user: User;
+	let posts: Post[];
 
 	$: isLoggedInUser = user.uid === $firebaseUser?.uid;
+
+	onMount(async () => {
+		console.log(`/api/user/username/${user.username}/posts`);
+
+		let res = await fetch(`/api/user/username/${user.username}/posts`);
+		const data = await res.json();
+
+		if (data.success) posts = data.posts;
+		else console.error(data.error);
+	});
 </script>
 
 <div class="flex flex-col md:flex-row gap-4 justify-center">
@@ -39,14 +52,18 @@
 	<div class="m-4">
 		<div class="flex flex-row justify-between my-4">
 			<div class="tabs tabs-boxed bg-base-300">
-				<a class="tab tab-lg tab-active">Posts</a>
-				<a class="tab tab-lg">Collections</a>
+				<a class="tab tab-lg tab-active">posts</a>
+				<a class="tab tab-lg">collections</a>
 			</div>
 		</div>
 		<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-			{#each Array(20) as i}
-				<PostPreview />
-			{/each}
+			{#if posts}
+				{#each posts as post}
+					<PostPreview {post} />
+				{/each}
+			{:else}
+				<Spinner />
+			{/if}
 		</div>
 	</div>
 </div>
