@@ -25,7 +25,10 @@
 	});
 </script>
 
-<div bind:this={container} class="card bg-base-100 shadow-xl image-full h-fit max-w-1/4">
+<div
+	bind:this={container}
+	class="card bg-base-100 shadow-xl image-full h-fit max-w-1/4 cursor-pointer"
+>
 	<figure>
 		<img
 			src={post.imageUrl}

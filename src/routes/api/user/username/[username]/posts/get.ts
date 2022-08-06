@@ -15,7 +15,6 @@ export async function get({ params }: { params: { username: string; }; }) {
         return {
             status: 404,
             body: {
-                success: false,
                 error: "User not found."
             }
         }
@@ -24,7 +23,6 @@ export async function get({ params }: { params: { username: string; }; }) {
     return {
         status: 200,
         body: {
-            success: true,
             posts: user.Posts
         }
     }

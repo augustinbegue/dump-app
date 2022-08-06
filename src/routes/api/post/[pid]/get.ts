@@ -2,9 +2,6 @@ import { prisma } from "$lib/modules/database/prisma";
 
 /** @type {import('./__types/[pid]').RequestHandler} */
 export async function get({ params }: { params: { pid: string; }; }) {
-    console.log(params);
-
-
     let { pid } = params;
 
     const post = await prisma.post.findUnique({

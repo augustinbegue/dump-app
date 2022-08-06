@@ -14,6 +14,7 @@ export async function get({ params }: { params: { username: string; }; }) {
 
     if (user) {
         return {
+            status: 200,
             body: {
                 user,
             }

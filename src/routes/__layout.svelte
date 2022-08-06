@@ -1,7 +1,17 @@
+<script lang="ts" context="module">
+	import type { Load } from '@sveltejs/kit';
+
+	/** @type {import('@sveltejs/kit').Load} */
+	export const load: Load = async ({ url }) => ({ props: { url } });
+</script>
+
 <script lang="ts">
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Header from '$lib/components/header/Header.svelte';
 	import '../app.css';
+	import PageTransition from '$lib/components/ui/transitions/PageTransition.svelte';
+
+	export let url: string;
 </script>
 
 <svelte:head>
@@ -11,9 +21,9 @@
 <div class="flex flex-col justify-between h-full">
 	<Header />
 
-	<main class="grow shrink-0 overflow-auto">
+	<PageTransition {url}>
 		<slot />
-	</main>
+	</PageTransition>
 
 	<Footer />
 </div>

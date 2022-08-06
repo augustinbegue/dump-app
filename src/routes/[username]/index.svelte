@@ -1,35 +1,49 @@
+<script context="module" lang="ts">
+	import type { Load } from '@sveltejs/kit';
+
+	/** @type {import('./__types/[params]').Load} */
+	export const load: Load = async ({ params, fetch }) => {
+		let userRes = await fetch(`/api/user/username/${params.username}`);
+		let postsRes = await fetch(`/api/user/username/${params.username}/posts`);
+		const userData = await userRes.json();
+		const postsData = await postsRes.json();
+
+		console.log(userData, postsData);
+
+		if (postsRes.status === 200 && userRes.status === 200) {
+			return {
+				props: {
+					user: userData.user,
+					posts: postsData.posts
+				}
+			};
+		} else {
+			return {
+				status: postsRes.status
+			};
+		}
+	};
+</script>
+
 <script lang="ts">
-	import PostPreview from '$lib/components/posts/PostPreview.svelte';
-	import Spinner from '$lib/components/utils/Spinner.svelte';
+	import PostPreview from '$lib/components/ui/posts/PostPreview.svelte';
+	import UserDisplay from '$lib/components/ui/profile/UserDisplay.svelte';
+	import Spinner from '$lib/components/ui/Spinner.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import type { Post, User } from '@prisma/client';
-	import { onMount } from 'svelte';
 
 	export let user: User;
-	let posts: Post[];
+	export let posts: Post[];
 
 	$: isLoggedInUser = user.uid === $firebaseUser?.uid;
-
-	onMount(async () => {
-		let res = await fetch(`/api/user/username/${user.username}/posts`);
-		const data = await res.json();
-
-		if (data.success) posts = data.posts;
-		else console.error(data.error);
-	});
 </script>
 
 <div class="flex flex-col md:flex-row gap-4 justify-center">
 	<div class="m-4">
 		<div class="card shadow-2xl bg-base-100 min-w-max h-max">
 			<div class="card-body">
-				<div class="avatar">
-					<div class="w-24 rounded-full">
-						<img src={user.photoUrl} alt="{user.username}'s profile picture" />
-					</div>
-				</div>
+				<UserDisplay {user} />
 				<div class="card-title flex-col items-start gap-0">
-					<p class="text-lg font-normal">@{user.username}</p>
 					<p>{user.name}</p>
 				</div>
 				{#if isLoggedInUser}
@@ -55,13 +69,9 @@
 			</div>
 		</div>
 		<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-			{#if posts}
-				{#each posts as post}
-					<PostPreview {post} author={user} />
-				{/each}
-			{:else}
-				<Spinner />
-			{/if}
+			{#each posts as post}
+				<PostPreview {post} author={user} />
+			{/each}
 		</div>
 	</div>
 </div>
