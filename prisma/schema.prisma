@@ -31,11 +31,31 @@ model Follows {
 }
 
 model Post {
-  pid         String   @id @unique
+  pid         String        @id @unique
   title       String
   description String
   imageUrl    String
   authorUid   String
-  author      User     @relation(fields: [authorUid], references: [uid])
-  createdAt   DateTime @default(now())
+  author      User          @relation(fields: [authorUid], references: [uid])
+  createdAt   DateTime      @default(now())
+  metadataId  Int?          @unique
+  metadata    PostMetadata? @relation(fields: [metadataId], references: [id])
+}
+
+enum MetadataType {
+  location
+  camera
+  lens
+  focalLength
+  aperture
+  shutterSpeed
+  iso
+}
+
+model PostMetadata {
+  id     Int            @id @unique
+  pid    String         @unique
+  post   Post?
+  types  MetadataType[]
+  values String[]
 }
