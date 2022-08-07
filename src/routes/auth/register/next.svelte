@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { auth } from '$lib/modules/firebase/client';
+	import { auth, currentUser } from '$lib/modules/firebase/client';
 	import { firebaseUser } from '$lib/modules/firebase/client';
 
 	let username: string;
@@ -39,6 +39,9 @@
 			});
 
 			if (res.ok) {
+				const body = await res.json();
+				currentUser.set(body.user);
+
 				return goto(`/${username}`);
 			} else {
 				usernameError = 'Username is already in use';
@@ -55,7 +58,7 @@
 	onMount(async () => {
 		firebaseUser.subscribe(async (fbuser) => {
 			if (fbuser == null) {
-				return goto('/user/register');
+				return goto('/auth/register');
 			}
 
 			try {
