@@ -1,4 +1,4 @@
-import { credential } from "firebase-admin";
+import admin from "firebase-admin";
 import { getApps, initializeApp, type App, type ServiceAccount } from "firebase-admin/app";
 import { getAuth, type Auth } from "firebase-admin/auth";
 import { getStorage, Storage } from "firebase-admin/storage";
@@ -10,7 +10,7 @@ export let storage: Storage;
 
 if (!getApps().length) {
     app = initializeApp({
-        credential: credential.cert(serviceAccount as ServiceAccount),
+        credential: admin.credential.cert(serviceAccount as ServiceAccount),
         storageBucket: "dump-app-dev.appspot.com"
     });
 
