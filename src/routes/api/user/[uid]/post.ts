@@ -2,36 +2,36 @@ import { prisma } from "$lib/modules/database/prisma";
 import { auth } from "$lib/modules/firebase/admin";
 
 export async function post({ params, request }: { params: { uid: string }, request: Request; }) {
-    const data = await request.json();
-
-    if (!params.uid) {
-        return {
-            status: 400,
-            body: {
-                message: "Missing/wrong uid",
-            }
-        };
-    }
-
-    if (!data.username) {
-        return {
-            status: 400,
-            body: {
-                message: "Missing username",
-            }
-        };
-    }
-
-    if (!data.name) {
-        return {
-            status: 400,
-            body: {
-                message: "Missing name",
-            }
-        };
-    }
-
     try {
+        const data = await request.json();
+
+        if (!params.uid) {
+            return {
+                status: 400,
+                body: {
+                    message: "Missing/wrong uid",
+                }
+            };
+        }
+
+        if (!data.username) {
+            return {
+                status: 400,
+                body: {
+                    message: "Missing username",
+                }
+            };
+        }
+
+        if (!data.name) {
+            return {
+                status: 400,
+                body: {
+                    message: "Missing name",
+                }
+            };
+        }
+
         let fbUser = await auth.getUser(params.uid);
 
         if (!fbUser) {
@@ -48,11 +48,13 @@ export async function post({ params, request }: { params: { uid: string }, reque
                 uid: params.uid,
             },
             update: {
-                ...data,
+                username: data.username,
+                name: data.name,
             },
             create: {
                 uid: params.uid,
-                ...data,
+                name: data.name,
+                username: data.username,
             },
         });
 

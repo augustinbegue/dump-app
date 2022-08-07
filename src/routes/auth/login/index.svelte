@@ -82,7 +82,7 @@
 	});
 </script>
 
-<div class="hero min-h-screen bg-base-200">
+<div class="hero min-h-full bg-base-200">
 	<div class="hero-content flex-col lg:flex-row-reverse">
 		<div class="text-center lg:text-left">
 			<h1 class="text-5xl font-bold">Login now!</h1>
@@ -145,11 +145,12 @@
 				<div class="divider">OR</div>
 				<div class="form-control">
 					<button
-						class="btn btn-secondary"
+						class="btn btn-secondary gap-2"
 						on:click={registerWithGoogle}
 						class:loading={googleLoading}
 						disabled={emailPasswordLoading}
 					>
+						<i class="fa-brands fa-google" />
 						Sign in with Google
 					</button>
 				</div>

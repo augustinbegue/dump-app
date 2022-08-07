@@ -14,18 +14,18 @@
 	export let url: string;
 </script>
 
-<div class="flex flex-row">
-	<div>
-		<ul class="menu bg-base-100 w-56 p-2 rounded-box">
-			<li class:bordered={url.endsWith('profile')}>
-				<span>
-					<i class="fa-solid fa-user" />
-					public profile
-				</span>
-			</li>
-		</ul>
-	</div>
-	<div class="my-2">
-		<slot />
+<div class="container mx-auto flex flex-row">
+	<ul class="menu bg-base-100 w-56 p-2 rounded-box">
+		<li class:bordered={url.endsWith('profile')}>
+			<span>
+				<i class="fa-solid fa-user" />
+				public profile
+			</span>
+		</li>
+	</ul>
+	<div class="card bg-base-300 my-2 w-full">
+		<div class="card-body">
+			<slot />
+		</div>
 	</div>
 </div>

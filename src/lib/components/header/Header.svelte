@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	import { auth, currentUser } from '$lib/modules/firebase/client';
 </script>
 
@@ -15,6 +17,7 @@
 				class="btn btn-ghost uppercase"
 				on:click={() => {
 					auth.signOut();
+					goto('/');
 				}}
 			>
 				Logout
