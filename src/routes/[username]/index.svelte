@@ -42,7 +42,7 @@
 					<p>{user.name}</p>
 				</div>
 				{#if isLoggedInUser}
-					<a class="btn btn-sm" href="{user.username}/edit">Edit</a>
+					<a class="btn btn-sm" href="/settings/profile">Edit</a>
 				{/if}
 				<p>Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
 			</div>

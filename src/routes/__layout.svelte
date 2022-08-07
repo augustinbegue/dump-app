@@ -6,15 +6,14 @@
 	import '../app.css';
 
 	onMount(async () => {
-		const { fetch: originalFetch } = window;
+		const { fetch: windowFetch } = window;
 		window.fetch = async function (url, options) {
-			console.log('fetching', url);
+			if (url.toString().startsWith('/api'))
+				if ($firebaseUser)
+					document.cookie = `authorization=Bearer ${await $firebaseUser.getIdToken()}; Path=/;`;
+				else document.cookie = `authorization=; Path=/; Expires=${new Date(0).toUTCString()};`;
 
-			if ($firebaseUser)
-				document.cookie = `authorization=Bearer ${await $firebaseUser.getIdToken()}; Path=/;`;
-			else document.cookie = `authorization=; Path=/; Expires=${new Date(0).toUTCString()};`;
-
-			return originalFetch(url, options);
+			return windowFetch(url, options);
 		};
 	});
 </script>

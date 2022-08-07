@@ -2,7 +2,7 @@
 	export const prerender = true;
 </script>
 
-<div class="hero bg-base-300 min-h-full">
+<div class="hero bg-base-100 min-h-full">
 	<div class="hero-content text-center">
 		<div class="max-w-md">
 			<h1 class="text-5xl font-bold">404</h1>

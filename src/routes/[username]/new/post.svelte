@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import ImagePicker from '$lib/components/ui/inputs/ImagePicker.svelte';
+	import ImagePicker from '$lib/components/ui/inputs/DragAndDropImagePicker.svelte';
 	import Spinner from '$lib/components/ui/Spinner.svelte';
 	import { currentUser } from '$lib/modules/firebase/client';
 	import { Steps } from '$lib/modules/interaction/steps';

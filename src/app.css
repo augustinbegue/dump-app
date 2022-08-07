@@ -10,18 +10,28 @@ html, body {
   display: none !important;
 }
 
-.btn {
-  @apply rounded-none;
+/* Typography */
+
+.h1 {
+  @apply text-2xl font-bold;
 }
 
-.card, .card-body, .card.image-full:before {
-  @apply rounded-none;
+.h2 {
+  @apply text-xl font-bold;
 }
 
-.input {
-  @apply rounded-none;
+.h3 {
+  @apply text-lg font-bold;
 }
 
-.tabs.tabs-boxed, .tab.tab-active {
-  @apply rounded-none;
+.h4 {
+  @apply text-base font-bold;
+}
+
+.h5 {
+  @apply text-sm font-bold;
+}
+
+.h6 {
+  @apply text-xs font-bold;
 }

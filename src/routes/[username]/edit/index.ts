@@ -1,1 +1,0 @@
-export * from "../../api/user/username/[username]/get";
