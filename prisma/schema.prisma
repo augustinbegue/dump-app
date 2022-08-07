@@ -11,12 +11,23 @@ datasource db {
 }
 
 model User {
-  uid       String   @id @unique
-  username  String   @unique
-  name      String
-  photoUrl  String   @default("/static/images/default-user-photo.png")
-  createdAt DateTime @default(now())
-  Posts     Post[]
+  uid        String    @id @unique
+  username   String    @unique
+  name       String
+  photoUrl   String    @default("/static/images/default-user-photo.png")
+  createdAt  DateTime  @default(now())
+  posts      Post[]
+  followedBy Follows[] @relation("following")
+  following  Follows[] @relation("follower")
+}
+
+model Follows {
+  follower     User   @relation("follower", fields: [followerUid], references: [uid])
+  followerUid  String
+  following    User   @relation("following", fields: [followingUid], references: [uid])
+  followingUid String
+
+  @@id([followerUid, followingUid])
 }
 
 model Post {
