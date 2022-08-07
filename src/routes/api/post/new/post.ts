@@ -1,5 +1,6 @@
 import { prisma } from "$lib/modules/database/prisma";
 import { storage } from "$lib/modules/firebase/admin";
+import { uploadImageToBucket } from "$lib/modules/firebase/admin/uploadImageToBucket";
 import type { Post } from "@prisma/client";
 import type { RequestEvent } from "@sveltejs/kit";
 
@@ -8,8 +9,7 @@ export async function post({ params, request, locals }: RequestEvent) {
         return {
             status: 401,
             body: {
-                success: false,
-                error: "You must be logged in to create a post."
+                message: "You must be logged in to create a post."
             }
         };
     }
@@ -26,18 +26,10 @@ export async function post({ params, request, locals }: RequestEvent) {
     }
 
     const ext = data.dataUrl.split(';')[0].split('/')[1];
-    const contentType = data.dataUrl.split(';')[0].split(':')[1];
     const fileName = `${post.pid}.${ext}`;
-    const buffer = Buffer.from(data.dataUrl.split(',')[1], 'base64')
 
     if (data.dataUrl) {
-        const storedFile = storage.bucket().file(`${locals.user.uid}/${fileName}`);
-        await storedFile.save(buffer, { contentType });
-
-        post.imageUrl = (await storedFile.getSignedUrl({
-            action: 'read',
-            expires: '03-09-2491'
-        }))[0];
+        post.imageUrl = await uploadImageToBucket(data.dataUrl, `${locals.user.uid}`, fileName);
 
         await prisma.post.create({
             data: post
@@ -54,8 +46,7 @@ export async function post({ params, request, locals }: RequestEvent) {
         return {
             status: 400,
             body: {
-                success: false,
-                error: "No file was uploaded."
+                message: "No file was uploaded."
             }
         }
     }

@@ -1,18 +1,27 @@
 import { prisma } from "$lib/modules/database/prisma";
+import type { RequestEvent } from "@sveltejs/kit";
 
-/** @type {import('./__types/[uid]').RequestHandler} */
-export async function get({ params }: { params: { username: string; }; }) {
-    let username = params.username;
+export async function get({ params, locals }: RequestEvent) {
+    if (!locals.user) {
+        return {
+            status: 401,
+            body: {
+                message: "Unauthorized",
+            },
+        };
+    }
+
+    let { uid } = locals.user;
 
     const user = await prisma.user.findUnique({
         where: {
-            username: username,
+            uid: uid,
         },
     });
 
+
     if (user) {
         return {
-            status: 200,
             body: {
                 user,
             }

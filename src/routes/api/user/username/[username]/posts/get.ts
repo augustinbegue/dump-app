@@ -15,7 +15,7 @@ export async function get({ params }: { params: { username: string; }; }) {
         return {
             status: 404,
             body: {
-                error: "User not found."
+                message: "User not found."
             }
         }
     }

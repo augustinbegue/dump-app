@@ -1,17 +1,20 @@
 import { prisma } from "$lib/modules/database/prisma";
 import { auth } from "$lib/modules/firebase/admin";
+import type { RequestEvent } from "@sveltejs/kit";
 
-export async function post({ params, request }: { params: { uid: string }, request: Request; }) {
-    const data = await request.json();
-
-    if (!params.uid) {
+export async function post({ request, locals }: RequestEvent) {
+    if (!locals.user) {
         return {
-            status: 400,
+            status: 401,
             body: {
-                message: "Missing/wrong uid",
-            }
+                message: "Unauthorized",
+            },
         };
     }
+
+    const data = await request.json();
+
+    let { uid } = locals.user;
 
     if (!data.username) {
         return {
@@ -32,7 +35,7 @@ export async function post({ params, request }: { params: { uid: string }, reque
     }
 
     try {
-        let fbUser = await auth.getUser(params.uid);
+        let fbUser = await auth.getUser(uid);
 
         if (!fbUser) {
             return {
@@ -45,13 +48,13 @@ export async function post({ params, request }: { params: { uid: string }, reque
 
         const user = await prisma.user.upsert({
             where: {
-                uid: params.uid,
+                uid: uid,
             },
             update: {
                 ...data,
             },
             create: {
-                uid: params.uid,
+                uid: uid,
                 ...data,
             },
         });
