@@ -74,6 +74,7 @@
 		name="email"
 		bind:value={email}
 		class:input-error={emailError}
+		disabled
 	/>
 	{#if emailError}
 		<label class="label" for="username">
@@ -91,7 +92,6 @@
 	<div class="btn-group">
 		<button
 			class="btn btn-success"
-			on:click={onSave}
 			disabled={saveLoading || !$firebaseUser}
 			class:loading={saveLoading}
 		>
@@ -99,7 +99,6 @@
 		</button>
 		<button
 			class="btn btn-outline btn-primary"
-			on:click={onReset}
 			disabled={resetLoading}
 			class:loading={resetLoading}
 		>

@@ -23,6 +23,8 @@
 	 * @returns {Promise<boolean>} resolves when the login is completed, returns true if the login was successful, false otherwise
 	 */
 	export const open = (): Promise<boolean> => {
+		console.log('open');
+
 		isOpen = true;
 
 		return new Promise((resolve, reject) => {

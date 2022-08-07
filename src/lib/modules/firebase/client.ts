@@ -30,11 +30,11 @@ auth.onAuthStateChanged(async user => {
     firebaseUser.set(user);
 
     if (user) {
-        console.log("user changed, resetting token");
-
         document.cookie = `authorization=Bearer ${await user.getIdToken()}; Path=/; Expires=Session;`;
         let res = await fetch(`/api/user/${user.uid}`);
-        currentUser.set((await res.json()).user);
+        const dbUser = (await res.json()).user;
+        currentUser.set(dbUser);
+        console.log("user changed, resetting token", dbUser);
     } else {
         currentUser.set(null);
         console.log("no user, removing token");
