@@ -102,9 +102,9 @@
 							</label>
 						{:else}
 							<label class="label" for="username">
-								<span class="label-text-alt opacity-50"
-									>This is what you'll use to share your profile.</span
-								>
+								<span class="label-text-alt opacity-50">
+									This is what you'll use to share your profile.
+								</span>
 							</label>
 						{/if}
 					</div>

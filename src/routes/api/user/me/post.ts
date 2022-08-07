@@ -51,7 +51,8 @@ export async function post({ request, locals }: RequestEvent) {
                 uid: uid,
             },
             update: {
-                ...data,
+                username: data.username,
+                name: data.name,
             },
             create: {
                 uid: uid,

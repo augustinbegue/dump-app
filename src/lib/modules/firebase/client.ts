@@ -30,11 +30,15 @@ auth.onAuthStateChanged(async user => {
     firebaseUser.set(user);
 
     if (user) {
-        document.cookie = `authorization=Bearer ${await user.getIdToken()}; Path=/; Expires=${new Date(Date.now() + 1000 * 60 * 60).toUTCString()};`;
+        console.log("user changed, resetting token");
+
+        document.cookie = `authorization=Bearer ${await user.getIdToken()}; Path=/; Expires=Session;`;
         let res = await fetch(`/api/user/${user.uid}`);
         currentUser.set((await res.json()).user);
     } else {
         currentUser.set(null);
+        console.log("no user, removing token");
+
         if (browser)
             document.cookie = "authorization=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
     }
