@@ -1,9 +1,10 @@
 import { prisma } from "$lib/modules/database/prisma";
 import { auth } from "$lib/modules/firebase/admin";
+import type { CreateOrUpdateUserInput } from "$lib/types/api";
 
 export async function POST({ params, request }: { params: { uid: string }, request: Request; }) {
     try {
-        const data = await request.json();
+        const data = (await request.json()) as CreateOrUpdateUserInput;
 
         if (!params.uid) {
             return {

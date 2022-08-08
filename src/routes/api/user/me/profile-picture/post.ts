@@ -1,12 +1,13 @@
 import { prisma } from "$lib/modules/database/prisma";
 import { uploadImageToBucket } from "$lib/modules/firebase/admin/uploadImageToBucket";
+import type { UpdateProfilePhotoInput } from "$lib/types/api";
 import type { RequestEvent } from "@sveltejs/kit";
 
 export async function POST({ request, locals }: RequestEvent) {
     if (!locals.user)
         return { status: 401, body: { message: "Unauthorized" } };
 
-    const data = await request.json();
+    const data = (await request.json()) as UpdateProfilePhotoInput;
 
     const ext = data.dataUrl.split(';')[0].split('/')[1];
     const fileName = `${locals.user.uid}.${ext}`;

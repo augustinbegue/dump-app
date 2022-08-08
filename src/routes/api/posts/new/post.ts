@@ -42,7 +42,6 @@ export async function POST({ params, request, locals }: RequestEvent) {
         return {
             status: 200,
             body: {
-                success: true,
                 post
             }
         };

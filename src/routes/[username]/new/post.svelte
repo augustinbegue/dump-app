@@ -86,7 +86,7 @@
 
 		try {
 			uploading = true;
-			let res = await fetch('/api/post/new', {
+			let res = await fetch('/api/posts/new', {
 				method: 'POST',
 				body: JSON.stringify(body)
 			});
@@ -94,7 +94,7 @@
 			if (res.status === 200) {
 				let json = await res.json();
 				if (json.success) {
-					goto(`/${$currentUser?.username}/post/${json.post.pid}`);
+					goto(`/${$currentUser?.username}/postsss/${json.post.pid}`);
 				} else {
 					uploadError = json.error;
 				}
