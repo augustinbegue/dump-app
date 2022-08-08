@@ -7,7 +7,7 @@ export async function get({ params }: { params: { username: string; }; }) {
             username
         },
         include: {
-            Posts: true
+            posts: true,
         }
     })
 
@@ -23,7 +23,7 @@ export async function get({ params }: { params: { username: string; }; }) {
     return {
         status: 200,
         body: {
-            posts: user.Posts
+            posts: user.posts
         }
     }
 }
