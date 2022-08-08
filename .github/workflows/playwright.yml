@@ -22,8 +22,9 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Initialize database
+      - name: Reset database
         run: npx prisma migrate reset --force
+      - name: Initialize database
         run: npx prisma db push --accept-data-loss
       - name: Run Playwright tests
         run: npx playwright test
