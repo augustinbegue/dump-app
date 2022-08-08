@@ -79,7 +79,8 @@
 		const body = {
 			title,
 			description,
-			metadata: Array.from(metadata),
+			metadataKeys: Array.from(metadata.keys()),
+			metadataValues: Array.from(metadata.values()),
 			dataUrl
 		};
 

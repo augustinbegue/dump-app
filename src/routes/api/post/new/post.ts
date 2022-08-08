@@ -23,6 +23,8 @@ export async function post({ params, request, locals }: RequestEvent) {
         createdAt: new Date(),
         pid: crypto.randomUUID(),
         imageUrl: '',
+        metadataKeys: data.metadataKeys,
+        metadataValues: data.metadataValues
     }
 
     const ext = data.dataUrl.split(';')[0].split('/')[1];
@@ -32,7 +34,9 @@ export async function post({ params, request, locals }: RequestEvent) {
         post.imageUrl = await uploadImageToBucket(data.dataUrl, `${locals.user.uid}`, fileName);
 
         await prisma.post.create({
-            data: post
+            data: {
+                ...post
+            },
         });
 
         return {
