@@ -1,7 +1,7 @@
 import { prisma } from "$lib/modules/database/prisma";
 import type { RequestEvent } from "@sveltejs/kit";
 
-export async function get({ params, locals }: RequestEvent) {
+export async function GET({ params, locals }: RequestEvent) {
     if (!locals.user) {
         return {
             status: 401,

@@ -28,8 +28,6 @@
 	async function save() {
 		saveLoading = true;
 
-		console.log(photoUrl, dataUrl);
-
 		if (dataUrl && dataUrl != defaultProfileImage) {
 			const data = {
 				dataUrl: dataUrl

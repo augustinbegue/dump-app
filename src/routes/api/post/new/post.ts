@@ -4,7 +4,7 @@ import { uploadImageToBucket } from "$lib/modules/firebase/admin/uploadImageToBu
 import type { Post } from "@prisma/client";
 import type { RequestEvent } from "@sveltejs/kit";
 
-export async function post({ params, request, locals }: RequestEvent) {
+export async function POST({ params, request, locals }: RequestEvent) {
     if (!locals.user) {
         return {
             status: 401,

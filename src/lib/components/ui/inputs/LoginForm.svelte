@@ -39,7 +39,7 @@
 			let credential = await signInWithCredential(auth, authCredential);
 			return (await userExists(credential))
 				? onLogin('success', credential, authCredential)
-				: onLogin('failure');
+				: onLogin('next');
 		} catch (error) {
 			emailPasswordLoading = false;
 			if (error instanceof FirebaseError) {
@@ -64,9 +64,12 @@
 			googleLoading = true;
 			let credential = await signInWithPopup(auth, googleProvider);
 			let authCredential = GoogleAuthProvider.credentialFromResult(credential);
+
+			console.log('user signed in', credential.user.email);
+
 			return (await userExists(credential))
 				? onLogin('success', credential, authCredential!)
-				: onLogin('failure');
+				: onLogin('next');
 		} catch (error) {
 			googleLoading = false;
 			console.error(error);

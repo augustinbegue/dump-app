@@ -1,6 +1,6 @@
 import { prisma } from "$lib/modules/database/prisma";
 
-export async function get({ params }: { params: { username: string; }; }) {
+export async function GET({ params }: { params: { username: string; }; }) {
     const { username } = params;
     const user = await prisma.user.findUnique({
         where: {

@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
-import { getAuth, GoogleAuthProvider, type User as FbUser } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signOut, type User as FbUser } from "firebase/auth";
 import { browser } from "$app/env";
 import { writable } from "svelte/store";
 import type { User } from "@prisma/client";
@@ -30,11 +30,14 @@ auth.onAuthStateChanged(async user => {
     firebaseUser.set(user);
 
     if (user) {
-        document.cookie = `authorization=Bearer ${await user.getIdToken()}; Path=/; Expires=Session;`;
         let res = await fetch(`/api/user/${user.uid}`);
-        const dbUser = (await res.json()).user;
-        currentUser.set(dbUser);
-        console.log("user changed, resetting token", dbUser);
+
+        if (res.status === 200) {
+            const dbUser = (await res.json()).user;
+            currentUser.set(dbUser);
+            console.log("user changed, resetting authorization for", dbUser.username);
+            document.cookie = `authorization=Bearer ${await user.getIdToken()}; Path=/; Expires=Session;`;
+        }
     } else {
         currentUser.set(null);
         console.log("no user, removing token");

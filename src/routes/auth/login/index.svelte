@@ -6,6 +6,8 @@
 	import { onMount } from 'svelte';
 
 	function onLogin(result: string) {
+		console.log('LOGIN RESULT:', result);
+
 		switch (result) {
 			case 'success':
 				goto('/');
@@ -13,7 +15,7 @@
 			case 'failure':
 				break;
 			case 'next':
-				goto('/register/next');
+				goto('/auth/register/next');
 				break;
 			default:
 				break;

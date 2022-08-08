@@ -7,6 +7,9 @@ export let app: App;
 export let auth: Auth;
 export let storage: Storage;
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 if (!getApps().length) {
     app = initializeApp({
         credential: admin.credential.cert({

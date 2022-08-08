@@ -2,7 +2,7 @@ import { prisma } from "$lib/modules/database/prisma";
 import { auth } from "$lib/modules/firebase/admin";
 import type { RequestEvent } from "@sveltejs/kit";
 
-export async function post({ request, locals }: RequestEvent) {
+export async function POST({ request, locals }: RequestEvent) {
     if (!locals.user) {
         return {
             status: 401,

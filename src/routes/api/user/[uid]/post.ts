@@ -1,7 +1,7 @@
 import { prisma } from "$lib/modules/database/prisma";
 import { auth } from "$lib/modules/firebase/admin";
 
-export async function post({ params, request }: { params: { uid: string }, request: Request; }) {
+export async function POST({ params, request }: { params: { uid: string }, request: Request; }) {
     try {
         const data = await request.json();
 
