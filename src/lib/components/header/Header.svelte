@@ -29,10 +29,7 @@
 						</div>
 					</div>
 				</label>
-				<ul
-					tabindex="0"
-					class="menu bg-base-200 dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4"
-				>
+				<ul tabindex="0" class="menu bg-base-200 dropdown-content p-2 shadow rounded-box w-52 mt-4">
 					<li class="menu-title">
 						<span class="text-base">@{$currentUser.username}</span>
 					</li>
@@ -48,12 +45,6 @@
 							Logout
 						</btn>
 					</li>
-				</ul>
-			</div>
-			<div class="dropdown dropdown-end">
-				<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-					<li>@{$currentUser.username}</li>
-					<li><a>Item 2</a></li>
 				</ul>
 			</div>
 		{:else}
