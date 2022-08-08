@@ -5,7 +5,7 @@ dotenv.config();
 const config: PlaywrightTestConfig = {
 	webServer: {
 		command: 'npm run build && npm run preview',
-		port: 3000
+		port: 4173
 	},
 	testMatch: ['/e2e/**/*.spec.ts'],
 };
