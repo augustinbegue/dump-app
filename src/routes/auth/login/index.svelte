@@ -2,8 +2,9 @@
 	import { goto } from '$app/navigation';
 
 	import LoginForm from '$lib/components/ui/inputs/LoginForm.svelte';
-	import { auth } from '$lib/modules/firebase/client';
+	import { auth, firebaseUser } from '$lib/modules/firebase/client';
 	import { onMount } from 'svelte';
+	import type { Unsubscriber } from 'svelte/store';
 
 	function onLogin(result: string) {
 		console.log('LOGIN RESULT:', result);
@@ -22,21 +23,14 @@
 		}
 	}
 
+	let us: Unsubscriber;
 	onMount(async () => {
-		if (auth.currentUser != null) {
-			try {
-				let res = await fetch(`/api/user/${auth.currentUser.uid}`);
-				let data = await res.json();
-
-				if (res.status === 200) {
-					goto(`/${data.user.username}`);
-				} else {
-					goto('/auth/register/next');
-				}
-			} catch (error) {
-				console.error(error);
+		us = firebaseUser.subscribe((user) => {
+			if (user) {
+				us();
+				goto(`/auth/register/next`);
 			}
-		}
+		});
 	});
 </script>
 

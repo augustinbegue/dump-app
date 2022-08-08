@@ -35,7 +35,10 @@
 		/>
 	</figure>
 	<div class="card-body">
-		<h2 class="card-title">{post.title}</h2>
+		<div class="card-title flex-col items-start gap-0 font-normal">
+			<p>{post.title}</p>
+			<p class="text-sm">{new Date(post.createdAt).toLocaleDateString()}</p>
+		</div>
 		<p>{post.description}</p>
 	</div>
 </div>
