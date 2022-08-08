@@ -12,7 +12,20 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter(),
+		adapter: vercel({
+			// if true, will deploy the app using edge functions
+			// (https://vercel.com/docs/concepts/functions/edge-functions)
+			// rather than serverless functions
+			edge: true,
+
+			// an array of dependencies that esbuild should treat
+			// as external when bundling functions
+			external: ['prisma/schema.prisma'],
+
+			// if true, will split your app into multiple functions
+			// instead of creating a single one for the entire app
+			split: false
+		}),
 		methodOverride: {
 			allowed: ['PATCH', 'DELETE']
 		}
