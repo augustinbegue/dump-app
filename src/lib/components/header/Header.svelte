@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 
 	import { auth, currentUser } from '$lib/modules/firebase/client';
+	import UserSearchBar from '../ui/inputs/UserSearchBar.svelte';
 </script>
 
 <header class="navbar bg-base-300 shrink-0">
@@ -9,14 +10,11 @@
 		<a class="btn btn-ghost uppercase font-bold" href="/">dump</a>
 	</div>
 	<div class="navbar-center">
-		<div class="form-control">
-			<div class="input-group input-group-sm mx-8">
-				<input type="text" placeholder="search…" class="input input-sm" />
-				<button class="btn btn-sm btn-square">
-					<i class="fa-solid fa-magnifying-glass" />
-				</button>
-			</div>
-		</div>
+		<UserSearchBar
+			onclick={(user) => {
+				goto(`/${user.username}`);
+			}}
+		/>
 	</div>
 	<div class="navbar-end">
 		{#if $currentUser != null}
