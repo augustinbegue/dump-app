@@ -77,3 +77,21 @@ test('a user follows another user', async () => {
     expect(body.following[0].followerUid).toBe(uid2);
     expect(body.following[0].followingUid).toBe(uid1);
 })
+
+test('users have the right amount of followers', async () => {
+    let res = (await context.request.get(`/api/users/${uid1}`));
+    expect(res).toBeOK();
+
+    let body = await res.json();
+
+    expect(body.user.followersCount).toBe(1);
+    expect(body.user.followingCount).toBe(1);
+
+    res = (await context.request.get(`/api/users/${uid2}`));
+    expect(res).toBeOK();
+
+    body = await res.json();
+
+    expect(body.user.followersCount).toBe(1);
+    expect(body.user.followingCount).toBe(1);
+})

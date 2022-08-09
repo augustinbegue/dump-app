@@ -19,6 +19,8 @@ let expectedBody = {
         name,
         createdAt: expect.any(String),
         photoUrl: "/images/default-user-photo.png",
+        followingCount: 0,
+        followersCount: 0,
     }
 }
 

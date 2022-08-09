@@ -17,7 +17,7 @@ export interface UserPostsOutput {
     posts: Post[];
 }
 
-export interface FollowedByOutput {
+export interface FollowersOutput {
     followers: Follows[];
 }
 
