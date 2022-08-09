@@ -56,6 +56,7 @@ export async function POST({ params, request }: { params: { uid: string }, reque
                 uid: params.uid,
                 name: data.name,
                 username: data.username,
+                photoUrl: fbUser.photoURL,
             },
         });
 

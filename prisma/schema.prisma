@@ -14,7 +14,7 @@ model User {
   uid        String    @id @unique
   username   String    @unique
   name       String
-  photoUrl   String    @default("/static/images/default-user-photo.png")
+  photoUrl   String    @default("/images/default-user-photo.png")
   createdAt  DateTime  @default(now())
   posts      Post[]
   followedBy Follows[] @relation("following")
