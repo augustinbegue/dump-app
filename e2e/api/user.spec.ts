@@ -3,8 +3,9 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { auth } from '../helpers/firebase-client.js';
 import { auth as adminAuth } from '../helpers/firebase-admin.js';
 import { prisma } from '../helpers/prisma.js'
+import { authenticateUser } from '../helpers/users.js';
 
-export let context: any;
+let context: any;
 
 const name = 'John Doe';
 const username = 'test';
@@ -17,7 +18,7 @@ let expectedBody = {
         username,
         name,
         createdAt: expect.any(String),
-        photoUrl: "/static/images/default-user-photo.png",
+        photoUrl: "/images/default-user-photo.png",
     }
 }
 
@@ -95,18 +96,7 @@ test('user exists after creation', async () => {
 })
 
 test('user can authenticate its requests', async ({ browser }) => {
-    let fbUser = (await signInWithEmailAndPassword(auth, email, password)).user;
-
-    context.addCookies([{
-        name: 'authorization',
-        value: await fbUser.getIdToken(),
-        domain: 'localhost',
-        path: '/',
-        secure: false,
-        httpOnly: true,
-        sameSite: 'Strict',
-        expires: Math.round((new Date().getTime() + (1000 * 60 * 30)) / 1000),
-    }])
+    await authenticateUser(context, email, password);
 
     let res = await context.request.get(`/api/users/me`);
     expect(res).toBeOK();

@@ -68,11 +68,11 @@
 
       - Requires authentication to access potentially private collections
 
-    - ### GET `/api/users/username/[uid]/followedBy` Get a User's Followers
+    - ### GET `/api/users/username/[uid]/followers` Get a User's Followers
 
       - Requires authentication
 
-    - ### POST `/api/users/username/[uidToFollow]/followedBy` Follow a User
+    - ### POST `/api/users/username/[uidToFollow]/followers` Follow a User
 
       - Requires authentication
 
