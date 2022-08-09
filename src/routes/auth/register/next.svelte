@@ -26,7 +26,7 @@
 
 		try {
 			finishLoading = true;
-			let res = await fetch(`/api/user/${auth.currentUser?.uid}`, {
+			let res = await fetch(`/api/users/${auth.currentUser?.uid}`, {
 				method: 'POST',
 				mode: 'same-origin',
 				headers: {
@@ -62,7 +62,7 @@
 			}
 
 			try {
-				let res = await fetch(`/api/user/${fbuser.uid}`);
+				let res = await fetch(`/api/users/${fbuser.uid}`);
 				let json = await res.json();
 				if (res.status === 200) {
 					goto(`/${json.user.username}`);

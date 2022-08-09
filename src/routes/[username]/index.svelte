@@ -3,7 +3,8 @@
 
 	/** @type {import('./__types/[params]').Load} */
 	export const load: Load = async ({ params, props, fetch }) => {
-		let postsRes = await fetch(`/api/user/username/${params.username}/posts`);
+		const user = props.user as User;
+		let postsRes = await fetch(`/api/users/${user.uid}/posts`);
 		const postsData = await postsRes.json();
 
 		if (postsRes.status === 200) {

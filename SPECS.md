@@ -42,10 +42,46 @@
 
   - ### POST `/api/posts/new` Create a Post
 
-  - ### GET `/api/posts/[postId]` Get a Post
+    - Requires authentication
 
-- ## `/api/posts` Collections
+  - ### GET `/api/posts/[pId]` Get a Post
 
-  - ### POST `/api/posts/new` Create a Collection
+- ## `/api/collections` Collections
 
-  - ### GET `/api/posts/[postId]` Get a Collection
+  - ### POST `/api/collections/new` Create a Collection
+
+    - Requires authentication
+
+  - ### GET `/api/collections/[cId]` Get a Collection
+
+- ## `/api/users` Users
+
+  - ### POST `/api/users/[uid]` Create a User
+
+    - Requires firebase authentication
+
+  - ### GET `/api/users/[uid]` Get a User by firebase UID
+
+    - ### GET `/api/users/username/[uid]/posts` Get a User's Posts
+
+    - ### GET `/api/users/username/[uid]/collections` Get a User's Collections
+
+      - Requires authentication to access potentially private collections
+
+    - ### GET `/api/users/username/[uid]/followedBy` Get a User's Followers
+
+      - Requires authentication
+
+    - ### POST `/api/users/username/[uidToFollow]/followedBy` Follow a User
+
+      - Requires authentication
+
+    - ### GET `/api/users/username/[uid]/following` Get a User's Following
+
+      - Requires authentication
+
+    - ### GET `/api/users/username/[uid]/following/[uidToCheck]` Check if a User is Following another User
+
+      - Requires authentication
+
+  - ### GET `/api/users/username/[username]` Get a User by username
