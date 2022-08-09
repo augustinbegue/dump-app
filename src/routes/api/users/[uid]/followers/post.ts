@@ -45,25 +45,87 @@ export async function POST({ params, request, locals }: { params: { uid: string 
     }
 
     try {
-        await prisma.follows.create({
-            data: {
-                follower: {
-                    connect: {
-                        uid: follower.uid,
+        let res = await prisma.follows.findFirst({
+            where: {
+                followerUid: follower.uid,
+                followingUid: userToFollow.uid,
+            }
+        })
+
+        if (res) {
+            await prisma.follows.delete({
+                where: {
+                    followerUid_followingUid: {
+                        followerUid: follower.uid,
+                        followingUid: userToFollow.uid,
+                    }
+                }
+            });
+
+            await prisma.user.update({
+                where: {
+                    uid: userToFollow.uid,
+                },
+                data: {
+                    followersCount: {
+                        decrement: 1,
+                    }
+                }
+            });
+
+            await prisma.user.update({
+                where: {
+                    uid: follower.uid,
+                },
+                data: {
+                    followingCount: {
+                        decrement: 1,
+                    }
+                }
+            });
+        } else {
+            await prisma.follows.create({
+                data: {
+                    follower: {
+                        connect: {
+                            uid: follower.uid,
+                        },
+                    },
+                    following: {
+                        connect: {
+                            uid: userToFollow.uid,
+                        },
                     },
                 },
-                following: {
-                    connect: {
-                        uid: userToFollow.uid,
-                    },
+            });
+
+            await prisma.user.update({
+                where: {
+                    uid: userToFollow.uid,
                 },
-            },
-        });
+                data: {
+                    followersCount: {
+                        increment: 1,
+                    }
+                }
+            });
+
+            await prisma.user.update({
+                where: {
+                    uid: follower.uid,
+                },
+                data: {
+                    followingCount: {
+                        increment: 1,
+                    }
+                }
+            });
+        }
     } catch (error) {
         return {
             status: 400,
             body: {
-                message: "Already following",
+                message: "An error occurred",
             }
         }
     }
