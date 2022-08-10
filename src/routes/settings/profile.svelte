@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ButtonImagePicker from '$lib/components/ui/inputs/ButtonImagePicker.svelte';
+	import ButtonImagePicker from '$lib/components/ui/inputs/ImagePickerButton.svelte';
 	import { currentUser, firebaseUser } from '$lib/modules/firebase/client';
 	import type { User } from '@prisma/client';
 	import { onMount } from 'svelte';

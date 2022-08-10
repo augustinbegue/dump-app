@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import UserDisplay from '$lib/components/ui/profile/UserDisplay.svelte';
+	import UserDisplay from '$lib/components/ui/users/UserDisplay.svelte';
 
 	import type { Post, User } from '@prisma/client';
 
