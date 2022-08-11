@@ -74,7 +74,7 @@
 	});
 </script>
 
-<div class="hero min-h-screen bg-base-200">
+<div class="hero min-h-full bg-base-200">
 	<div class="hero-content flex-col lg:flex-row-reverse">
 		<div class="text-center lg:text-left lg:min-w-max">
 			<h1 class="text-5xl font-bold">One more thing...</h1>
