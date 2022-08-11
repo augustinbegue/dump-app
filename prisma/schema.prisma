@@ -11,19 +11,22 @@ datasource db {
 }
 
 model User {
-  uid            String    @id @unique
-  username       String    @unique
-  name           String
-  photoUrl       String    @default("/images/default-user-photo.png")
-  createdAt      DateTime  @default(now())
-  posts          Post[]
-  followers      Follows[] @relation("following")
-  followersCount Int       @default(0)
-  following      Follows[] @relation("follower")
-  followingCount Int       @default(0)
+  uid                String         @id @unique
+  username           String         @unique
+  name               String
+  photoUrl           String         @default("/images/default-user-photo.png")
+  createdAt          DateTime       @default(now())
+  posts              Post[]
+  followers          Follow[]       @relation("following")
+  followersCount     Int            @default(0)
+  following          Follow[]       @relation("follower")
+  followingCount     Int            @default(0)
+  createdCollections Collection[]   @relation("author")
+  allowedCollections Collection[]
+  privacy            PrivacySetting @default(PUBLIC)
 }
 
-model Follows {
+model Follow {
   follower     User     @relation("follower", fields: [followerUid], references: [uid])
   followerUid  String
   following    User     @relation("following", fields: [followingUid], references: [uid])
@@ -34,13 +37,34 @@ model Follows {
 }
 
 model Post {
-  pid            String   @id @unique
+  pid            String      @id @unique
   title          String
   description    String
   imageUrl       String
   authorUid      String
-  author         User     @relation(fields: [authorUid], references: [uid])
-  createdAt      DateTime @default(now())
+  author         User        @relation(fields: [authorUid], references: [uid])
+  createdAt      DateTime    @default(now())
   metadataKeys   String[]
   metadataValues String[]
+  collection     Collection? @relation(fields: [collectionCid], references: [cid])
+  collectionCid  String?
+}
+
+enum PrivacySetting {
+  PUBLIC
+  PRIVATE
+}
+
+model Collection {
+  cid          String         @id @unique
+  name         String
+  description  String
+  imageUrl     String
+  authorUid    String
+  author       User           @relation("author", fields: [authorUid], references: [uid])
+  createdAt    DateTime       @default(now())
+  posts        Post[]
+  postsCount   Int            @default(0)
+  privacy      PrivacySetting @default(PUBLIC)
+  allowedUsers User[]
 }
