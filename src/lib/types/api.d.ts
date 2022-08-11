@@ -32,6 +32,7 @@ export interface CreateOrUpdatePostInput {
     metadataValues: string[];
     dataUrl: string;
     showInFeed: boolean;
+    collectionCid: string | null;
 }
 
 export interface PostOutput {

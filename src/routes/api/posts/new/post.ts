@@ -34,7 +34,7 @@ export async function POST({ params, request, locals }: RequestEvent) {
         imageUrl: '',
         metadataKeys: data.metadataKeys,
         metadataValues: data.metadataValues,
-        collectionCid: null,
+        collectionCid: data.collectionCid,
         showInFeed: data.showInFeed
     }
 
