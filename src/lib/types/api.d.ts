@@ -1,4 +1,4 @@
-import type { Follow, PrivacySetting, User } from "@prisma/client";
+import type { Follow, PrivacySetting, User, Collection, Post } from "@prisma/client";
 
 export interface UserOutput {
     user: User;

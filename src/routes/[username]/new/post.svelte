@@ -218,12 +218,9 @@
 						name="upload"
 						on:click={upload}
 						disabled={uploading || uploadDisabled}
+						class:loading={uploading}
 					>
-						{#if uploading}
-							<progress class="progress w-full" />
-						{:else}
-							Upload
-						{/if}
+						Post
 					</button>
 					{#if uploadError}
 						<label class="label" for="upload">
