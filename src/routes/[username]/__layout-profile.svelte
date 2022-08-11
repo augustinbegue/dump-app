@@ -76,7 +76,7 @@
 		</div>
 		{#if isLoggedInUser}
 			<div class="">
-				<a class="btn btn-primary gap-2 mt-4" href="{user.username}/new"> New Post </a>
+				<a class="btn btn-primary gap-2 mt-4" href="{user.username}/new"> publish </a>
 			</div>
 		{/if}
 	</div>

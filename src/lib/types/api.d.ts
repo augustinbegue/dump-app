@@ -13,7 +13,7 @@ export interface UpdateProfilePhotoInput {
     dataUrl: string;
 }
 
-export interface UserPostsOutput {
+export interface PostsOutput {
     posts: Post[];
 }
 
@@ -52,7 +52,12 @@ export interface CreateOrUpdateCollectionInput {
 
 export interface CollectionOutput {
     collection: Collection & {
-        posts: string[],
-        allowedUsers: string[],
+        author: User;
+        posts: {
+            pid: string;
+        }[];
+        allowedUsers: {
+            uid: string;
+        }[];
     };
 }

@@ -23,14 +23,13 @@
 </script>
 
 <script lang="ts">
+	import CollectionPreview from '$lib/components/collections/CollectionPreview.svelte';
 	import type { Collection, Post, User } from '@prisma/client';
 
 	export let collections: Collection[];
 	export let user: User;
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  gap-4">
-	{#each collections as collection}
-		{collection.cid}
-	{/each}
-</div>
+{#each collections as collection, i}
+	<CollectionPreview {collection} author={user} />
+{/each}
