@@ -1,4 +1,4 @@
-import type { Follows, User } from "@prisma/client";
+import type { Follow, User } from "@prisma/client";
 
 export interface UserOutput {
     user: User;
@@ -18,9 +18,9 @@ export interface UserPostsOutput {
 }
 
 export interface FollowersOutput {
-    followers: Follows[];
+    followers: Follow[];
 }
 
 export interface FollowingOutput {
-    following: Follows[];
+    following: Follow[];
 }

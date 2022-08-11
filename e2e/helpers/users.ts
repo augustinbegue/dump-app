@@ -54,7 +54,7 @@ export async function deleteUser(uid: string) {
             authorUid: uid,
         }
     })
-    await prisma.follows.deleteMany({
+    await prisma.follow.deleteMany({
         where: {
             OR: [
                 {

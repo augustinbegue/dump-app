@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Follows, User } from '@prisma/client';
+	import type { Follow, User } from '@prisma/client';
 	import { onMount } from 'svelte';
 	import FollowButton from '../inputs/FollowButton.svelte';
 	import Spinner from '../Spinner.svelte';
 
-	export let follow: Follows;
+	export let follow: Follow;
 	export let type: 'followers' | 'following';
 
 	let user: User;

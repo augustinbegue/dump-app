@@ -45,7 +45,7 @@ export async function POST({ params, request, locals }: { params: { uid: string 
     }
 
     try {
-        let res = await prisma.follows.findFirst({
+        let res = await prisma.follow.findFirst({
             where: {
                 followerUid: follower.uid,
                 followingUid: userToFollow.uid,
@@ -53,7 +53,7 @@ export async function POST({ params, request, locals }: { params: { uid: string 
         })
 
         if (res) {
-            await prisma.follows.delete({
+            await prisma.follow.delete({
                 where: {
                     followerUid_followingUid: {
                         followerUid: follower.uid,
@@ -84,7 +84,7 @@ export async function POST({ params, request, locals }: { params: { uid: string 
                 }
             });
         } else {
-            await prisma.follows.create({
+            await prisma.follow.create({
                 data: {
                     follower: {
                         connect: {
