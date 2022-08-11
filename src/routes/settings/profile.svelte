@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ButtonImagePicker from '$lib/components/ui/inputs/ButtonImagePicker.svelte';
+	import ButtonImagePicker from '$lib/components/ui/inputs/ImagePickerButton.svelte';
 	import { currentUser, firebaseUser } from '$lib/modules/firebase/client';
 	import type { User } from '@prisma/client';
 	import { onMount } from 'svelte';
@@ -19,7 +19,7 @@
 	let resetLoading = false;
 	async function reset() {
 		resetLoading = true;
-		user = (await (await fetch(`/api/user/me`)).json()).user;
+		user = (await (await fetch(`/api/users/me`)).json()).user;
 		resetLoading = false;
 	}
 
@@ -32,7 +32,7 @@
 			const data = {
 				dataUrl: dataUrl
 			};
-			await fetch(`/api/user/me/profile-picture`, {
+			await fetch(`/api/users/me/profile-picture`, {
 				method: 'POST',
 				body: JSON.stringify(data)
 			});
@@ -40,7 +40,7 @@
 			user.photoUrl = defaultProfileImage;
 		}
 
-		let res = await fetch(`/api/user/me`, {
+		let res = await fetch(`/api/users/me`, {
 			method: 'POST',
 			body: JSON.stringify({
 				...user

@@ -3,8 +3,9 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { auth } from '../helpers/firebase-client.js';
 import { auth as adminAuth } from '../helpers/firebase-admin.js';
 import { prisma } from '../helpers/prisma.js'
+import { authenticateUser } from '../helpers/users.js';
 
-export let context: any;
+let context: any;
 
 const name = 'John Doe';
 const username = 'test';
@@ -17,7 +18,9 @@ let expectedBody = {
         username,
         name,
         createdAt: expect.any(String),
-        photoUrl: "/static/images/default-user-photo.png",
+        photoUrl: "/images/default-user-photo.png",
+        followingCount: 0,
+        followersCount: 0,
     }
 }
 
@@ -49,17 +52,17 @@ test('user creation', async () => {
     expectedBody.user.uid = uid;
 
     // Test incorrect requests
-    let res = await context.request.post(`/api/user/${uid}`, {
+    let res = await context.request.post(`/api/users/${uid}`, {
         data: {}
     });
     expect(res).not.toBeOK();
-    res = await context.request.post(`/api/user/${uid}`, {
+    res = await context.request.post(`/api/users/${uid}`, {
         data: {
             name
         }
     });
     expect(res).not.toBeOK();
-    res = await context.request.post(`/api/user/${uid}`, {
+    res = await context.request.post(`/api/users/${uid}`, {
         data: {
             username
         }
@@ -67,7 +70,7 @@ test('user creation', async () => {
     expect(res).not.toBeOK();
 
     // Test the user creation on the api
-    res = await context.request.post(`/api/user/${uid}`, {
+    res = await context.request.post(`/api/users/${uid}`, {
         data: {
             username,
             name,
@@ -83,32 +86,21 @@ test('user creation', async () => {
 });
 
 test('user exists after creation', async () => {
-    let res = await context.request.get(`/api/user/username/${username}`);
+    let res = await context.request.get(`/api/users/username/${username}`);
     expect(res).toBeOK();
     let body = await (res.json());
     expect(body).toEqual(expectedBody);
 
-    res = await context.request.get(`/api/user/${body.user.uid}`);
+    res = await context.request.get(`/api/users/${body.user.uid}`);
     expect(res).toBeOK();
     body = await (res.json());
     expect(body).toEqual(expectedBody);
 })
 
 test('user can authenticate its requests', async ({ browser }) => {
-    let fbUser = (await signInWithEmailAndPassword(auth, email, password)).user;
+    await authenticateUser(context, email, password);
 
-    context.addCookies([{
-        name: 'authorization',
-        value: await fbUser.getIdToken(),
-        domain: 'localhost',
-        path: '/',
-        secure: false,
-        httpOnly: true,
-        sameSite: 'Strict',
-        expires: Math.round((new Date().getTime() + (1000 * 60 * 30)) / 1000),
-    }])
-
-    let res = await context.request.get(`/api/user/me`);
+    let res = await context.request.get(`/api/users/me`);
     expect(res).toBeOK();
     let body = await (res.json());
     expect(body).toEqual(expectedBody);

@@ -3,7 +3,8 @@
 
 	/** @type {import('./__types/[params]').Load} */
 	export const load: Load = async ({ params, props, fetch }) => {
-		let postsRes = await fetch(`/api/user/username/${params.username}/posts`);
+		const user = props.user as User;
+		let postsRes = await fetch(`/api/users/${user.uid}/posts`);
 		const postsData = await postsRes.json();
 
 		if (postsRes.status === 200) {
@@ -23,15 +24,27 @@
 
 <script lang="ts">
 	import PostPreview from '$lib/components/ui/posts/PostPreview.svelte';
-	import UserDisplay from '$lib/components/ui/profile/UserDisplay.svelte';
+	import UserDisplay from '$lib/components/ui/users/UserDisplay.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import type { Post, User } from '@prisma/client';
+	import FollowsModal from '$lib/components/ui/modals/FollowsModal.svelte';
+	import FollowButton from '$lib/components/ui/inputs/FollowButton.svelte';
 
 	export let user: User;
 	export let posts: Post[];
 
 	$: isLoggedInUser = user.uid === $firebaseUser?.uid;
+
+	let openFollowersModal: () => void;
+	let openFollowingModal: () => void;
 </script>
+
+{#key user}
+	<!-- Followers Modal -->
+	<FollowsModal bind:open={openFollowersModal} type="followers" {user} />
+	<!-- Following Modal -->
+	<FollowsModal bind:open={openFollowingModal} type="following" {user} />
+{/key}
 
 <div class="flex flex-col md:flex-row gap-4 justify-center">
 	<div class="m-4">
@@ -43,8 +56,20 @@
 				</div>
 				{#if isLoggedInUser}
 					<a class="btn btn-sm" href="/settings/profile">Edit</a>
+				{:else if $firebaseUser}
+					<FollowButton {user} />
 				{/if}
-				<p>Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
+				<p class="cursor-pointer" on:click={() => openFollowersModal()}>
+					<span class="font-medium">
+						{user.followersCount}
+					</span> followers
+				</p>
+				<p class="cursor-pointer" on:click={() => openFollowingModal()}>
+					<span class="font-medium">
+						{user.followingCount}
+					</span> following
+				</p>
+				<p class="text-sm">joined: {new Date(user.createdAt).toLocaleDateString()}</p>
 			</div>
 		</div>
 		{#if isLoggedInUser}

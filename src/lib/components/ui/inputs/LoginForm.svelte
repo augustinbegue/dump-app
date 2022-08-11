@@ -43,7 +43,7 @@
 		} catch (error) {
 			emailPasswordLoading = false;
 			if (error instanceof FirebaseError) {
-				if (error.code === 'auth/user-not-found') {
+				if (error.code === 'auth/users-not-found') {
 					emailError = 'Email not found or password was incorrect';
 					passwordError = 'Email not found or password was incorrect';
 				} else if (error.code === 'auth/wrong-password') {
@@ -85,7 +85,7 @@
 	async function userExists(credential: UserCredential) {
 		let user = credential.user;
 
-		let res = await fetch(`/api/user/${user.uid}`);
+		let res = await fetch(`/api/users/${user.uid}`);
 		if (res.status === 200) return true;
 		else return false;
 	}

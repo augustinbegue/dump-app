@@ -11,9 +11,7 @@
 			return;
 		}
 
-		users = (await (await fetch(`/api/user/search/${input}`)).json()).users;
-
-		console.log(users);
+		users = (await (await fetch(`/api/users/search/${input}`)).json()).users;
 	}
 </script>
 

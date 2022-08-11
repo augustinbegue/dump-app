@@ -30,7 +30,7 @@ auth.onAuthStateChanged(async user => {
     firebaseUser.set(user);
 
     if (user) {
-        let res = await fetch(`/api/user/${user.uid}`);
+        let res = await fetch(`/api/users/${user.uid}`);
 
         if (res.status === 200) {
             const dbUser = (await res.json()).user;

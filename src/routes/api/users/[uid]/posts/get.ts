@@ -1,10 +1,10 @@
 import { prisma } from "$lib/modules/database/prisma";
 
-export async function GET({ params }: { params: { username: string; }; }) {
-    const { username } = params;
+export async function GET({ params }: { params: { uid: string; }; }) {
+    const { uid } = params;
     const user = await prisma.user.findUnique({
         where: {
-            username
+            uid
         },
         include: {
             posts: true,
