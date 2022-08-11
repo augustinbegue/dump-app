@@ -12,5 +12,7 @@ declare namespace App {
 
 	// interface Session {}
 
-	// interface Stuff {}
+	interface Stuff {
+		user: import("@prisma/client").User;
+	}
 }

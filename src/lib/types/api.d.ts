@@ -17,6 +17,10 @@ export interface UserPostsOutput {
     posts: Post[];
 }
 
+export interface UserCollectionsOutput {
+    collections: Collection[];
+}
+
 export interface FollowersOutput {
     followers: Follow[];
 }

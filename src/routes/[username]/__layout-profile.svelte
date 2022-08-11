@@ -2,36 +2,38 @@
 	import type { Load } from '@sveltejs/kit';
 
 	/** @type {import('./__types/[params]').Load} */
-	export const load: Load = async ({ params, props, fetch }) => {
-		const user = props.user as User;
-		let postsRes = await fetch(`/api/users/${user.uid}/posts`);
-		const postsData = await postsRes.json();
+	export const load: Load = async ({ params, props, fetch, url }) => {
+		let userRes = await fetch(`/api/users/username/${params.username}`);
+		const userData = (await userRes.json()) as UserOutput;
 
-		if (postsRes.status === 200) {
+		if (userRes.status === 200) {
 			return {
 				props: {
-					...props,
-					posts: postsData.posts
+					url: url.toString(),
+					user: userData.user
+				},
+				stuff: {
+					user: userData.user
 				}
 			};
 		} else {
 			return {
-				status: postsRes.status
+				status: userRes.status
 			};
 		}
 	};
 </script>
 
 <script lang="ts">
-	import PostPreview from '$lib/components/posts/PostPreview.svelte';
 	import UserDisplay from '$lib/components/users/UserDisplay.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
-	import type { Post, User } from '@prisma/client';
+	import type { User } from '@prisma/client';
 	import FollowsModal from '$lib/components/modals/FollowsModal.svelte';
 	import FollowButton from '$lib/components/inputs/FollowButton.svelte';
+	import type { UserOutput } from '$lib/types/api';
 
 	export let user: User;
-	export let posts: Post[];
+	export let url: string;
 
 	$: isLoggedInUser = user.uid === $firebaseUser?.uid;
 
@@ -81,14 +83,31 @@
 	<div class="m-4">
 		<div class="flex flex-row justify-between my-4">
 			<div class="tabs tabs-boxed bg-base-300">
-				<a class="tab tab-lg tab-active">posts</a>
-				<a class="tab tab-lg">collections</a>
+				<a
+					class="tab tab-lg"
+					href="/{user.username}"
+					class:tab-active={url.endsWith(user.username)}
+				>
+					feed
+				</a>
+				<a
+					class="tab tab-lg"
+					href="/{user.username}/posts"
+					class:tab-active={url.endsWith('posts')}
+				>
+					posts
+				</a>
+				<a
+					class="tab tab-lg"
+					href="/{user.username}/collections"
+					class:tab-active={url.endsWith('collections')}
+				>
+					collections
+				</a>
 			</div>
 		</div>
 		<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  gap-4">
-			{#each posts as post}
-				<PostPreview {post} author={user} />
-			{/each}
+			<slot />
 		</div>
 	</div>
 </div>
