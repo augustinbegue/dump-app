@@ -46,6 +46,10 @@
 
   - ### GET `/api/posts/[pId]` Get a Post
 
+  - ### GET `/api/posts/[pId]` Update a Post
+
+    - Requires authentication
+
 - ## `/api/collections` Collections
 
   - ### POST `/api/collections/new` Create a Collection
@@ -53,6 +57,12 @@
     - Requires authentication
 
   - ### GET `/api/collections/[cId]` Get a Collection
+
+    - Requires authentication
+
+  - ### POST `/api/collections/[cId]` Update a Collection
+
+    - Requires authentication
 
 - ## `/api/users` Users
 

@@ -7,7 +7,11 @@ export async function GET({ params }: { params: { uid: string; }; }) {
             uid
         },
         include: {
-            posts: true,
+            posts: {
+                where: {
+                    showInFeed: true
+                }
+            }
         }
     })
 

@@ -48,6 +48,7 @@ model Post {
   metadataValues String[]
   collection     Collection? @relation(fields: [collectionCid], references: [cid])
   collectionCid  String?
+  showInFeed     Boolean     @default(true)
 }
 
 enum PrivacySetting {
@@ -59,7 +60,6 @@ model Collection {
   cid          String         @id @unique
   name         String
   description  String
-  imageUrl     String
   authorUid    String
   author       User           @relation("author", fields: [authorUid], references: [uid])
   createdAt    DateTime       @default(now())

@@ -24,3 +24,25 @@ export interface FollowersOutput {
 export interface FollowingOutput {
     following: Follow[];
 }
+
+export interface CreateOrUpdatePostInput {
+    title: string;
+    description: string;
+    metadataKeys: string[];
+    metadataValues: string[];
+    dataUrl: string;
+    showInFeed: boolean;
+}
+
+export interface PostOutput {
+    post: Post;
+}
+
+export interface CreateOrUpdateCollectionInput {
+    name: string;
+    description: string;
+}
+
+export interface CollectionOutput {
+    collection: Collection;
+}
