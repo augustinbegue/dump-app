@@ -41,22 +41,24 @@ export async function POST({ params, request, locals }: {
 
     const data = (await request.json()) as CreateOrUpdateCollectionInput;
 
-    if (!data.name || !data.description) {
-        return {
-            status: 400,
-            body: {
-                message: "You must provide a name and a description."
-            }
-        };
-    }
-
     let res = await prisma.collection.update({
         where: {
             cid: params.cid
         },
         data: {
             name: data.name,
-            description: data.description
+            description: data.description,
+            privacy: data.privacy,
+            allowedUsers: {
+                connect: (data.allowedUids || []).map(uid => ({ uid }))
+            },
+        },
+        include: {
+            allowedUsers: {
+                select: {
+                    uid: true,
+                }
+            },
         }
     });
 

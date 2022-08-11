@@ -1,4 +1,4 @@
-import type { Follow, User } from "@prisma/client";
+import type { Follow, PrivacySetting, User } from "@prisma/client";
 
 export interface UserOutput {
     user: User;
@@ -40,10 +40,15 @@ export interface PostOutput {
 }
 
 export interface CreateOrUpdateCollectionInput {
-    name: string;
-    description: string;
+    name?: string;
+    description?: string;
+    privacy?: PrivacySetting;
+    allowedUids?: string[];
 }
 
 export interface CollectionOutput {
-    collection: Collection;
+    collection: Collection & {
+        posts: string[],
+        allowedUsers: string[],
+    };
 }

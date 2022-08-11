@@ -33,12 +33,12 @@ export async function createUser(context: any, email: string, password: string, 
     });
 
     if (res.status() != 200)
-        console.error(`User ${email} creation failed with status ${res.status()}`, await res.json());
+        console.error(`User ${email} creation failed with status ${res.status()}`, JSON.stringify((await res.json())));
 
     res = await context.request.get(`/api/users/username/${username}`);
 
     if (res.status() != 200)
-        console.error(`User ${email} creation failed with status ${res.status()}`, await res.json());
+        console.error(`User ${email} creation failed with status ${res.status()}`, JSON.stringify((await res.json())));
 
     return uid;
 }
@@ -50,6 +50,11 @@ export async function createUser(context: any, email: string, password: string, 
 export async function deleteUser(uid: string) {
     await adminAuth.deleteUser(uid);
     await prisma.post.deleteMany({
+        where: {
+            authorUid: uid,
+        }
+    })
+    await prisma.collection.deleteMany({
         where: {
             authorUid: uid,
         }

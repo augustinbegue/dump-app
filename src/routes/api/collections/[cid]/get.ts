@@ -38,7 +38,7 @@ export async function GET({ params, locals }: { params: { cid: string }, locals:
         }
     }
 
-    if (collection.privacy === "PRIVATE" && !collection.allowedUsers.some(u => u.uid === locals.user?.uid)) {
+    if (collection.privacy === "PRIVATE" && (!collection.allowedUsers.some(u => u.uid === locals.user?.uid) && collection.author.uid !== locals.user?.uid)) {
         return {
             status: 403,
             body: {

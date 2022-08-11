@@ -22,15 +22,37 @@ export async function POST({ params, request, locals }: RequestEvent) {
             }
         };
     }
+    let res;
+    try {
+        res = await prisma.collection.create({
+            data: {
+                cid: crypto.randomUUID(),
+                authorUid: locals.user.uid,
+                name: data.name,
+                description: data.description,
+                privacy: data.privacy,
+                allowedUsers: {
+                    connect: (data.allowedUids || []).map(uid => ({ uid }))
+                }
+            },
+            include: {
+                allowedUsers: {
+                    select: {
+                        uid: true,
+                    }
+                },
+            }
+        });
+    } catch (error) {
+        console.error(error);
 
-    let res = await prisma.collection.create({
-        data: {
-            cid: params.cid,
-            authorUid: locals.user.uid,
-            name: data.name,
-            description: data.description,
-        }
-    });
+        return {
+            status: 500,
+            body: {
+                message: "An error occurred while creating the collection."
+            }
+        };
+    }
 
     return {
         status: 200,
