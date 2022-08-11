@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 
 	import { auth, currentUser } from '$lib/modules/firebase/client';
-	import UserSearchBar from '../ui/inputs/UserSearchBar.svelte';
+	import UserSearchBar from '../inputs/UserSearchBar.svelte';
 </script>
 
 <header class="navbar bg-base-300 shrink-0">

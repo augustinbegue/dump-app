@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import LoginForm from '$lib/components/ui/inputs/LoginForm.svelte';
+	import LoginForm from '$lib/components/inputs/LoginForm.svelte';
 	import { auth, firebaseUser } from '$lib/modules/firebase/client';
 	import { onMount } from 'svelte';
 	import type { Unsubscriber } from 'svelte/store';

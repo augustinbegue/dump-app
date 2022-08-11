@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import ImagePicker from '$lib/components/ui/inputs/ImagePickerDragAndDrop.svelte';
-	import Spinner from '$lib/components/ui/Spinner.svelte';
+	import ImagePicker from '$lib/components/inputs/ImagePickerDragAndDrop.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import { currentUser } from '$lib/modules/firebase/client';
 	import { Steps } from '$lib/modules/interaction/steps';
 	import { onMount } from 'svelte';
@@ -94,7 +94,7 @@
 			if (res.status === 200) {
 				let json = await res.json();
 				if (json.success) {
-					goto(`/${$currentUser?.username}/postsss/${json.post.pid}`);
+					goto(`/${$currentUser?.username}/posts/${json.post.pid}`);
 				} else {
 					uploadError = json.error;
 				}

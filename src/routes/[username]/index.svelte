@@ -23,12 +23,12 @@
 </script>
 
 <script lang="ts">
-	import PostPreview from '$lib/components/ui/posts/PostPreview.svelte';
-	import UserDisplay from '$lib/components/ui/users/UserDisplay.svelte';
+	import PostPreview from '$lib/components/posts/PostPreview.svelte';
+	import UserDisplay from '$lib/components/users/UserDisplay.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import type { Post, User } from '@prisma/client';
-	import FollowsModal from '$lib/components/ui/modals/FollowsModal.svelte';
-	import FollowButton from '$lib/components/ui/inputs/FollowButton.svelte';
+	import FollowsModal from '$lib/components/modals/FollowsModal.svelte';
+	import FollowButton from '$lib/components/inputs/FollowButton.svelte';
 
 	export let user: User;
 	export let posts: Post[];
