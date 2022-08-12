@@ -1,16 +1,24 @@
 # dump-app
 
-Content oriented sharing app
+Photography oriented sharing app
 
 ## TODO: MVP
 
+### misc:
+
+- [ ] write the readme
+
 ### general: client
 
-- [ ] Find a way to fully load images before displaying them
+- [ ] fully load images before displaying them
+- [ ] write a boilerplate on top of the fetch api for type safety + body parsing ect
+- [ ] write UI tests
 
 ### general: backend
 
-- [ ] move backend/upload endpoints to a separate server
+- [ ] move upload endpoints to a separate media server
+      OR move the upload logic to the client (🤮) (maybe this can be done preperly using firebase rules)
+- [ ] refactor typing system w. custom typeguards to ensure type checking on inputs and outputs
 
 ### feature: profile edition
 
@@ -31,18 +39,18 @@ Content oriented sharing app
 
 ### feature: collections
 
-- [x] Write tests
 - [x] Allow a collection to be created
 - [x] Allow a collection to be edited
 - [ ] Allow a collection to be deleted
   - [ ] Api endpoints
   - [ ] Client pages
+  - [ ] Tests
 
 ### feature: feed
 
 - [ ] Design feed algorithm
 - [ ] Allow a user to see their own feed
-- [ ] Allow a user to see a feed for a specific profile
+- [ ] Allow a user to see a feed for a specific profile/topic
 
 ### feature: image processing
 
@@ -50,4 +58,8 @@ Content oriented sharing app
   - [ ] decide what compression algorithm and resolution to use
 - [ ] Create a thumbnail for each image
   - [ ] decide which resolution to use
-- [ ] Opt in paid feature to keep full size images
+
+## TODO: Next
+
+- [ ] Opt in paid features (going discord style business model 😎)
+- [ ] Connections to other sm (twitter, instagram, etc) to share posts ect
