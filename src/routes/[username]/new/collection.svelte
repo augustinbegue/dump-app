@@ -83,6 +83,8 @@
 
 	let uploading = false;
 	async function upload() {
+		if (uploading) return;
+
 		const body: CreateOrUpdateCollectionInput = {
 			name: title,
 			description: description,

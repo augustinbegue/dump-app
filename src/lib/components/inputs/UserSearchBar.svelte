@@ -23,6 +23,9 @@
 			class="form-control"
 			on:submit={(e) => {
 				e.preventDefault();
+
+				if (users.length === 0) return;
+
 				onclick(users[0]);
 				if (closeOnSelect) {
 					users = [];

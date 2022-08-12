@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import Fa from 'svelte-fa/src/fa.svelte';
+	import { faUpload } from '@fortawesome/free-solid-svg-icons/index.es';
 
 	let fileInput: HTMLDivElement;
 	export let files: File[] = [];
@@ -106,7 +107,7 @@
 {#if !validFiles || loading}
 	<div
 		bind:this={fileInput}
-		class="card bg-base-100 shadow-2xl h-full w-full max-w-5xl m-8 max-h-[70vh]"
+		class="card bg-base-100 shadow-2xl h-full w-full m-8 max-h-[70vh]"
 		class:cursor-pointer={!loading && !validFiles}
 	>
 		{#if loading}
@@ -116,7 +117,7 @@
 		{:else}
 			<div class="card-body items-center opacity-50 py-40 transition-all">
 				<span class="text-6xl">
-					<i class="fa-solid fa-upload" />
+					<Fa icon={faUpload} />
 				</span>
 				<h1 class="text-xl">
 					<span class="font-bold">Choose files</span>

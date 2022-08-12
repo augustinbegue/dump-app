@@ -18,6 +18,13 @@ export async function POST({ params, request, locals }: {
     const collection = await prisma.collection.findUnique({
         where: {
             cid: params.cid
+        },
+        include: {
+            allowedUsers: {
+                select: {
+                    uid: true
+                }
+            }
         }
     });
 
@@ -50,7 +57,8 @@ export async function POST({ params, request, locals }: {
             description: data.description,
             privacy: data.privacy,
             allowedUsers: {
-                connect: (data.allowedUids || []).map(uid => ({ uid }))
+                connect: (data.allowedUids || []).map(uid => ({ uid })),
+                disconnect: (collection.allowedUsers || []).filter(user => !data.allowedUids?.includes(user.uid)).map(user => ({ uid: user.uid }))
             },
         },
         include: {

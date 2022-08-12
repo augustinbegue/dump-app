@@ -49,8 +49,8 @@
 	<FollowsModal bind:open={openFollowingModal} type="following" {user} />
 {/key}
 
-<div class="flex flex-col md:flex-row gap-4 justify-center">
-	<div class="m-4">
+<div class="flex flex-col md:flex-row gap-4 justify-center p-4">
+	<div>
 		<div class="card shadow-2xl bg-base-200 min-w-max h-max">
 			<div class="card-body">
 				<UserDisplay {user} />
@@ -76,13 +76,13 @@
 			</div>
 		</div>
 		{#if isLoggedInUser}
-			<div class="">
-				<a class="btn btn-primary gap-2 mt-4" href="{user.username}/new"> publish </a>
+			<div class="flex flex-col">
+				<a class="btn btn-primary gap-2 mt-4" href="/{user.username}/new"> publish </a>
 			</div>
 		{/if}
 	</div>
-	<div class="m-4">
-		<div class="flex flex-row justify-between my-4">
+	<div class="w-full">
+		<div class="flex flex-row justify-between mb-4">
 			<div class="tabs tabs-boxed bg-base-300">
 				<a
 					class="tab tab-lg"
