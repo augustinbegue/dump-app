@@ -93,11 +93,8 @@
 
 			if (res.status === 200) {
 				let json = await res.json();
-				if (json.success) {
-					goto(`/${$currentUser?.username}/posts/${json.post.pid}`);
-				} else {
-					uploadError = json.error;
-				}
+
+				goto(`/${$currentUser?.username}/posts/${json.post.pid}`);
 			} else {
 				uploadError =
 					'An error occurred while uploading your image. Please try again or contact us if the problem persists.';

@@ -21,6 +21,8 @@
 
   - ### `[username]/collections/[collectionId]/edit` Collection Edit Page
 
+  - ### `[username]/collections/[collectionId]/add` Collection Page to Add Posts
+
 - ## `[username]/new` Creation Routes
 
   - ### `[username]/new/post` New Post

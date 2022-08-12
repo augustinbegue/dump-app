@@ -13,7 +13,6 @@
 	export let count: number;
 
 	let postsPerPage: number;
-	$: pageNumber = count / postsPerPage;
 	let currentPage = 0;
 
 	function setPostsPerPage() {
@@ -21,16 +20,26 @@
 			? (postsPerPage = 24)
 			: window.matchMedia('min-width: 1280px').matches
 			? (postsPerPage = 18)
-			: (postsPerPage = 12);
+			: window.matchMedia('min-width: 768px').matches
+			? (postsPerPage = 12)
+			: (postsPerPage = 6);
 	}
 
 	let loadingMore = false;
 	let posts: Post[] = [];
 	async function loadMore() {
+		if (loadingMore) return;
 		console.log('load more');
 
-		if (loadingMore) return;
-		if (currentPage + 1 >= pageNumber) return;
+		let pageNumber = Math.ceil(count / postsPerPage);
+		console.log(count, postsPerPage, pageNumber);
+
+		if (currentPage + 1 > pageNumber) {
+			loadingMore = false;
+			return;
+		}
+
+		console.log(currentPage, pageNumber);
 
 		loadingMore = true;
 		let take = postsPerPage;

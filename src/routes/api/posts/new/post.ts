@@ -16,7 +16,7 @@ export async function POST({ params, request, locals }: RequestEvent) {
 
     const data = await request.json() as CreateOrUpdatePostInput;
 
-    if (!data.title || !data.dataUrl || data.showInFeed === undefined) {
+    if (!data.title || !data.dataUrl) {
         return {
             status: 400,
             body: {
@@ -34,7 +34,7 @@ export async function POST({ params, request, locals }: RequestEvent) {
         imageUrl: '',
         metadataKeys: data.metadataKeys,
         metadataValues: data.metadataValues,
-        showInFeed: data.showInFeed,
+        showInFeed: data.showInFeed ?? true,
         collectionCid: data.collectionCid,
     }
 

@@ -44,9 +44,10 @@
 			</div>
 		{/if}
 	</div>
+	<!-- TODO: Properly paged endpoints -->
 	<PostsGrid
 		endpoint={`/api/collections/${collection.cid}/posts`}
-		count={collection.postsCount}
+		count={collection.posts.length}
 		author={collection.author}
 	/>
 </div>
