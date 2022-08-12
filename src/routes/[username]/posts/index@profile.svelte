@@ -1,11 +1,11 @@
 <script context="module" lang="ts">
-	import type { UserPostsOutput } from '$lib/types/api';
+	import type { PostsOutput } from '$lib/types/api';
 	import type { Load } from '@sveltejs/kit';
 
 	/** @type {import('./__types/[params]').Load} */
 	export const load: Load = async ({ props, fetch, stuff }) => {
 		let res = await fetch(`/api/users/${stuff.user?.uid}/posts`);
-		const data = (await res.json()) as UserPostsOutput;
+		const data = (await res.json()) as PostsOutput;
 
 		if (res.status === 200) {
 			return {

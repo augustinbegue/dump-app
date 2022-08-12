@@ -31,6 +31,7 @@
 	import FollowsModal from '$lib/components/modals/FollowsModal.svelte';
 	import FollowButton from '$lib/components/inputs/FollowButton.svelte';
 	import type { UserOutput } from '$lib/types/api';
+	import PostsGrid from '$lib/components/posts/PostsGrid.svelte';
 
 	export let user: User;
 	export let url: string;
@@ -106,8 +107,6 @@
 				</a>
 			</div>
 		</div>
-		<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  gap-4">
-			<slot />
-		</div>
+		<slot />
 	</div>
 </div>
