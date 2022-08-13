@@ -5,11 +5,9 @@
 	let isOpen: boolean = false;
 	export const open = () => {
 		isOpen = true;
-		console.log(isOpen);
 	};
 	export const close = () => {
 		isOpen = false;
-		console.log(isOpen);
 	};
 </script>
 

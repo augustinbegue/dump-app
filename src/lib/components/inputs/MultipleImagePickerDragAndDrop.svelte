@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Spinner from '$lib/components/Spinner.svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
-	import { faUpload } from '@fortawesome/free-solid-svg-icons/index.es';
+	import { faUpload } from '@fortawesome/free-solid-svg-icons';
 
 	let fileInput: HTMLDivElement;
 	export let files: File[] = [];

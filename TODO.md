@@ -32,10 +32,10 @@ Photography oriented sharing app
 - [x] Allow a post to be created
 - [ ] Allow a post to be edited
   - [x] Api endpoints
-  - [ ] Client pages
+  - [x] Client pages
 - [ ] Allow a post to be deleted
   - [x] Api endpoints
-  - [ ] Client pages
+  - [ ] Client integration
   - [x] Tests
 
 ### feature: collections
@@ -44,7 +44,7 @@ Photography oriented sharing app
 - [x] Allow a collection to be edited
 - [ ] Allow a collection to be deleted
   - [x] Api endpoints
-  - [ ] Client pages
+  - [ ] Client integration
   - [x] Tests
 
 ### feature: feed

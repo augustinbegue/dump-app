@@ -44,7 +44,7 @@ test('invalid post creations', async () => {
     expect(res.status()).toBe(400);
 });
 
-let postUid = '';
+let dbPost: any;
 test('user can create a post', async () => {
     let post = {
         title: 'test',
@@ -65,7 +65,7 @@ test('user can create a post', async () => {
     expect(data.post.metadataKeys).toEqual(post.metadataKeys);
     expect(data.post.metadataValues).toEqual(post.metadataValues);
 
-    postUid = data.post.pid;
+    dbPost = data.post;
 });
 
 test('user can update a post', async () => {
@@ -78,7 +78,7 @@ test('user can update a post', async () => {
     }
     await authenticateUser(context, email1, password1);
 
-    let res = await context.request.post(`/api/posts/${postUid}`, {
+    let res = await context.request.post(`/api/posts/${dbPost.pid}`, {
         data: post
     });
     expect(res).toBeOK();
@@ -92,9 +92,15 @@ test('user can update a post', async () => {
 test('user can delete a post', async () => {
     await authenticateUser(context, email1, password1);
 
-    let res = await context.request.delete(`/api/posts/${postUid}`);
+    let res = await context.request.delete(`/api/posts/${dbPost.pid}`);
     expect(res).toBeOK();
-
-    res = await context.request.get(`/api/posts/${postUid}`);
-    expect(res.status()).toBe(404);
 });
+
+test('post is properly deleted', async () => {
+    let res = await context.request.get(`/api/posts/${dbPost.pid}`);
+    expect(res.status()).toBe(404);
+
+    let page = await context.newPage();
+    let pageRes = await page.goto(dbPost.imageUrl);
+    expect(pageRes?.status()).toBe(404);
+})
