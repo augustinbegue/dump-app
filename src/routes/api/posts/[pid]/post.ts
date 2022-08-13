@@ -17,7 +17,7 @@ export async function POST({ params, request, locals }: RequestEvent) {
         };
     }
 
-    const post = await prisma.post.findUnique({
+    let post = await prisma.post.findUnique({
         where: {
             pid,
         }
@@ -32,7 +32,7 @@ export async function POST({ params, request, locals }: RequestEvent) {
         };
     }
 
-    await prisma.post.update({
+    post = await prisma.post.update({
         where: {
             pid,
         },

@@ -1,11 +1,7 @@
-import { expect, test } from '@playwright/test';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../helpers/firebase-client.js';
-import { auth as adminAuth } from '../helpers/firebase-admin.js';
-import { prisma } from '../helpers/prisma.js'
+import { type BrowserContext, expect, test } from '@playwright/test';
 import { authenticateUser, createUser, deleteUser } from '../helpers/users.js';
 
-let context: any;
+let context: BrowserContext;
 
 const name1 = 'John Doe';
 const username1 = 'test1collections';
@@ -123,3 +119,10 @@ test('collection allow private access', async () => {
     let body = (await res.json());
     expect(body.collection.allowedUsers[0].uid).toBe(uid2);
 })
+
+test('collection can be deleted', async () => {
+    await authenticateUser(context, email1, password1);
+
+    let res = await context.request.delete(`/api/collections/${collectionId}`);
+    expect(res).toBeOK();
+});

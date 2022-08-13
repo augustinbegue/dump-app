@@ -1,4 +1,6 @@
 import { prisma } from "$lib/modules/database/prisma";
+import { storage } from "$lib/modules/firebase/admin";
+import { deleteImageFromBucket } from "$lib/modules/firebase/admin/deleteImageFromBucket";
 import type { RequestEvent } from "@sveltejs/kit";
 
 export async function DELETE({ params, locals }: RequestEvent) {
@@ -28,11 +30,13 @@ export async function DELETE({ params, locals }: RequestEvent) {
         }
     }
 
+    await deleteImageFromBucket(post);
+
     await prisma.post.delete({
         where: {
             pid
         }
-    })
+    });
 
     return {
         status: 200,
