@@ -1,7 +1,7 @@
 <script lang="ts">
-	import LoginModal from '$lib/components/ui/modals/LoginModal.svelte';
-	import Login from '$lib/components/ui/modals/LoginModal.svelte';
-	import Spinner from '$lib/components/ui/Spinner.svelte';
+	import LoginModal from '$lib/components/modals/LoginModal.svelte';
+	import Login from '$lib/components/modals/LoginModal.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import type { User } from '@prisma/client';
 	import { FirebaseError } from 'firebase/app';

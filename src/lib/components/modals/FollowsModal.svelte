@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { FollowersOutput, FollowingOutput } from '$lib/types/api';
 
-	import type { Follows, User } from '@prisma/client';
+	import type { Follow, User } from '@prisma/client';
 	import { onMount } from 'svelte';
 	import Spinner from '../Spinner.svelte';
 	import UserFollow from '../users/UserFollow.svelte';
@@ -9,7 +9,7 @@
 
 	export let user: User;
 	export let type: 'followers' | 'following';
-	let follows: Follows[];
+	let follows: Follow[];
 
 	let modal: Modal;
 	export let open: () => void;

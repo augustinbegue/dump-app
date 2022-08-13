@@ -21,6 +21,7 @@ let expectedBody = {
         photoUrl: "/images/default-user-photo.png",
         followingCount: 0,
         followersCount: 0,
+        privacy: "PUBLIC",
     }
 }
 

@@ -1,6 +1,6 @@
 import { prisma } from "$lib/modules/database/prisma";
-import { storage } from "$lib/modules/firebase/admin";
 import { uploadImageToBucket } from "$lib/modules/firebase/admin/uploadImageToBucket";
+import type { CreateOrUpdatePostInput } from "$lib/types/api";
 import type { Post } from "@prisma/client";
 import type { RequestEvent } from "@sveltejs/kit";
 
@@ -14,7 +14,16 @@ export async function POST({ params, request, locals }: RequestEvent) {
         };
     }
 
-    const data = await request.json();
+    const data = await request.json() as CreateOrUpdatePostInput;
+
+    if (!data.title || !data.dataUrl) {
+        return {
+            status: 400,
+            body: {
+                message: "You must provide a title and a dataUrl."
+            }
+        };
+    }
 
     const post: Post = {
         title: data.title,
@@ -24,7 +33,9 @@ export async function POST({ params, request, locals }: RequestEvent) {
         pid: crypto.randomUUID(),
         imageUrl: '',
         metadataKeys: data.metadataKeys,
-        metadataValues: data.metadataValues
+        metadataValues: data.metadataValues,
+        showInFeed: data.showInFeed ?? true,
+        collectionCid: data.collectionCid,
     }
 
     const ext = data.dataUrl.split(';')[0].split('/')[1];
@@ -35,7 +46,7 @@ export async function POST({ params, request, locals }: RequestEvent) {
 
         await prisma.post.create({
             data: {
-                ...post
+                ...post,
             },
         });
 

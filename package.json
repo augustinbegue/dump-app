@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npx prisma migrate deploy",
+		"build": "vite build && npx prisma migrate deploy && npx prisma generate",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
 		"test": "playwright test",
@@ -19,33 +19,35 @@
 		"@types/cookie": "^0.5.1",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
+		"autoprefixer": "^10.4.7",
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"postcss": "^8.4.14",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
+		"prisma": "^4.2.1",
 		"svelte": "^3.46.0",
 		"svelte-check": "^2.7.1",
 		"svelte-preprocess": "^4.10.6",
+		"tailwindcss": "^3.1.4",
 		"tslib": "^2.3.1",
 		"typescript": "^4.7.4",
-		"vite": "^3.0.0",
-		"prisma": "^4.1.1",
-		"postcss": "^8.4.14",
-		"autoprefixer": "^10.4.7",
-		"tailwindcss": "^3.1.4"
+		"vite": "^3.0.0"
 	},
 	"type": "module",
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.5.0",
-		"@fortawesome/fontawesome-free": "^6.1.1",
-		"@prisma/client": "^4.1.1",
-		"@sveltejs/adapter-vercel": "^1.0.0-next.66",
+		"@fortawesome/free-brands-svg-icons": "^6.1.2",
+		"@fortawesome/free-solid-svg-icons": "^6.1.2",
+		"@prisma/client": "^4.2.1",
 		"@sveltejs/adapter-node": "next",
+		"@sveltejs/adapter-vercel": "^1.0.0-next.66",
 		"cookie": "^0.4.2",
 		"daisyui": "^2.17.0",
 		"dotenv": "^16.0.1",
 		"firebase": "^9.8.4",
-		"firebase-admin": "^11.0.0"
+		"firebase-admin": "^11.0.0",
+		"svelte-fa": "^3.0.3"
 	}
 }

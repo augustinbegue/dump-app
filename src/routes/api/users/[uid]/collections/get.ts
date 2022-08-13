@@ -1,17 +1,20 @@
 import { prisma } from "$lib/modules/database/prisma";
 
-export async function GET({ params }: { params: { uid: string; }; }) {
+export async function GET({ params, locals }: { params: { uid: string; }, locals: App.Locals }) {
     const { uid } = params;
+
+    let isLoggedInUser = locals.user && locals.user.uid === uid;
+
     const user = await prisma.user.findUnique({
         where: {
             uid
         },
         include: {
-            posts: {
+            createdCollections: isLoggedInUser ? true : {
                 where: {
-                    showInFeed: true
+                    privacy: "PUBLIC"
                 }
-            }
+            },
         }
     })
 
@@ -27,7 +30,7 @@ export async function GET({ params }: { params: { uid: string; }; }) {
     return {
         status: 200,
         body: {
-            posts: user.posts
+            collections: user.createdCollections
         }
     }
 }

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import ImagePicker from '$lib/components/ui/inputs/ImagePickerDragAndDrop.svelte';
-	import Spinner from '$lib/components/ui/Spinner.svelte';
+	import ImagePicker from '$lib/components/inputs/ImagePickerDragAndDrop.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import { currentUser } from '$lib/modules/firebase/client';
 	import { Steps } from '$lib/modules/interaction/steps';
 	import { onMount } from 'svelte';
@@ -93,11 +93,8 @@
 
 			if (res.status === 200) {
 				let json = await res.json();
-				if (json.success) {
-					goto(`/${$currentUser?.username}/postsss/${json.post.pid}`);
-				} else {
-					uploadError = json.error;
-				}
+
+				goto(`/${$currentUser?.username}/posts/${json.post.pid}`);
 			} else {
 				uploadError =
 					'An error occurred while uploading your image. Please try again or contact us if the problem persists.';
@@ -218,12 +215,9 @@
 						name="upload"
 						on:click={upload}
 						disabled={uploading || uploadDisabled}
+						class:loading={uploading}
 					>
-						{#if uploading}
-							<progress class="progress w-full" />
-						{:else}
-							Upload
-						{/if}
+						Post
 					</button>
 					{#if uploadError}
 						<label class="label" for="upload">

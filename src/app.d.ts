@@ -12,5 +12,9 @@ declare namespace App {
 
 	// interface Session {}
 
-	// interface Stuff {}
+	interface Stuff {
+		user: import("@prisma/client").User;
+	}
 }
+
+declare module '@fortawesome/free-solid-svg-icons/index.es';

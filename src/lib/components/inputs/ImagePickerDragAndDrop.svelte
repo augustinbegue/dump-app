@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Spinner from '$lib/components/ui/Spinner.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 
 	let fileInput: HTMLDivElement;
 	export let file: File;

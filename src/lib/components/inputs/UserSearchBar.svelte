@@ -2,8 +2,10 @@
 	import type { User } from '@prisma/client';
 
 	export let onclick: (selected: User) => void;
+	export let closeOnSelect: boolean = false;
 	let input: string;
 	let users: User[] = [];
+	let container: HTMLElement;
 
 	async function oninput() {
 		if (input.length < 3) {
@@ -21,10 +23,19 @@
 			class="form-control"
 			on:submit={(e) => {
 				e.preventDefault();
+
+				if (users.length === 0) return;
+
 				onclick(users[0]);
+				if (closeOnSelect) {
+					users = [];
+					input = '';
+					e.currentTarget.blur();
+				}
 			}}
 		>
 			<input
+				bind:this={container}
 				type="text"
 				placeholder="search…"
 				name="search"
@@ -35,13 +46,22 @@
 			/>
 		</form>
 	</label>
-	<ul tabindex="0" class="menu bg-base-200 dropdown-content p-2 shadow rounded-box w-52 mt-4">
+	<ul
+		tabindex="0"
+		class="menu bg-base-200 dropdown-content p-2 shadow rounded-box w-52 mt-4"
+		class:hidden={users.length <= 0}
+	>
 		{#each users as user}
 			<li>
 				<span
 					class="text-sm"
-					on:click={() => {
+					on:click={(e) => {
 						onclick(user);
+						if (closeOnSelect) {
+							users = [];
+							input = '';
+							e.currentTarget.parentElement?.parentElement?.blur();
+						}
 					}}
 				>
 					<div class="avatar">
