@@ -16,5 +16,3 @@ declare namespace App {
 		user: import("@prisma/client").User;
 	}
 }
-
-declare module '@fortawesome/free-solid-svg-icons/index.es';

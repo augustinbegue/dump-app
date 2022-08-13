@@ -54,6 +54,10 @@
 
     - Requires authentication
 
+  - ### DELETE `/api/posts/[pId]` Delete a Post
+
+    - Requires authentication
+
 - ## `/api/collections` Collections
 
   - ### POST `/api/collections/new` Create a Collection
@@ -65,6 +69,10 @@
     - Requires authentication
 
   - ### POST `/api/collections/[cId]` Update a Collection
+
+    - Requires authentication
+
+  - ### DELETE `/api/collections/[cId]` Delete a Collection
 
     - Requires authentication
 

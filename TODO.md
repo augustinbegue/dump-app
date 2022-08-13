@@ -28,23 +28,16 @@ Photography oriented sharing app
 
 ### feature: posts
 
-- [ ] Write tests
+- [x] Write tests
 - [x] Allow a post to be created
-- [ ] Allow a post to be edited
-  - [x] Api endpoints
-  - [ ] Client pages
-- [ ] Allow a post to be deleted
-  - [ ] Api endpoints
-  - [ ] Client pages
+- [x] Allow a post to be edited
+- [x] Allow a post to be deleted
 
 ### feature: collections
 
 - [x] Allow a collection to be created
 - [x] Allow a collection to be edited
-- [ ] Allow a collection to be deleted
-  - [ ] Api endpoints
-  - [ ] Client pages
-  - [ ] Tests
+- [x] Allow a collection to be deleted
 
 ### feature: feed
 

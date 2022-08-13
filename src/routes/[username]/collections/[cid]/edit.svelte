@@ -5,10 +5,23 @@
 
 	import UserSearchBar from '$lib/components/inputs/UserSearchBar.svelte';
 	import UserDisplaySmall from '$lib/components/users/UserDisplaySmall.svelte';
+	import { currentUser } from '$lib/modules/firebase/client';
 	import type { CollectionOutput, CreateOrUpdateCollectionInput } from '$lib/types/api';
 
 	import type { Collection, User } from '@prisma/client';
 	import { onMount } from 'svelte/internal';
+
+	export let collection: Collection & {
+		author: User;
+		posts: {
+			pid: string;
+		}[];
+		allowedUsers: {
+			uid: string;
+		}[];
+	};
+
+	$: isAuthor = collection.author.uid === $currentUser?.uid;
 
 	let allowedUids: string[] = [];
 	let allowedUsers: User[] = [];
@@ -31,16 +44,6 @@
 				allowedUsers.pop();
 			}
 		})();
-
-	export let collection: Collection & {
-		author: User;
-		posts: {
-			pid: string;
-		}[];
-		allowedUsers: {
-			uid: string;
-		}[];
-	};
 
 	let loading = false;
 	async function onsave() {
@@ -71,6 +74,8 @@
 	}
 
 	onMount(() => {
+		if (!isAuthor) goto('.');
+
 		allowedUids = collection.allowedUsers.map(({ uid }) => uid);
 	});
 </script>
