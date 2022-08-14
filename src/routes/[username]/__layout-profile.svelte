@@ -57,9 +57,7 @@
 				<div class="card-title flex-col items-start gap-0">
 					<p>{user.name}</p>
 				</div>
-				{#if isLoggedInUser}
-					<a class="btn btn-sm" href="/settings/profile">Edit</a>
-				{:else if $firebaseUser}
+				{#if !isLoggedInUser && $firebaseUser}
 					<FollowButton {user} />
 				{/if}
 				<p class="cursor-pointer" on:click={() => openFollowersModal()}>

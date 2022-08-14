@@ -22,11 +22,10 @@
 	 * Opens the modal
 	 * @returns {Promise<boolean>} resolves when the login is completed, returns true if the login was successful, false otherwise
 	 */
-	export const open = (): Promise<boolean> => {
-		console.log('open');
-
+	export const open = async (): Promise<boolean> => {
 		isOpen = true;
 
+		await auth.signOut();
 		return new Promise((resolve, reject) => {
 			onLogin = async (
 				result: string,
@@ -36,7 +35,11 @@
 				switch (result) {
 					case 'success':
 						if (userCredential && authCredential) {
-							await reauthenticateWithCredential(userCredential.user, authCredential);
+							try {
+								await reauthenticateWithCredential(userCredential.user, authCredential);
+							} catch (error) {
+								console.error(error);
+							}
 						}
 						isOpen = false;
 						resolve(true);

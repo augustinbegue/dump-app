@@ -32,6 +32,7 @@
 						<span class="text-base">@{$currentUser.username}</span>
 					</li>
 					<li><a href="/{$currentUser.username}">Profile</a></li>
+					<li><a href="/settings">Settings</a></li>
 					<div class="divider my-0 py-0" />
 					<li>
 						<btn

@@ -3,6 +3,7 @@
 	import Login from '$lib/components/modals/LoginModal.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
+	import { addAlert, alerts } from '$lib/modules/interaction/alerter';
 	import type { User } from '@prisma/client';
 	import { FirebaseError } from 'firebase/app';
 	import { updateEmail, updatePassword, updatePhoneNumber } from 'firebase/auth';
@@ -22,29 +23,44 @@
 		if (!$firebaseUser) return;
 
 		try {
-			if ($firebaseUser.email != email) {
-				await updateEmail($firebaseUser, email);
-			}
+			await saveEmail();
 		} catch (error) {
-			if (error instanceof FirebaseError) {
-				if (error.code == 'auth/requires-recent-login') {
-					let success = await loginModal.open();
-					if (success) {
-						console.log('success');
-
-						await updateEmail($firebaseUser, email).catch(console.error);
-					} else {
-						emailError = 'You must login again to be able to update your email.';
-					}
-				}
-			} else {
-				emailError = error.message;
-			}
+			return;
 		}
 
 		// if ($firebaseUser.phoneNumber != phoneNumber) {
 		// 	updatePhoneNumber($firebaseUser, phoneNumber);
 		// }
+
+		emailError = '';
+	}
+
+	async function saveEmail() {
+		if (!$firebaseUser) return;
+
+		try {
+			await updateEmail($firebaseUser, email);
+
+			addAlert({
+				type: 'success',
+				message: 'Email updated successfully.'
+			});
+		} catch (error) {
+			if (error instanceof FirebaseError) {
+				if (error.code == 'auth/requires-recent-login') {
+					let success = await loginModal.open();
+					if (success) {
+						saveEmail();
+					} else {
+						emailError = 'You must login again to be able to update your email.';
+					}
+				} else if (error.code == 'auth/email-already-in-use') {
+					emailError = 'That email is already in use.';
+				}
+			} else {
+				emailError = 'An error occurred while updating your email.';
+			}
+		}
 	}
 
 	let us: Unsubscriber;
@@ -74,7 +90,6 @@
 		name="email"
 		bind:value={email}
 		class:input-error={emailError}
-		disabled
 	/>
 	{#if emailError}
 		<label class="label" for="username">
@@ -94,6 +109,7 @@
 			class="btn btn-success"
 			disabled={saveLoading || !$firebaseUser}
 			class:loading={saveLoading}
+			on:click={onSave}
 		>
 			Save
 		</button>
@@ -101,6 +117,7 @@
 			class="btn btn-outline btn-primary"
 			disabled={resetLoading}
 			class:loading={resetLoading}
+			on:click={onReset}
 		>
 			Reset
 		</button>
