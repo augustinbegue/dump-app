@@ -27,8 +27,8 @@ Photography oriented sharing app
 
 ### feature: profile edition
 
-- [ ] allow an account to change its email
-- [ ] allow an account to change its password
+- [x] allow an account to change its email
+- [x] allow an account to change its password
 
 ### feature: posts
 
