@@ -1,14 +1,5 @@
 <script lang="ts">
 	import { alerts } from '$lib/modules/interaction/alerter';
-
-	import {
-		faCheckCircle,
-		faInfoCircle,
-		faTimes,
-		faTimesCircle,
-		faWarning
-	} from '@fortawesome/free-solid-svg-icons';
-	import Fa from 'svelte-fa/src/fa.svelte';
 </script>
 
 <div class="absolute bottom-0 p-4 w-full z-50">
@@ -23,16 +14,16 @@
 			>
 				<div>
 					{#if alert.type === 'info'}
-						<Fa icon={faInfoCircle} />
+						<span class="material-icons-outlined"> info </span>
 					{/if}
 					{#if alert.type === 'success'}
-						<Fa icon={faCheckCircle} />
+						<span class="material-icons-outlined"> check_circle </span>
 					{/if}
 					{#if alert.type === 'warning'}
-						<Fa icon={faWarning} />
+						<span class="material-icons-outlined"> warning_amber </span>
 					{/if}
 					{#if alert.type === 'error'}
-						<Fa icon={faTimesCircle} />
+						<span class="material-icons-outlined"> error_outline </span>
 					{/if}
 					<span>{@html alert.message}</span>
 				</div>
@@ -45,7 +36,7 @@
 							});
 						}}
 					>
-						<Fa icon={faTimes} />
+						<span class="material-icons-outlined"> close </span>
 					</button>
 				</div>
 			</div>

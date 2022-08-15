@@ -157,7 +157,6 @@
 				class:loading={googleLoading}
 				disabled={emailPasswordLoading}
 			>
-				<i class="fa-brands fa-google" />
 				Sign in with Google
 			</button>
 		</div>

@@ -61,3 +61,4 @@ Photography oriented sharing app
 - [ ] Opt in paid features (going discord style business model 😎)
 - [ ] Connections to other sm (twitter, instagram, etc) to share posts ect
 - [ ] Allow an account to add connections (google, instagram, etc)
+- [ ] Notifications
