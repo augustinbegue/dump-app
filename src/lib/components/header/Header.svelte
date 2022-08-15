@@ -31,7 +31,8 @@
 					<li class="menu-title">
 						<span class="text-base">@{$currentUser.username}</span>
 					</li>
-					<li><a href="/{$currentUser.username}">Profile</a></li>
+					<li><a href="/{$currentUser.username}">profile</a></li>
+					<li><a href="/settings">settings</a></li>
 					<div class="divider my-0 py-0" />
 					<li>
 						<btn
@@ -40,7 +41,7 @@
 								window.location.reload();
 							}}
 						>
-							Logout
+							logout
 						</btn>
 					</li>
 				</ul>

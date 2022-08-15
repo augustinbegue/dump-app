@@ -63,16 +63,12 @@
 		'shutter-speed',
 		'iso'
 	];
-	let selectedMetatype = metatype[0];
 	function addMetatype() {
 		metadata = metadata.set(selectedMetatype, '');
-		selectedMetatype =
-			notAddedMetatypes[
-				(notAddedMetatypes.indexOf(selectedMetatype) + 1) % notAddedMetatypes.length
-			];
 	}
 	let metadata: Map<string, string> = new Map();
 	$: notAddedMetatypes = metatype.filter((metatype) => !metadata.has(metatype));
+	$: selectedMetatype = notAddedMetatypes[0];
 
 	let uploading = false;
 	async function upload() {

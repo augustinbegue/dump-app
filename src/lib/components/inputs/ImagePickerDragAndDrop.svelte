@@ -94,7 +94,7 @@
 	{:else if !validFile}
 		<div class="card-body items-center opacity-50 py-40 transition-all">
 			<span class="text-6xl">
-				<i class="fa-solid fa-upload" />
+				<span class="material-icons-outlined"> file_upload </span>
 			</span>
 			<h1 class="text-xl">
 				<span class="font-bold">Choose a file</span>
@@ -107,7 +107,7 @@
 		</figure>
 		<div class="card-body items-center justify-center opacity-100 transition-all">
 			<span class="text-6xl">
-				<i class="fa-solid fa-upload" />
+				<span class="material-icons-outlined"> file_upload </span>
 			</span>
 			<h1 class="text-xl">
 				<span class="font-bold">Choose a file</span>

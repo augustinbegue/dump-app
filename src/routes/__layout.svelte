@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Alerter from '$lib/components/Alerter.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Header from '$lib/components/header/Header.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
@@ -18,6 +19,7 @@
 	});
 </script>
 
+<Alerter />
 <div class="flex flex-col justify-between h-full">
 	<Header />
 

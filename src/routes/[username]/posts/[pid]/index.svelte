@@ -1,38 +1,29 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-
-	import PostsGrid from '$lib/components/posts/PostsGrid.svelte';
 	import UserDisplay from '$lib/components/users/UserDisplay.svelte';
 	import { currentUser } from '$lib/modules/firebase/client';
 
-	import type { Collection, User } from '@prisma/client';
+	import type { Post, User } from '@prisma/client';
 
 	import ConfirmModal from '$lib/components/modals/ConfirmModal.svelte';
 
-	$: isAuthor = $currentUser?.uid === collection.author.uid;
-
-	export let collection: Collection & {
+	export let post: Post & {
 		author: User;
-		posts: {
-			pid: string;
-		}[];
-		allowedUsers: {
-			uid: string;
-		}[];
 	};
+
+	$: isAuthor = post.author.uid === $currentUser?.uid;
 
 	let openDeleteModal: () => Promise<void>;
 
 	function deletePost() {
 		openDeleteModal()
 			.then(async () => {
-				let res = await fetch(`/api/collections/${collection.cid}`, {
+				let res = await fetch(`/api/posts/${post.pid}`, {
 					method: 'DELETE'
 				});
 
 				if (res.ok) {
-					goto(`/${collection.author.username}/collections`);
+					goto(`/${post.author.username}/posts`);
 				}
 			})
 			.catch((e) => {});
@@ -42,14 +33,14 @@
 <ConfirmModal title="Are you sure you want to delete this post?" bind:open={openDeleteModal} />
 <div class="flex flex-col md:flex-row gap-4 justify-center p-4">
 	<div>
-		<div class="card bg-base-200 max-w-[25%] min-w-max">
-			<div class="card-body">
+		<div class="card bg-base-200 min-w-max">
+			<div class="card-body gap-4">
 				<div class="flex flex-row justify-between gap-4">
 					<div class="flex flex-row justify-start gap-4">
-						<UserDisplay user={collection.author} size={'sm'} />
+						<UserDisplay user={post.author} size={'sm'} />
 						<div class="card-title flex-col justify-start items-start gap-0 font-normal h-fit">
-							<p>{collection.name}</p>
-							<p class="text-sm">{new Date(collection.createdAt).toLocaleDateString()}</p>
+							<p>{post.title}</p>
+							<p class="text-sm">{new Date(post.createdAt).toLocaleDateString()}</p>
 						</div>
 					</div>
 					<div class="dropdown dropdown-end">
@@ -59,7 +50,7 @@
 						<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
 							<li>
 								{#if isAuthor}
-									<a href="{collection.cid}/edit">edit</a>
+									<a href="{post.pid}/edit">edit</a>
 								{/if}
 							</li>
 							<li>
@@ -70,20 +61,16 @@
 						</ul>
 					</div>
 				</div>
-				<p>{collection.description}</p>
-				<span class="kbd w-fit">{collection.privacy.toLowerCase()}</span>
+				<p>{post.description}</p>
+				<ul class="flex flex-col text-xs font-mono gap-1">
+					{#each post.metadataKeys as key, i}
+						<li><span class="kbd">{key}:</span> {post.metadataValues[i]}</li>
+					{/each}
+				</ul>
 			</div>
 		</div>
-		{#if isAuthor}
-			<div class="flex flex-col">
-				<a class="btn btn-primary gap-2 mt-4" href="{$page.params.cid}/add"> add posts </a>
-			</div>
-		{/if}
 	</div>
-	<!-- TODO: Properly paged endpoints -->
-	<PostsGrid
-		endpoint={`/api/collections/${collection.cid}/posts`}
-		count={collection.posts.length}
-		author={collection.author}
-	/>
+	{#if post}
+		<img class="max-w-full max-h-[70vh]" src={post.imageUrl} alt={post.title} />
+	{/if}
 </div>

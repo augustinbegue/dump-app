@@ -35,7 +35,7 @@
 
 		try {
 			emailPasswordLoading = true;
-			let credentials = await createUserWithEmailAndPassword(auth, email, password);
+			await createUserWithEmailAndPassword(auth, email, password);
 			return goto('./register/next');
 		} catch (error) {
 			emailPasswordLoading = false;
@@ -166,7 +166,6 @@
 						class:loading={googleLoading}
 						disabled={emailPasswordLoading}
 					>
-						<i class="fa-brands fa-google" />
 						Sign in with Google
 					</button>
 				</div>

@@ -7,7 +7,7 @@ import type { RequestEvent } from "@sveltejs/kit";
 export async function POST({ params, request, locals }: RequestEvent) {
     if (!locals.user) {
         return {
-            status: 401,
+            status: 403,
             body: {
                 message: "You must be logged in to create a post."
             }

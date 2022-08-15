@@ -61,3 +61,8 @@ export interface CollectionOutput {
         }[];
     };
 }
+
+export interface AlertMessage {
+    type: "success" | "error" | "warning" | "info";
+    message: string;
+}
