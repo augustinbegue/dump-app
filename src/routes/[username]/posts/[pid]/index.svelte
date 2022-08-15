@@ -4,9 +4,7 @@
 	import { currentUser } from '$lib/modules/firebase/client';
 
 	import type { Post, User } from '@prisma/client';
-	import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
-	import Fa from 'svelte-fa/src/fa.svelte';
 	import ConfirmModal from '$lib/components/modals/ConfirmModal.svelte';
 
 	export let post: Post & {
@@ -47,7 +45,7 @@
 					</div>
 					<div class="dropdown dropdown-end">
 						<label tabindex="0" for="" class="btn btn-ghost">
-							<Fa icon={faEllipsisV} size="1.5x" />
+							<span class="material-icons-outlined"> more_vert </span>
 						</label>
 						<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
 							<li>

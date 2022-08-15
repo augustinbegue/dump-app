@@ -3,6 +3,7 @@
 	import Login from '$lib/components/modals/LoginModal.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { firebaseUser } from '$lib/modules/firebase/client';
+	import { addAlert, alerts } from '$lib/modules/interaction/alerter';
 	import type { User } from '@prisma/client';
 	import { FirebaseError } from 'firebase/app';
 	import { updateEmail, updatePassword, updatePhoneNumber } from 'firebase/auth';
@@ -17,34 +18,79 @@
 	async function onReset() {}
 
 	let emailError = '';
-	let saveLoading = false;
-	async function onSave() {
-		if (!$firebaseUser) return;
+	let saveEmailLoading = false;
+	async function saveEmail() {
+		if (!$firebaseUser || saveEmailLoading) return;
+		saveEmailLoading = true;
 
 		try {
-			if ($firebaseUser.email != email) {
-				await updateEmail($firebaseUser, email);
-			}
+			await updateEmail($firebaseUser, email);
+
+			emailError = '';
+			saveEmailLoading = false;
+			addAlert({
+				type: 'success',
+				message: 'Email updated successfully.'
+			});
 		} catch (error) {
+			saveEmailLoading = false;
 			if (error instanceof FirebaseError) {
 				if (error.code == 'auth/requires-recent-login') {
 					let success = await loginModal.open();
 					if (success) {
-						console.log('success');
-
-						await updateEmail($firebaseUser, email).catch(console.error);
+						saveEmail();
 					} else {
 						emailError = 'You must login again to be able to update your email.';
 					}
+				} else if (error.code == 'auth/email-already-in-use') {
+					emailError = 'That email is already in use.';
 				}
 			} else {
-				emailError = error.message;
+				emailError = 'An error occurred while updating your email.';
 			}
+
+			return;
+		}
+	}
+
+	let newPassword = '';
+	let newPasswordConfirm = '';
+	let passwordError = '';
+	let savePasswordLoading = false;
+	async function savePassword() {
+		if (!$firebaseUser || savePasswordLoading) return;
+		savePasswordLoading = true;
+
+		if (newPassword !== newPasswordConfirm) {
+			passwordError = 'Passwords do not match';
+			return;
 		}
 
-		// if ($firebaseUser.phoneNumber != phoneNumber) {
-		// 	updatePhoneNumber($firebaseUser, phoneNumber);
-		// }
+		try {
+			await updatePassword($firebaseUser, newPassword);
+			savePasswordLoading = false;
+			addAlert({
+				type: 'success',
+				message: 'Password updated successfully.'
+			});
+		} catch (error) {
+			savePasswordLoading = false;
+			if (error instanceof FirebaseError) {
+				if (error.code == 'auth/requires-recent-login') {
+					let success = await loginModal.open();
+					if (success) {
+						savePassword();
+					} else {
+						passwordError = 'You must login again to be able to update your password.';
+					}
+				} else if (error.code == 'auth/weak-password') {
+					passwordError = 'new password is too weak.';
+				}
+			} else {
+				console.error(error);
+				passwordError = 'An error occurred while updating your password.';
+			}
+		}
 	}
 
 	let us: Unsubscriber;
@@ -74,7 +120,6 @@
 		name="email"
 		bind:value={email}
 		class:input-error={emailError}
-		disabled
 	/>
 	{#if emailError}
 		<label class="label" for="username">
@@ -82,18 +127,13 @@
 		</label>
 	{/if}
 </div>
-<!-- <div class="form-control w-1/2">
-		<label class="label" for="username">
-			<span class="label-text">phone number</span>
-		</label>
-		<input class="input input-bordered" type="text" name="phoneNumber" bind:value={phoneNumber} />
-	</div> -->
 <div class="form-control my-4  w-1/2">
 	<div class="btn-group">
 		<button
 			class="btn btn-success"
-			disabled={saveLoading || !$firebaseUser}
-			class:loading={saveLoading}
+			disabled={saveEmailLoading || !$firebaseUser}
+			class:loading={saveEmailLoading}
+			on:click={saveEmail}
 		>
 			Save
 		</button>
@@ -101,8 +141,60 @@
 			class="btn btn-outline btn-primary"
 			disabled={resetLoading}
 			class:loading={resetLoading}
+			on:click={onReset}
 		>
 			Reset
+		</button>
+	</div>
+</div>
+
+<div class="divider" />
+
+<div class="form-control">
+	<label class="label" for="password">
+		<span class="label-text">New Password</span>
+	</label>
+	<input
+		bind:value={newPassword}
+		id="password"
+		type="password"
+		placeholder="password"
+		class="input input-bordered"
+		class:input-error={passwordError}
+	/>
+	{#if passwordError}
+		<label class="label" for="password">
+			<span class="label-text-alt text-error">{passwordError}</span>
+		</label>
+	{/if}
+</div>
+<div class="form-control">
+	<label class="label" for="passwordconfirm">
+		<span class="label-text">New Password Confirmation</span>
+	</label>
+	<input
+		bind:value={newPasswordConfirm}
+		id="passwordconfirm"
+		type="password"
+		placeholder="password"
+		class="input input-bordered"
+		class:input-error={passwordError}
+	/>
+	{#if passwordError}
+		<label class="label" for="passwordconfirm">
+			<span class="label-text-alt text-error">{passwordError}</span>
+		</label>
+	{/if}
+</div>
+<div class="form-control my-4  w-1/2">
+	<div class="btn-group">
+		<button
+			class="btn btn-success"
+			disabled={savePasswordLoading || !$firebaseUser}
+			class:loading={savePasswordLoading}
+			on:click={savePassword}
+		>
+			Update Password
 		</button>
 	</div>
 </div>

@@ -20,11 +20,15 @@ Photography oriented sharing app
       OR move the upload logic to the client (🤮) (maybe this can be done preperly using firebase rules)
 - [ ] refactor typing system w. custom typeguards to ensure type checking on inputs and outputs
 
+### feature: auth
+
+- [ ] check for password complexity
+- [ ] check for correct username
+
 ### feature: profile edition
 
-- [ ] allow an account to change its email
-- [ ] allow an account to change its password
-- [ ] allow an account to add connections (google, instagram, etc)
+- [x] allow an account to change its email
+- [x] allow an account to change its password
 
 ### feature: posts
 
@@ -56,3 +60,5 @@ Photography oriented sharing app
 
 - [ ] Opt in paid features (going discord style business model 😎)
 - [ ] Connections to other sm (twitter, instagram, etc) to share posts ect
+- [ ] Allow an account to add connections (google, instagram, etc)
+- [ ] Notifications
