@@ -12,7 +12,7 @@ export async function POST({ params, request, locals }: RequestEvent) {
 				message: 'You must be logged in to create a post.'
 			},
 			{
-				status: 403
+				status: 401
 			}
 		);
 	}

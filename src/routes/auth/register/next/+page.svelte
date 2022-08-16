@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { auth, currentUser } from '$lib/modules/firebase/client';
 	import { firebaseUser } from '$lib/modules/firebase/client';
+import { page } from '$app/stores';
 
 	let username: string;
 	let usernameError: string;
@@ -42,7 +43,7 @@
 				const body = await res.json();
 				currentUser.set(body.user);
 
-				return goto(`/${username}`);
+				return goto(redirectUrl ?? `/${username}`);
 			} else {
 				usernameError = 'Username is already in use';
 				finishLoading = false;
@@ -55,17 +56,20 @@
 		}
 	}
 
+	let redirectUrl: string | null;
 	onMount(async () => {
+		redirectUrl = $page.url.searchParams.get('redirect');
+
 		firebaseUser.subscribe(async (fbuser) => {
 			if (fbuser == null) {
-				return goto('/auth/register');
+				return goto('/auth/register' + (redirectUrl ? '?redirect=' + redirectUrl : ''));
 			}
 
 			try {
 				let res = await fetch(`/api/users/${fbuser.uid}`);
 				let json = await res.json();
 				if (res.status === 200) {
-					goto(`/${json.user.username}`);
+					goto(redirectUrl ?? `/${json.user.username}`);
 				}
 			} catch (error) {
 				console.error(error);

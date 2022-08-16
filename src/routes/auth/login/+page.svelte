@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	import LoginForm from '$lib/components/inputs/LoginForm.svelte';
 	import { auth, firebaseUser } from '$lib/modules/firebase/client';
@@ -11,12 +12,12 @@
 
 		switch (result) {
 			case 'success':
-				goto('/');
+				goto(redirectUrl ?? `/`);
 				break;
 			case 'failure':
 				break;
 			case 'next':
-				goto('/auth/register/next');
+				goto(`/auth/register/next` + redirectUrl ? `?redirect=${redirectUrl}` : '');
 				break;
 			default:
 				break;
@@ -24,11 +25,13 @@
 	}
 
 	let us: Unsubscriber;
+	let redirectUrl: string | null;
 	onMount(async () => {
+		redirectUrl = $page.url.searchParams.get('redirect');
 		us = firebaseUser.subscribe((user) => {
 			if (user) {
 				us();
-				goto(`/auth/register/next`);
+				goto(`/auth/register/next` + redirectUrl ? `?redirect=${redirectUrl}` : '');
 			}
 		});
 	});

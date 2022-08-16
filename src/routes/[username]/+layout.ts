@@ -1,3 +1,4 @@
+import type { UserOutput } from '$lib/types/api';
 import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 
@@ -11,6 +12,6 @@ export const load: LayoutLoad = async ({ params, data, fetch, url }) => {
 			user: userData.user
 		};
 	} else {
-		throw error(userRes.status, 'an error occured');
+		throw error(userRes.status, (userData as any).message);
 	}
 };

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+import { page } from '$app/stores';
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import { auth, googleProvider } from '$lib/modules/firebase/client';
 	import { FirebaseError } from 'firebase/app';
@@ -36,7 +37,7 @@
 		try {
 			emailPasswordLoading = true;
 			await createUserWithEmailAndPassword(auth, email, password);
-			return goto('./register/next');
+			return goto('./register/next' + (redirectUrl ? `?redirectUrl=${redirectUrl}` : ''));
 		} catch (error) {
 			emailPasswordLoading = false;
 			if (error instanceof FirebaseError) {
@@ -59,17 +60,20 @@
 		try {
 			googleLoading = true;
 			let credentials = await signInWithPopup(auth, googleProvider);
-			return goto('./register/next');
+			return goto('./register/next' + (redirectUrl ? '?redirect=' + redirectUrl : ''));
 		} catch (error) {
 			googleLoading = false;
 			console.error(error);
 		}
 	}
 
-	onMount(() => {
+	let redirectUrl: string | null;
+	onMount(async () => {
+		redirectUrl = $page.url.searchParams.get('redirect');
+
 		firebaseUser.subscribe((user) => {
 			if (user != null) {
-				return goto('./register/next');
+				return goto('./register/next' + (redirectUrl ? '?redirect=' + redirectUrl : ''));
 			}
 		});
 

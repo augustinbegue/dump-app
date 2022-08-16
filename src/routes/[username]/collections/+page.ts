@@ -13,6 +13,6 @@ export const load: PageLoad = async ({ data, fetch, parent }) => {
 			collections: body.collections
 		};
 	} else {
-		throw error(400, 'not found');
+		throw error(404, 'not found');
 	}
 };
