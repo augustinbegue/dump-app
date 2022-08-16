@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import { prisma } from "$lib/modules/database/prisma";
 import type { RequestEvent } from "@sveltejs/kit";
 
@@ -21,8 +22,5 @@ export async function GET({ params, locals }: RequestEvent) {
         take: 10
     })
 
-    return {
-        status: 200,
-        body: { users }
-    };
+    return json({ users });
 }

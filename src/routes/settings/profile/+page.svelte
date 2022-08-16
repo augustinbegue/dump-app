@@ -1,11 +1,16 @@
 <script lang="ts">
-	import ButtonImagePicker from '$lib/components/inputs/ImagePickerButton.svelte';
-	import { currentUser, firebaseUser } from '$lib/modules/firebase/client';
-	import type { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 	import { onMount } from 'svelte';
 
+	import ButtonImagePicker from '$lib/components/inputs/ImagePickerButton.svelte';
+	import { currentUser, firebaseUser } from '$lib/modules/firebase/client';
+	
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+	$: ({ user } = data);
+
 	const defaultProfileImage = '/images/default-user-photo.png';
-	export let user: User;
 	let photoUrl: string;
 
 	let file: File;

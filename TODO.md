@@ -22,6 +22,7 @@ Photography oriented sharing app
 
 ### feature: auth
 
+- [ ] use query params to redirect to specific page after login/register
 - [ ] check for password complexity
 - [ ] check for correct username
 

@@ -26,7 +26,7 @@
 
 	onMount(() => {
 		container.onclick = () => {
-			goto(`/${author.username}/collections/${collection.cid}`);
+			goto(`/collections/${collection.cid}`);
 		};
 	});
 </script>

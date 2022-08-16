@@ -1,17 +1,8 @@
-<script context="module" lang="ts">
-	import type { Load } from '@sveltejs/kit';
-
-	export const load: Load = async ({ url }) => {
-		return {
-			props: {
-				url: url.toString()
-			}
-		};
-	};
-</script>
-
 <script lang="ts">
-	export let url: string;
+	import type { LayoutData } from "./$types";
+
+	export let data : LayoutData;
+	$: ({ url } = data);
 </script>
 
 <div class="container mx-auto flex flex-row h-full">

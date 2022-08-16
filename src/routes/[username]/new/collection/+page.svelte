@@ -131,7 +131,7 @@
 
 				await Promise.all(promises);
 
-				goto(`/${$currentUser?.username}/collections/${collectionId}`);
+				goto(`/collections/${collectionId}`);
 			} else {
 				uploadError =
 					'An error occurred while creating the collection. Please try again or contact us if the problem persists.';
