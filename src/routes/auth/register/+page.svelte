@@ -37,7 +37,7 @@ import { page } from '$app/stores';
 		try {
 			emailPasswordLoading = true;
 			await createUserWithEmailAndPassword(auth, email, password);
-			return goto('./register/next' + (redirectUrl ? `?redirectUrl=${redirectUrl}` : ''));
+			return goto('./register/next' + (redirectUrl ? `?redirect=${redirectUrl}` : ''));
 		} catch (error) {
 			emailPasswordLoading = false;
 			if (error instanceof FirebaseError) {

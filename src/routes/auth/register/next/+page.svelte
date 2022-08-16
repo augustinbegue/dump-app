@@ -59,6 +59,8 @@ import { page } from '$app/stores';
 	let redirectUrl: string | null;
 	onMount(async () => {
 		redirectUrl = $page.url.searchParams.get('redirect');
+		console.log(redirectUrl);
+		
 
 		firebaseUser.subscribe(async (fbuser) => {
 			if (fbuser == null) {
@@ -69,7 +71,7 @@ import { page } from '$app/stores';
 				let res = await fetch(`/api/users/${fbuser.uid}`);
 				let json = await res.json();
 				if (res.status === 200) {
-					goto(redirectUrl ?? `/${json.user.username}`);
+					goto($page.url.searchParams.get('redirect') ?? `/${json.user.username}`);
 				}
 			} catch (error) {
 				console.error(error);
