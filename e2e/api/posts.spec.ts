@@ -26,7 +26,7 @@ test('invalid post creations', async () => {
     let res = await context.request.post('/api/posts/new', {
         data: {}
     });
-    expect(res.status()).toBe(403);
+    expect(res.status()).toBe(401);
 
     await authenticateUser(context, email1, password1);
 
