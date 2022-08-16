@@ -20,7 +20,7 @@
 		};
 
 		container.onclick = () => {
-			goto(`/${author.username}/posts/${post.pid}`);
+			goto(`/posts/${post.pid}`);
 		};
 	});
 </script>
