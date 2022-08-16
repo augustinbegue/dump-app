@@ -8,7 +8,13 @@
 </svelte:head>
 
 {#if $firebaseUser}
-	FEED
+<div class="hero bg-base-300 min-h-full">
+	<div class="hero-content text-center">
+		<div class="max-w-md">
+			<p>your feed is coming soon</p>
+		</div>
+	</div>
+</div>
 {:else}
 	<div class="hero bg-base-300 min-h-full">
 		<div class="hero-content text-center">
