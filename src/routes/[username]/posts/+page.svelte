@@ -17,7 +17,7 @@
 			<h1 class="text-3xl font-bold">Nothing to see here yet...</h1>
 			<p class="font-medium mt-2">
 				{#if isLoggedInUser}
-					click <a class="link" href="/{$page.params.username}/new/post">here</a> to create a new post.
+					click <a class="link" href="/new/post">here</a> to create a new post.
 				{:else}
 					{user.name} hasn't created any posts yet.
 				{/if}

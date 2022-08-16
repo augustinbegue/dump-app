@@ -8,11 +8,11 @@
 
 ## `[username]` User Page
 
-## `/posts` User Posts
+  ## `[username]/posts` User Posts
 
-  - ### `[username]/posts/[postId]` Post Page
+  - ### `/posts/[postId]` Post Page
 
-## `/collections` User Collections
+  ## `[username]/collections` User Collections
 
   Collections are a set of posts created by the user or generated automatically.
   They have privacy options on which can access them that are set by the user and can be modified later.
@@ -23,13 +23,13 @@
 
   - ### `/collections/[collectionId]/add` Collection Page to Add Posts
 
-- ## `[username]/new` Creation Routes
+## `/new` Creation Routes
 
-  - ### `[username]/new/post` New Post
+  - ### `/new/post` New Post
 
   A new post is created with a description, content and optional metadata
 
-  - ### `[username]/new/collections` New collection
+  - ### `/new/collections` New collection
 
   A new collection is created with a name, a description and a set of posts from the user.
 

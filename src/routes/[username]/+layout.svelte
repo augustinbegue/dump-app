@@ -47,7 +47,7 @@
 		</div>
 		{#if isLoggedInUser}
 			<div class="flex flex-col">
-				<a class="btn btn-primary gap-2 mt-4" href="/{user.username}/new"> publish </a>
+				<a class="btn btn-primary gap-2 mt-4" href="/new"> publish </a>
 			</div>
 		{/if}
 	</div>
