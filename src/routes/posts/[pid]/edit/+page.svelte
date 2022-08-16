@@ -44,7 +44,7 @@
 			});
 
 			if (res.status === 200) {
-				goto(`/${post.author.username}/posts/${post.pid}`);
+				goto(`/posts/${post.pid}`);
 			} else {
 				console.error(await res.json());
 			}
