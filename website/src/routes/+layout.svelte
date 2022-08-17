@@ -24,7 +24,10 @@
 						authorization: document.cookie.replace(/^.*authorization=([^;]*).*$/, '$1')
 					}
 				};
-				if (dev) url = url.toString().replace('/upload', 'http://127.0.0.1:4174/upload');
+				if (dev) {
+					url = url.toString().replace('/upload', 'http://127.0.0.1:4174/upload');
+				} else {
+				}
 			}
 
 			return windowFetch(url, options);
