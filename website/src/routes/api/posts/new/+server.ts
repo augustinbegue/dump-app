@@ -1,11 +1,10 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/modules/database/prisma';
-import { uploadImageToBucket } from '$lib/modules/firebase/admin/uploadImageToBucket';
 import type { CreateOrUpdatePostInput } from '$lib/types/api';
 import type { Post } from '@prisma/client';
 import type { RequestEvent } from '@sveltejs/kit';
 
-export async function POST({ params, request, locals }: RequestEvent) {
+export async function POST({ request, locals }: RequestEvent) {
 	if (!locals.user) {
 		return json(
 			{
@@ -19,10 +18,10 @@ export async function POST({ params, request, locals }: RequestEvent) {
 
 	const data = (await request.json()) as CreateOrUpdatePostInput;
 
-	if (!data.title || !data.dataUrl) {
+	if (!data.title) {
 		return json(
 			{
-				message: 'You must provide a title and a dataUrl.'
+				message: 'You must provide a title.'
 			},
 			{
 				status: 400
@@ -43,29 +42,13 @@ export async function POST({ params, request, locals }: RequestEvent) {
 		collectionCid: data.collectionCid
 	};
 
-	const ext = data.dataUrl.split(';')[0].split('/')[1];
-	const fileName = `${post.pid}.${ext}`;
+	await prisma.post.create({
+		data: {
+			...post
+		}
+	});
 
-	if (data.dataUrl) {
-		post.imageUrl = await uploadImageToBucket(data.dataUrl, `${locals.user.uid}`, fileName);
-
-		await prisma.post.create({
-			data: {
-				...post
-			}
-		});
-
-		return json({
-			post
-		});
-	} else {
-		return json(
-			{
-				message: 'No file was uploaded.'
-			},
-			{
-				status: 400
-			}
-		);
-	}
+	return json({
+		post
+	});
 }

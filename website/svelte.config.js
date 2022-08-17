@@ -29,6 +29,9 @@ const config = {
 		}),
 		methodOverride: {
 			allowed: ['PATCH', 'DELETE']
+		},
+		files: {
+			lib: '../lib',
 		}
 	}
 };
