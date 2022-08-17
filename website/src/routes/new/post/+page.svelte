@@ -2,8 +2,7 @@
 	import { goto } from '$app/navigation';
 
 	import ImagePicker from '$lib/components/inputs/ImagePickerDragAndDrop.svelte';
-	import Spinner from '$lib/components/Spinner.svelte';
-	import { currentUser } from '$lib/modules/firebase/client';
+	import type { UploadImageInput } from '$lib/types/api';
 	import { Steps } from '$lib/modules/interaction/steps';
 	import { onMount } from 'svelte';
 
@@ -71,13 +70,13 @@
 	$: selectedMetatype = notAddedMetatypes[0];
 
 	let uploading = false;
+	let pid: string;
 	async function upload() {
 		const body = {
 			title,
 			description,
 			metadataKeys: Array.from(metadata.keys()),
-			metadataValues: Array.from(metadata.values()),
-			dataUrl
+			metadataValues: Array.from(metadata.values())
 		};
 
 		try {
@@ -90,17 +89,37 @@
 			if (res.status === 200) {
 				let json = await res.json();
 
-				goto(`/posts/${json.post.pid}`);
-			} else {
-				uploadError =
-					'An error occurred while uploading your image. Please try again or contact us if the problem persists.';
+				pid = json.post.pid;
+				let input: UploadImageInput = {
+					dataUrl,
+					pid
+				};
+				res = await fetch('/upload', {
+					method: 'POST',
+					body: JSON.stringify(input)
+				});
+
+				if (res.status === 200) {
+					goto(`/posts/${json.post.pid}`);
+				} else {
+					throw new Error('File Upload failed');
+				}
 			}
+
+			uploadError =
+				'An error occurred while uploading your image. Please try again or contact us if the problem persists.';
 			uploading = false;
 		} catch (error) {
 			uploading = false;
-			console.error(error);
 			uploadError =
 				'An error occurred while uploading your image. Please try again or contact us if the problem persists.';
+
+			if (pid) {
+				await fetch(`/api/posts/${pid}`, {
+					method: 'DELETE',
+					body: JSON.stringify(body)
+				});
+			}
 		}
 	}
 

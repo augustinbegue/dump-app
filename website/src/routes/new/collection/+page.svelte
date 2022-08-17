@@ -7,11 +7,13 @@
 	import UserDisplaySmall from '$lib/components/users/UserDisplaySmall.svelte';
 	import { currentUser } from '$lib/modules/firebase/client';
 	import { Steps } from '$lib/modules/interaction/steps';
+	import { createPost } from '$lib/modules/requests/createPost';
 	import type {
 		CollectionOutput,
 		CreateOrUpdateCollectionInput,
 		CreateOrUpdatePostInput,
-		PostOutput
+		PostOutput,
+		UploadImageInput
 	} from '$lib/types/api';
 	import type { PrivacySetting, User } from '@prisma/client';
 	import { onMount } from 'svelte';
@@ -107,11 +109,8 @@
 				// Create hidden posts for each file in the collection
 				let promises = [];
 				for (let i = 0; i < dataUrls.length; i++) {
-					const dataUrl = dataUrls[i];
-
 					const body: CreateOrUpdatePostInput = {
 						collectionCid: collectionId,
-						dataUrl,
 						metadataKeys: [],
 						metadataValues: [],
 						title: files[i].name,
@@ -119,14 +118,7 @@
 						showInFeed: false
 					};
 
-					console.log(body);
-
-					promises.push(
-						fetch('/api/posts/new', {
-							method: 'POST',
-							body: JSON.stringify(body)
-						})
-					);
+					promises.push(createPost(body, dataUrls[i]));
 				}
 
 				await Promise.all(promises);

@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 
 	import MultipleImagePickerDragAndDrop from '$lib/components/inputs/MultipleImagePickerDragAndDrop.svelte';
+	import { createPost } from '$lib/modules/requests/createPost';
 	import type { CreateOrUpdatePostInput } from '$lib/types/api';
 
 	let files: File[] = [];
@@ -23,11 +24,8 @@
 			// Create hidden posts for each file in the collection
 			let promises = [];
 			for (let i = 0; i < dataUrls.length; i++) {
-				const dataUrl = dataUrls[i];
-
 				const body: CreateOrUpdatePostInput = {
 					collectionCid: collectionId,
-					dataUrl,
 					metadataKeys: [],
 					metadataValues: [],
 					title: files[i].name,
@@ -35,14 +33,7 @@
 					showInFeed: false
 				};
 
-				console.log(body);
-
-				promises.push(
-					fetch('/api/posts/new', {
-						method: 'POST',
-						body: JSON.stringify(body)
-					})
-				);
+				promises.push(createPost(body, dataUrls[i]));
 			}
 
 			await Promise.all(promises);

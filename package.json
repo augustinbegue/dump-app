@@ -6,6 +6,9 @@
         "preview": "concurrently npm:preview:*",
         "preview:cms": "npm run preview --workspace=cms",
         "preview:website": "npm run preview --workspace=website",
+        "dev": "concurrently npm:dev:*",
+        "dev:cms": "npm run dev --workspace=cms",
+        "dev:website": "npm run dev --workspace=website",
         "test": "playwright test"
     },
     "workspaces": [
