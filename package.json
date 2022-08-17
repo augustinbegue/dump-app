@@ -1,7 +1,9 @@
 {
     "name": "dump-app",
     "scripts": {
-        "build": "npm run build --workspace=website --workspace=cms && npm run generate",
+        "build": "concurrently npm:build:* && npm run generate",
+        "build:cms": "npm run build --workspace=cms",
+        "build:website": "npm run build --workspace=website",
         "generate": "npx prisma migrate deploy && npx prisma generate",
         "preview": "concurrently npm:preview:*",
         "preview:cms": "npm run preview --workspace=cms",

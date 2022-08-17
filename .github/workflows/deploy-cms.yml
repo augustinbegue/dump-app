@@ -1,0 +1,26 @@
+name: Deploy CMS
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            mkdir -p ~/app
+            cd ~/app
+            git clone https://github.com/augustinbegue/dump-app
+            cd dump-app
+            npm install
+            npm run generate
+            npm run build:cms
+            pm2 start cms/build/index.js --name "dump-app-cms"
+            pm2 restart dump-app-cms
