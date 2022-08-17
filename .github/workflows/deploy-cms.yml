@@ -14,11 +14,14 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          script_stop:
           script: |
+            PATH=$PATH:/home/${{ secrets.USERNAME }}/.nvm/versions/node/v16.17.0/bin
             mkdir -p ~/app
             cd ~/app
             git clone https://github.com/augustinbegue/dump-app
             cd dump-app
+            git pull
             npm install
             npm run generate
             npm run build:cms
