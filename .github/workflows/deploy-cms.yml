@@ -24,4 +24,5 @@ jobs:
             npm install
             npm run generate
             npm run build:cms
-            pm2 start build --name "dump-app-cms"
+            pm2 start cms/build/index.js --name "dump-app-cms"
+            pm2 restart dump-app-cms
