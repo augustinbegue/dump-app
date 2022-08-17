@@ -7,22 +7,25 @@ Photography oriented sharing app
 ### misc:
 
 - [ ] write the readme
-
-### general: client
+#### client
 
 - [ ] fully load images before displaying them
 - [ ] write a boilerplate on top of the fetch api for type safety + body parsing ect
-- [ ] write UI tests
-
-### general: backend
+#### backend
 
 - [ ] move upload endpoints to a separate media server
-      OR move the upload logic to the client (🤮) (maybe this can be done preperly using firebase rules)
+      OR move the upload logic to the client (🤮) (maybe this can be done properly using firebase rules)
 - [ ] refactor typing system w. custom typeguards to ensure type checking on inputs and outputs
+#### seo
+
+- [ ] Check which meta tags have to be used for embeds
+#### ui
+
+- [ ] check for responsiveness on mobile
 
 ### feature: auth
 
-- [ ] use query params to redirect to specific page after login/register
+- [x] use query params to redirect to specific page after login/register
 - [ ] check for password complexity
 - [ ] check for correct username
 
@@ -37,12 +40,15 @@ Photography oriented sharing app
 - [x] Allow a post to be created
 - [x] Allow a post to be edited
 - [x] Allow a post to be deleted
+- [ ] Download button
 
 ### feature: collections
 
 - [x] Allow a collection to be created
 - [x] Allow a collection to be edited
 - [x] Allow a collection to be deleted
+- [ ] Post selection and removal
+- [ ] Add existing posts to a collection
 
 ### feature: feed
 
@@ -63,3 +69,4 @@ Photography oriented sharing app
 - [ ] Connections to other sm (twitter, instagram, etc) to share posts ect
 - [ ] Allow an account to add connections (google, instagram, etc)
 - [ ] Notifications
+- [ ] write UI tests
