@@ -33,6 +33,7 @@
 	"dependencies": {
 		"@sveltejs/adapter-node": "^1.0.0-next.86",
 		"cors": "^2.8.5",
+		"dotenv": "^16.0.1",
 		"express": "^4.18.1"
 	}
 }
