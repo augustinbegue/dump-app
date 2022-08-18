@@ -7,21 +7,25 @@ Photography oriented sharing app
 ### misc:
 
 - [ ] write the readme
+
 #### client
 
 - [ ] fully load images before displaying them
 - [ ] write a boilerplate on top of the fetch api for type safety + body parsing ect
+
 #### backend
 
-- [ ] move upload endpoints to a separate media server
-      OR move the upload logic to the client (🤮) (maybe this can be done properly using firebase rules)
-- [ ] refactor typing system w. custom typeguards to ensure type checking on inputs and outputs
+- [x] move upload endpoints to a separate media server
+- [x] refactor typing system w. custom typeguards to ensure type checking on inputs and outputs
+
 #### seo
 
 - [ ] Check which meta tags have to be used for embeds
+
 #### ui
 
 - [ ] check for responsiveness on mobile
+- [ ] create daisyui theme for light and dark mode
 
 ### feature: auth
 
