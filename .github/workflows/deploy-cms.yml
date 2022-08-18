@@ -24,7 +24,7 @@ jobs:
             cd dump-app
             git restore .
             git pull
-            npm install
+            npm ci
             npm run generate
             npm run build:cms
             pm2 start cms/server.js --name "dump-app-cms"
