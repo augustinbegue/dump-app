@@ -7,7 +7,7 @@ import https from 'https';
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 
 app.get('/healthcheck', (req, res) => {
   res.end('ok');
