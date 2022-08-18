@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PasswordInput from '$lib/components/inputs/PasswordInput.svelte';
 	import LoginModal from '$lib/components/modals/LoginModal.svelte';
 	import Login from '$lib/components/modals/LoginModal.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
@@ -149,43 +150,12 @@
 </div>
 
 <div class="divider" />
-
-<div class="form-control">
-	<label class="label" for="password">
-		<span class="label-text">New Password</span>
-	</label>
-	<input
-		bind:value={newPassword}
-		id="password"
-		type="password"
-		placeholder="password"
-		class="input input-bordered"
-		class:input-error={passwordError}
-	/>
-	{#if passwordError}
-		<label class="label" for="password">
-			<span class="label-text-alt text-error">{passwordError}</span>
-		</label>
-	{/if}
-</div>
-<div class="form-control">
-	<label class="label" for="passwordconfirm">
-		<span class="label-text">New Password Confirmation</span>
-	</label>
-	<input
-		bind:value={newPasswordConfirm}
-		id="passwordconfirm"
-		type="password"
-		placeholder="password"
-		class="input input-bordered"
-		class:input-error={passwordError}
-	/>
-	{#if passwordError}
-		<label class="label" for="passwordconfirm">
-			<span class="label-text-alt text-error">{passwordError}</span>
-		</label>
-	{/if}
-</div>
+<PasswordInput bind:password={newPassword} bind:passwordError passwordLabel="New Password" />
+<PasswordInput
+	bind:password={newPasswordConfirm}
+	bind:passwordError
+	passwordLabel="New Password Confirmation"
+/>
 <div class="form-control my-4  w-1/2">
 	<div class="btn-group">
 		<button
