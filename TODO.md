@@ -32,6 +32,8 @@ Photography oriented sharing app
 - [x] use query params to redirect to specific page after login/register
 - [ ] check for password complexity
 - [ ] check for correct username
+- [x] check for password complexity
+- [x] check for correct username
 
 ### feature: profile edition
 
@@ -53,6 +55,7 @@ Photography oriented sharing app
 - [x] Allow a collection to be deleted
 - [ ] Post selection and removal
 - [ ] Add existing posts to a collection
+- [ ] Invite non existing users to a collection (link discord invite style)
 
 ### feature: feed
 
