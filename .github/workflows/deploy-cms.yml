@@ -16,14 +16,16 @@ jobs:
           port: ${{ secrets.PORT }}
           script_stop:
           script: |
+            export NODE_ENV=production
             PATH=$PATH:/home/${{ secrets.USERNAME }}/.nvm/versions/node/v16.17.0/bin
             mkdir -p ~/app
             cd ~/app
             git clone https://github.com/augustinbegue/dump-app
             cd dump-app
+            git restore .
             git pull
             npm install
             npm run generate
             npm run build:cms
-            pm2 start cms/build/index.js --name "dump-app-cms"
+            pm2 start cms/server.js --name "dump-app-cms"
             pm2 restart dump-app-cms
