@@ -11,6 +11,7 @@
         "dev": "concurrently npm:dev:*",
         "dev:cms": "npm run dev --workspace=cms",
         "dev:website": "npm run dev --workspace=website",
+        "lint": "npm run lint --workspace=cms && npm run lint --workspace=website",
         "test": "playwright test"
     },
     "workspaces": [

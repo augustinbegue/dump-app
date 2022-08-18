@@ -3,7 +3,7 @@ import { prisma } from '$lib/modules/database/prisma';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ params }: { params: { uid: string } }) {
-	let uid = params.uid;
+	const uid = params.uid;
 
 	const user = await prisma.user.findUnique({
 		where: {
@@ -67,7 +67,7 @@ export async function POST({ params, request }: { params: { uid: string }; reque
 			);
 		}
 
-		let fbUser = await auth.getUser(params.uid);
+		const fbUser = await auth.getUser(params.uid);
 
 		if (!fbUser) {
 			return json(

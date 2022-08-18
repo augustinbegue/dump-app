@@ -12,7 +12,7 @@ const username = 'test';
 const email = 'usertest@test.test';
 const password = 'test123456&/';
 let uid: string;
-let expectedBody = {
+const expectedBody = {
     user: {
         uid: '',
         username,
@@ -37,7 +37,7 @@ test.beforeAll(async ({ browser }) => {
     } catch (e) { }
 
     try {
-        let user = await adminAuth.getUserByEmail(email);
+        const user = await adminAuth.getUserByEmail(email);
         await adminAuth.deleteUser(user.uid);
     } catch (e) { }
 
@@ -48,7 +48,7 @@ test.beforeAll(async ({ browser }) => {
 
 test('user creation', async () => {
     // Create firebase user
-    let fbUser = (await createUserWithEmailAndPassword(auth, email, password)).user;
+    const fbUser = (await createUserWithEmailAndPassword(auth, email, password)).user;
     uid = fbUser.uid;
     expectedBody.user.uid = uid;
 
@@ -101,9 +101,9 @@ test('user exists after creation', async () => {
 test('user can authenticate its requests', async ({ browser }) => {
     await authenticateUser(context, email, password);
 
-    let res = await context.request.get(`/api/users/me`);
+    const res = await context.request.get(`/api/users/me`);
     expect(res).toBeOK();
-    let body = await (res.json());
+    const body = await (res.json());
     expect(body).toEqual(expectedBody);
 })
 
@@ -114,6 +114,6 @@ test.afterAll(async () => {
         }
     });
 
-    let user = await adminAuth.getUserByEmail(email);
+    const user = await adminAuth.getUserByEmail(email);
     await adminAuth.deleteUser(user.uid);
 });

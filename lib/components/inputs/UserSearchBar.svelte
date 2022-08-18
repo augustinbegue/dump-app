@@ -2,7 +2,7 @@
 	import type { User } from '@prisma/client';
 
 	export let onclick: (selected: User) => void;
-	export let closeOnSelect: boolean = false;
+	export let closeOnSelect = false;
 	let input: string;
 	let users: User[] = [];
 	let container: HTMLElement;

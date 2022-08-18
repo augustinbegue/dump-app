@@ -4,7 +4,7 @@
 	import { currentUser } from '$lib/modules/firebase/client';
 	import ConfirmModal from '$lib/components/modals/ConfirmModal.svelte';
 
-	import type { PageData } from "./$types";
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 

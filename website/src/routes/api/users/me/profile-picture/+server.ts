@@ -18,7 +18,7 @@ export async function POST({ request, locals }: RequestEvent) {
 	const ext = data.dataUrl.split(';')[0].split('/')[1];
 	const fileName = `${locals.user.uid}.${ext}`;
 	if (data.dataUrl) {
-		let photoUrl = await uploadImageToBucket(data.dataUrl, `${locals.user.uid}`, fileName);
+		const photoUrl = await uploadImageToBucket(data.dataUrl, `${locals.user.uid}`, fileName);
 
 		await prisma.user.update({
 			where: {

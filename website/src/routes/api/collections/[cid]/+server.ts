@@ -33,7 +33,7 @@ export async function DELETE({ params, locals }: { params: { cid: string }; loca
 		);
 	}
 
-	let posts = await prisma.post.findMany({
+	const posts = await prisma.post.findMany({
 		where: {
 			collectionCid: cid
 		}
@@ -181,7 +181,7 @@ export async function POST({
 
 	const data = (await request.json()) as CreateOrUpdateCollectionInput;
 
-	let res = await prisma.collection.update({
+	const res = await prisma.collection.update({
 		where: {
 			cid: params.cid
 		},

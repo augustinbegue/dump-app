@@ -10,14 +10,14 @@ export const handle: Handle = async ({ event, resolve }) => {
         try {
             token = token.replace('Bearer ', '');
 
-            let decoded = await auth.verifyIdToken(token);
-            let { uid } = decoded;
+            const decoded = await auth.verifyIdToken(token);
+            const { uid } = decoded;
 
             event.locals.user = await prisma.user.findUnique({ where: { uid } });
         } catch (error) {
             console.error(error);
 
-            let response = await resolve(event);
+            const response = await resolve(event);
             response.headers.set('Set-Cookie', 'authorization=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;');
 
             return response;

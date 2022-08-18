@@ -3,7 +3,7 @@ import { prisma } from '$lib/modules/database/prisma';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ params }: { params: { username: string } }) {
-	let username = params.username;
+	const username = params.username;
 
 	const user = await prisma.user.findUnique({
 		where: {

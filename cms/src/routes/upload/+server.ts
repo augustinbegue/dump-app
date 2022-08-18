@@ -42,6 +42,10 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			}
 		});
 
+		console.log(
+			`[${new Date().toLocaleTimeString()}] Uploaded image ${locals.user.uid}/${fileName}`
+		);
+
 		return json({
 			post
 		});

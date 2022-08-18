@@ -9,7 +9,7 @@ import { page } from '$app/stores';
 	let usernameError: string;
 	let name: string;
 	let nameError: string;
-	let finishLoading: boolean = false;
+	let finishLoading = false;
 	async function finish(e: Event) {
 		e.preventDefault();
 

@@ -39,7 +39,11 @@ export interface CreateOrUpdatePostInput {
 }
 
 export interface PostOutput {
-	post: Post;
+	post:
+		| (Post & {
+				author: User;
+		  })
+		| null;
 }
 
 export interface CreateOrUpdateCollectionInput {

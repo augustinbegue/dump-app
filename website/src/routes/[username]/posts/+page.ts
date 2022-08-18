@@ -5,7 +5,7 @@ import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ data, fetch, parent }) => {
 	const parentData = await parent();
-	let res = await fetch(`/api/users/${parentData.user?.uid}/posts`);
+	const res = await fetch(`/api/users/${parentData.user?.uid}/posts`);
 	const json = (await res.json()) as PostsOutput;
 
 	if (res.status === 200) {

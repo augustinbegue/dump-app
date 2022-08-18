@@ -14,7 +14,7 @@ export async function GET({ params, locals }: RequestEvent) {
 		);
 	}
 
-	let { uid } = locals.user;
+	const { uid } = locals.user;
 
 	const user = await prisma.user.findUnique({
 		where: {
@@ -54,7 +54,7 @@ export async function POST({ request, locals }: RequestEvent) {
 
 	const data = await request.json();
 
-	let { uid } = locals.user;
+	const { uid } = locals.user;
 
 	if (!data.username) {
 		return json(
@@ -79,7 +79,7 @@ export async function POST({ request, locals }: RequestEvent) {
 	}
 
 	try {
-		let fbUser = await auth.getUser(uid);
+		const fbUser = await auth.getUser(uid);
 
 		if (!fbUser) {
 			return json(

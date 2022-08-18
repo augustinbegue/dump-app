@@ -50,9 +50,9 @@
 	}
 
 	// Step 1
-	let title: string = '';
+	let title = '';
 	$: title, updateButtonsState(currentStep);
-	let description: string = '';
+	let description = '';
 	$: description, updateButtonsState(currentStep);
 
 	// Step 2

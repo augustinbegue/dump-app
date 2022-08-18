@@ -99,7 +99,7 @@ export async function POST({
 	}
 
 	try {
-		let res = await prisma.follow.findFirst({
+		const res = await prisma.follow.findFirst({
 			where: {
 				followerUid: follower.uid,
 				followingUid: userToFollow.uid

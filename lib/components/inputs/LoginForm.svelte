@@ -58,7 +58,7 @@
 		}
 	}
 
-	let googleLoading: boolean = false;
+	let googleLoading = false;
 	async function registerWithGoogle() {
 		try {
 			googleLoading = true;

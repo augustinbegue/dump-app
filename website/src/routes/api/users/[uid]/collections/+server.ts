@@ -4,7 +4,7 @@ import { prisma } from '$lib/modules/database/prisma';
 export async function GET({ params, locals }: { params: { uid: string }; locals: App.Locals }) {
 	const { uid } = params;
 
-	let isLoggedInUser = locals.user && locals.user.uid === uid;
+	const isLoggedInUser = locals.user && locals.user.uid === uid;
 
 	const user = await prisma.user.findUnique({
 		where: {

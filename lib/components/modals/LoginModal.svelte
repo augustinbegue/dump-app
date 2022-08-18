@@ -11,7 +11,7 @@
 	import LoginForm from '../inputs/LoginForm.svelte';
 
 	let container: HTMLElement;
-	let isOpen: boolean = false;
+	let isOpen = false;
 	let onLogin: (
 		result: string,
 		credential?: UserCredential,

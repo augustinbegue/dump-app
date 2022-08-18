@@ -27,6 +27,7 @@
 				if (dev) {
 					url = url.toString().replace('/upload', 'http://127.0.0.1:4174/upload');
 				} else {
+					url = url.toString().replace('/upload', 'https://dump-app.begue.cc/upload');
 				}
 			}
 

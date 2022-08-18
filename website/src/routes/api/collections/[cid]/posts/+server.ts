@@ -6,8 +6,8 @@ import type { RequestEvent } from "@sveltejs/kit";
 export async function GET({ params, url }: RequestEvent) {
     const { cid } = params;
 
-    let { take, cursor, skip } = getQueryParams(new URL(url));
-    let res = await prisma.post.findMany({
+    const { take, cursor, skip } = getQueryParams(new URL(url));
+    const res = await prisma.post.findMany({
         where: {
             collectionCid: cid,
         },

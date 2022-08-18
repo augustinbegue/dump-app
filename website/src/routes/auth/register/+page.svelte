@@ -13,7 +13,7 @@ import { page } from '$app/stores';
 
 	let emailError: string;
 	let passwordError: string;
-	let emailPasswordLoading: boolean = false;
+	let emailPasswordLoading = false;
 	async function registerWithEmailAndPassword(e: Event) {
 		e.preventDefault();
 		emailError = '';
@@ -55,7 +55,7 @@ import { page } from '$app/stores';
 		}
 	}
 
-	let googleLoading: boolean = false;
+	let googleLoading = false;
 	async function registerWithGoogle() {
 		try {
 			googleLoading = true;

@@ -49,7 +49,7 @@ export async function DELETE({ params, locals }: RequestEvent) {
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ params }: { params: { pid: string } }) {
-	let { pid } = params;
+	const { pid } = params;
 
 	const post = await prisma.post.findUnique({
 		where: {
@@ -77,7 +77,7 @@ export async function GET({ params }: { params: { pid: string } }) {
 }
 
 export async function POST({ params, request, locals }: RequestEvent) {
-	let { pid } = params;
+	const { pid } = params;
 	const data = (await request.json()) as CreateOrUpdatePostInput;
 
 	if (!data.title) {

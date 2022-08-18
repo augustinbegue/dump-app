@@ -6,7 +6,7 @@
 	export let file: File;
 	export let dataUrl: string;
 	export let onchange: (file: File) => void;
-	let loading: boolean = false;
+	let loading = false;
 	$: validFile = file?.type.startsWith('image/');
 
 	onMount(() => {

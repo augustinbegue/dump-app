@@ -50,8 +50,8 @@
 		}
 	}
 
-	let title: string = '';
-	let description: string = '';
+	let title = '';
+	let description = '';
 
 	let metatype: string[] = [
 		'location',
@@ -100,7 +100,7 @@
 				});
 
 				if (res.status === 200) {
-					goto(`/posts/${json.post.pid}`);
+					return goto(`/posts/${json.post.pid}`);
 				} else {
 					throw new Error('File Upload failed');
 				}

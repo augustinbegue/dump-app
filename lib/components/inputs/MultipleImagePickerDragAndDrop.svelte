@@ -5,7 +5,7 @@
 	export let files: File[] = [];
 	export let dataUrls: string[] = [];
 	export let onchange: ((files: File[]) => void) | undefined;
-	let loading: boolean = false;
+	let loading = false;
 	$: validFiles = files?.length > 0 ? files.every((f) => f.type.startsWith('image/')) : false;
 	$: validFiles, console.log(validFiles);
 
