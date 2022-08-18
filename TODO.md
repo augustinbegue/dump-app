@@ -31,7 +31,7 @@ Photography oriented sharing app
 
 - [x] use query params to redirect to specific page after login/register
 - [ ] check for password complexity
-- [ ] check for correct username
+- [x] check for correct username
 
 ### feature: profile edition
 
