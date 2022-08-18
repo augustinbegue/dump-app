@@ -16,7 +16,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script_stop:
           script: |
-            export NODE_ENV=production
+            export NODE_ENV=developement
             PATH=$PATH:/home/${{ secrets.USERNAME }}/.nvm/versions/node/v16.17.0/bin
             mkdir -p ~/app
             cd ~/app
@@ -28,4 +28,5 @@ jobs:
             npm run generate
             npm run build:cms
             pm2 start cms/server.js --name "dump-app-cms"
+            export NODE_ENV=production
             pm2 restart dump-app-cms
