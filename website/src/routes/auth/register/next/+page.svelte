@@ -3,8 +3,8 @@
 	import { goto } from '$app/navigation';
 	import { auth, currentUser } from '$lib/modules/firebase/client';
 	import { firebaseUser } from '$lib/modules/firebase/client';
-import { page } from '$app/stores';
-
+	import { page } from '$app/stores';
+	import UsernameInput from '$lib/components/inputs/UsernameInput.svelte';
 	let username: string;
 	let usernameError: string;
 	let name: string;
@@ -60,7 +60,6 @@ import { page } from '$app/stores';
 	onMount(async () => {
 		redirectUrl = $page.url.searchParams.get('redirect');
 		console.log(redirectUrl);
-		
 
 		firebaseUser.subscribe(async (fbuser) => {
 			if (fbuser == null) {
@@ -89,31 +88,7 @@ import { page } from '$app/stores';
 		<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
 			<div class="card-body">
 				<form on:submit={finish}>
-					<div class="form-control">
-						<label for="username" class="label">
-							<span class="label-text">Username</span>
-						</label>
-						<input
-							bind:value={username}
-							id="username"
-							type="text"
-							placeholder="username"
-							class="input input-bordered"
-							autocomplete="username"
-							class:input-error={usernameError}
-						/>
-						{#if usernameError}
-							<label class="label" for="username">
-								<span class="label-text-alt text-error">{usernameError}</span>
-							</label>
-						{:else}
-							<label class="label" for="username">
-								<span class="label-text-alt opacity-50">
-									This is what you'll use to share your profile.
-								</span>
-							</label>
-						{/if}
-					</div>
+					<UsernameInput bind:username bind:usernameError />
 					<div class="form-control">
 						<label for="name" class="label">
 							<span class="label-text">Name</span>
@@ -143,6 +118,7 @@ import { page } from '$app/stores';
 							value="Finish"
 							class="btn btn-primary"
 							class:loading={finishLoading}
+							disabled={finishLoading || !!usernameError}
 						/>
 					</div>
 				</form>

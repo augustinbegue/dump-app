@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-import { page } from '$app/stores';
+	import { page } from '$app/stores';
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import { auth, googleProvider } from '$lib/modules/firebase/client';
 	import { FirebaseError } from 'firebase/app';
 	import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 	import { onMount } from 'svelte';
+	import PasswordInput from '$lib/components/inputs/PasswordInput.svelte';
 
 	let email: string;
 	let password: string;
@@ -116,42 +117,12 @@ import { page } from '$app/stores';
 							</label>
 						{/if}
 					</div>
-					<div class="form-control">
-						<label class="label" for="password">
-							<span class="label-text">Password</span>
-						</label>
-						<input
-							bind:value={password}
-							id="password"
-							type="password"
-							placeholder="password"
-							class="input input-bordered"
-							class:input-error={passwordError}
-						/>
-						{#if passwordError}
-							<label class="label" for="password">
-								<span class="label-text-alt text-error">{passwordError}</span>
-							</label>
-						{/if}
-					</div>
-					<div class="form-control">
-						<label class="label" for="passwordconfirm">
-							<span class="label-text">Password Confirmation</span>
-						</label>
-						<input
-							bind:value={passwordConfirm}
-							id="passwordconfirm"
-							type="password"
-							placeholder="password"
-							class="input input-bordered"
-							class:input-error={passwordError}
-						/>
-						{#if passwordError}
-							<label class="label" for="passwordconfirm">
-								<span class="label-text-alt text-error">{passwordError}</span>
-							</label>
-						{/if}
-					</div>
+					<PasswordInput bind:password bind:passwordError />
+					<PasswordInput
+						bind:password={passwordConfirm}
+						bind:passwordError
+						passwordLabel="Password Confirm"
+					/>
 					<div class="form-control mt-6">
 						<input
 							type="submit"

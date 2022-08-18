@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-
 	import { auth, currentUser } from '$lib/modules/firebase/client';
 	import UserSearchBar from '../inputs/UserSearchBar.svelte';
 </script>
