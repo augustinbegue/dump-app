@@ -1,11 +1,12 @@
 <script lang="ts">
-import type { User } from '@prisma/client';
+	import type { User } from '@prisma/client';
 	import { onMount } from 'svelte';
 
 	import ButtonImagePicker from '$lib/components/inputs/ImagePickerButton.svelte';
 	import { currentUser, firebaseUser } from '$lib/modules/firebase/client';
-	
+
 	import type { PageData } from './$types';
+	import UsernameInput from '$lib/components/inputs/UsernameInput.svelte';
 
 	export let data: PageData;
 	$: ({ user } = data);
@@ -87,21 +88,7 @@ import type { User } from '@prisma/client';
 	</div>
 </div>
 <div class="form-control w-1/2">
-	<label class="label" for="username">
-		<span class="label-text">username</span>
-	</label>
-	<input
-		class="input input-bordered"
-		type="text"
-		name="username"
-		bind:value={user.username}
-		class:input-error={usernameError}
-	/>
-	{#if usernameError}
-		<label class="label" for="username">
-			<span class="label-text-alt text-error">{usernameError}</span>
-		</label>
-	{/if}
+	<UsernameInput bind:username={user.username} bind:usernameError />
 </div>
 <div class="form-control w-1/2">
 	<label class="label" for="name">
