@@ -56,6 +56,18 @@
 		loadingMore = false;
 	}
 
+	export let selectMode = true;
+	export let selectedPids: string[] = [];
+	let onselect = (pid: string, i: number) => {
+		if (selectMode) {
+			if (selectedPids.includes(pid)) {
+				selectedPids = selectedPids.filter((p) => p !== pid);
+			} else {
+				selectedPids.push(pid);
+			}
+		}
+	};
+
 	onMount(() => {
 		if (browser) {
 			setPostsPerPage();
@@ -67,12 +79,47 @@
 	});
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-	{#each posts as post}
-		<PostPreview {post} {author} />
-	{/each}
-	{#if loadingMore}
-		<Spinner />
+<div class="flex flex-col">
+	{#if selectMode}
+		<div class="form-control w-max">
+			<label class="cursor-pointer label">
+				<input
+					type="checkbox"
+					class="checkbox  mr-2"
+					checked={selectedPids.length === posts.length}
+					on:input={(e) => {
+						if (!e.currentTarget.checked) {
+							selectedPids = [];
+						} else {
+							selectedPids = posts.map((p) => p.pid);
+						}
+
+						console.log(selectedPids);
+					}}
+				/>
+				<span class="label-text">select all</span>
+			</label>
+		</div>
 	{/if}
+	<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+		{#each posts as post, i}
+			<div>
+				{#if selectMode}
+					<div class="kbd w-full flex justify-start">
+						<input
+							type="checkbox"
+							class="checkbox checkbox-sm"
+							checked={selectedPids.includes(post.pid)}
+							on:click={() => onselect(post.pid, i)}
+						/>
+					</div>
+				{/if}
+				<PostPreview {post} {author} />
+			</div>
+		{/each}
+		{#if loadingMore}
+			<Spinner />
+		{/if}
+	</div>
+	<InfiniteScroll {loadMore} />
 </div>
-<InfiniteScroll {loadMore} />
