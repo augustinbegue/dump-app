@@ -4,7 +4,7 @@
 	import FollowsModal from '$lib/components/modals/FollowsModal.svelte';
 	import FollowButton from '$lib/components/inputs/FollowButton.svelte';
 
-	import type { LayoutData } from "./$types";
+	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
 	$: ({ user, url } = data);
@@ -53,23 +53,23 @@
 	</div>
 	<div class="w-full">
 		<div class="flex flex-row justify-between mb-4">
-			<div class="tabs tabs-boxed bg-base-300">
+			<div class="tabs tabs-boxed bg-base-300 w-full md:w-max">
 				<a
-					class="tab tab-lg"
+					class="tab md:tab-lg grow"
 					href="/{user.username}"
 					class:tab-active={url.endsWith(user.username)}
 				>
 					feed
 				</a>
 				<a
-					class="tab tab-lg"
+					class="tab md:tab-lg grow"
 					href="/{user.username}/posts"
 					class:tab-active={url.endsWith('posts')}
 				>
 					posts
 				</a>
 				<a
-					class="tab tab-lg"
+					class="tab md:tab-lg grow"
 					href="/{user.username}/collections"
 					class:tab-active={url.endsWith('collections')}
 				>

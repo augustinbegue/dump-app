@@ -12,6 +12,8 @@
 	<a class="footer-title link link-hover m-0" href="https://begue.cc">Augustin BÉGUÉ</a>
 </footer>
 
+<div class="p-6 md:hidden" />
+
 <div class="z-50 btm-nav flex btm-nav-sm md:hidden">
 	<a href="/new" class:active={url?.toString().indexOf('/new') != -1}>
 		<span class="material-icons-outlined"> add </span>
