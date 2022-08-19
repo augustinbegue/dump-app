@@ -7,6 +7,9 @@
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import { onMount } from 'svelte';
 	import '../app.css';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
 
 	onMount(async () => {
 		const { fetch: windowFetch } = window;
@@ -44,7 +47,7 @@
 		<slot />
 	</main>
 
-	<Footer />
+	<Footer url={data.url} />
 </div>
 
 <style>
