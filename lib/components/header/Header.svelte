@@ -17,7 +17,7 @@
 	</div>
 	<div class="navbar-end">
 		{#if $currentUser != null}
-			<a href="/new" class="hidden md:block btn btn-ghost text-base">publish</a>
+			<a href="/new" class="hidden md:flex btn btn-ghost text-base">publish</a>
 			<div class="dropdown dropdown-end">
 				<label tabindex="0" class="btn btn-ghost px-2 lowercase font-bold text-base" for="dropdown">
 					<div class="avatar">

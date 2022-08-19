@@ -6,7 +6,7 @@ export const load: PageLoad = async ({ data, fetch, parent, params }) => {
 	const res = await fetch(`/api/posts/${params.pid}`);
 	const body = (await res.json()) as PostOutput;
 
-	if (res.status != 200) {
+	if (res.status != 200 || !body?.post) {
 		throw error(res.status, (body as any).message);
 	}
 

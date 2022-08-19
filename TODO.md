@@ -24,7 +24,7 @@ Photography oriented sharing app
 
 #### ui
 
-- [ ] check for responsiveness on mobile
+- [x] check for responsiveness on mobile
 - [ ] create daisyui theme for light and dark mode
 
 ### feature: auth

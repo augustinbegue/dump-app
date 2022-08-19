@@ -48,15 +48,18 @@
 						</label>
 						<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
 							<li>
-								{#if isAuthor}
+								<button>download</button>
+							</li>
+							{#if isAuthor}
+								<li>
 									<a href="{post.pid}/edit">edit</a>
-								{/if}
-							</li>
-							<li>
-								{#if isAuthor}
+								</li>
+							{/if}
+							{#if isAuthor}
+								<li>
 									<btn class="text-error" on:click={() => deletePost()}>delete</btn>
-								{/if}
-							</li>
+								</li>
+							{/if}
 						</ul>
 					</div>
 				</div>
