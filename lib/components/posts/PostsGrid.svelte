@@ -57,13 +57,13 @@
 	}
 
 	export let selectMode = true;
-	export let selectedPids: string[] = [];
-	let onselect = (pid: string, i: number) => {
+	export let selectedPosts: Post[] = [];
+	let onselect = (post: Post, i: number) => {
 		if (selectMode) {
-			if (selectedPids.includes(pid)) {
-				selectedPids = selectedPids.filter((p) => p !== pid);
+			if (selectedPosts.filter((p) => p.pid === post.pid).length > 0) {
+				selectedPosts = selectedPosts.filter((p) => p.pid !== post.pid);
 			} else {
-				selectedPids.push(pid);
+				selectedPosts.push(post);
 			}
 		}
 	};
@@ -86,15 +86,15 @@
 				<input
 					type="checkbox"
 					class="checkbox  mr-2"
-					checked={selectedPids.length === posts.length}
+					checked={selectedPosts.length === posts.length}
 					on:input={(e) => {
 						if (!e.currentTarget.checked) {
-							selectedPids = [];
+							selectedPosts = [];
 						} else {
-							selectedPids = posts.map((p) => p.pid);
+							selectedPosts = posts;
 						}
 
-						console.log(selectedPids);
+						console.log(selectedPosts);
 					}}
 				/>
 				<span class="label-text">select all</span>
@@ -109,8 +109,8 @@
 						<input
 							type="checkbox"
 							class="checkbox checkbox-sm"
-							checked={selectedPids.includes(post.pid)}
-							on:click={() => onselect(post.pid, i)}
+							checked={selectedPosts.filter((p) => p.pid === post.pid).length > 0}
+							on:click={() => onselect(post, i)}
 						/>
 					</div>
 				{/if}

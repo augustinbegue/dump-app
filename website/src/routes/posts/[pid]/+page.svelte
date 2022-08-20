@@ -5,6 +5,7 @@
 	import ConfirmModal from '$lib/components/modals/ConfirmModal.svelte';
 
 	import type { PageData } from './$types';
+	import { downloadPostImage } from '$lib/modules/interaction/download';
 
 	export let data: PageData;
 
@@ -38,7 +39,13 @@
 			</label>
 			<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
 				<li>
-					<button on:click={() => {}}>download</button>
+					<button
+						on:click={() => {
+							downloadPostImage(post);
+						}}
+					>
+						download
+					</button>
 				</li>
 				{#if isAuthor}
 					<li>

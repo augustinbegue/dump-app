@@ -8,6 +8,8 @@
 	import ConfirmModal from '$lib/components/modals/ConfirmModal.svelte';
 
 	import type { PageData } from './$types';
+	import { downloadPostImage } from '$lib/modules/interaction/download';
+	import type { Post } from '@prisma/client';
 
 	export let data: PageData;
 	$: ({ collection } = data);
@@ -31,7 +33,7 @@
 	}
 
 	let selectMode = false;
-	let selectedPids: string[] = [];
+	let selectedPosts: Post[] = [];
 </script>
 
 <ConfirmModal title="Are you sure you want to delete this post?" bind:open={openDeleteModal} />
@@ -51,8 +53,18 @@
 						select
 					</button>
 				</li>
-				<li class:disabled={selectedPids.length === 0}>
-					<button disabled={selectedPids.length === 0} on:click={() => {}}> download </button>
+				<li class:disabled={selectedPosts.length === 0}>
+					<button
+						disabled={selectedPosts.length === 0}
+						on:click={() => {
+							for (let i = 0; i < selectedPosts.length; i++) {
+								const post = selectedPosts[i];
+								downloadPostImage(post);
+							}
+						}}
+					>
+						download
+					</button>
 				</li>
 				{#if isAuthor}
 					<li>
@@ -94,6 +106,6 @@
 		count={collection.posts.length}
 		author={collection.author}
 		bind:selectMode
-		bind:selectedPids
+		bind:selectedPosts
 	/>
 </div>

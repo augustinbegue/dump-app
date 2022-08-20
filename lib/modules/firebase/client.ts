@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics, type Analytics } from 'firebase/analytics';
-import { getAuth, GoogleAuthProvider, signOut, type User as FbUser } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, type User as FbUser } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 import { browser } from '$app/env';
 import { writable } from 'svelte/store';
 import type { User } from '@prisma/client';
@@ -43,3 +44,5 @@ auth.onAuthStateChanged(async (user) => {
 		if (browser) document.cookie = 'authorization=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;';
 	}
 });
+
+export const storage = getStorage(app);
