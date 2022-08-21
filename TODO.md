@@ -44,14 +44,16 @@ Photography oriented sharing app
 - [x] Allow a post to be created
 - [x] Allow a post to be edited
 - [x] Allow a post to be deleted
-- [ ] Download button
+- [x] Download button
 
 ### feature: collections
 
 - [x] Allow a collection to be created
 - [x] Allow a collection to be edited
 - [x] Allow a collection to be deleted
-- [ ] Post selection and removal
+- [x] Post selection
+- [x] Post download
+- [ ] Post removal
 - [ ] Add existing posts to a collection
 - [ ] Invite non existing users to a collection (link discord invite style)
 

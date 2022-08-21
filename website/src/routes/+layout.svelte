@@ -14,10 +14,9 @@
 	onMount(async () => {
 		const { fetch: windowFetch } = window;
 		window.fetch = async function (url, options) {
-			if (url.toString().startsWith('/api'))
-				if ($firebaseUser)
-					document.cookie = `authorization=Bearer ${await $firebaseUser.getIdToken()}; Path=/;`;
-				else document.cookie = `authorization=; Path=/; Expires=${new Date(0).toUTCString()};`;
+			if ($firebaseUser)
+				document.cookie = `authorization=Bearer ${await $firebaseUser.getIdToken()}; Path=/;`;
+			else document.cookie = `authorization=; Path=/; Expires=${new Date(0).toUTCString()};`;
 
 			if (url.toString().startsWith('/upload')) {
 				options = {

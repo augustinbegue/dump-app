@@ -80,6 +80,9 @@ export async function GET({ params, locals }: { params: { cid: string }; locals:
 			posts: {
 				select: {
 					pid: true
+				},
+				orderBy: {
+					createdAt: 'asc'
 				}
 			},
 			allowedUsers: {
@@ -123,6 +126,7 @@ export async function GET({ params, locals }: { params: { cid: string }; locals:
 }
 
 import type { CreateOrUpdateCollectionInput } from '$lib/types/api';
+import { tick } from 'svelte';
 
 export async function POST({
 	params,
