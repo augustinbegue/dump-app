@@ -185,10 +185,10 @@
 				</div>
 			</div>
 		</section>
-		<section class="hidden">
+		<section class="display: none;">
 			<MultipleImagePickerDragAndDrop bind:files bind:dataUrls onchange={onfileschange} />
 		</section>
-		<section class="hidden">
+		<section class="display: none;">
 			<div class="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100 h-full">
 				<div class="card-body">
 					<div class="form-control">
@@ -250,7 +250,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="hidden">
+		<section class="display: none;">
 			<div class="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
 				<div class="card-body">
 					<div class="card-title">recap</div>
@@ -309,6 +309,10 @@
 </div>
 
 <style lang="postcss">
+	.hidden {
+		display: none !important;
+	}
+
 	section {
 		@apply flex flex-col justify-start items-center w-full;
 	}

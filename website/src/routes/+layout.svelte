@@ -7,14 +7,16 @@
 	import { firebaseUser } from '$lib/modules/firebase/client';
 	import { onMount } from 'svelte';
 	import '../app.css';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
 
 	onMount(async () => {
 		const { fetch: windowFetch } = window;
 		window.fetch = async function (url, options) {
-			if (url.toString().startsWith('/api'))
-				if ($firebaseUser)
-					document.cookie = `authorization=Bearer ${await $firebaseUser.getIdToken()}; Path=/;`;
-				else document.cookie = `authorization=; Path=/; Expires=${new Date(0).toUTCString()};`;
+			if ($firebaseUser)
+				document.cookie = `authorization=Bearer ${await $firebaseUser.getIdToken()}; Path=/;`;
+			else document.cookie = `authorization=; Path=/; Expires=${new Date(0).toUTCString()};`;
 
 			if (url.toString().startsWith('/upload')) {
 				options = {
@@ -44,7 +46,7 @@
 		<slot />
 	</main>
 
-	<Footer />
+	<Footer url={data.url} />
 </div>
 
 <style>

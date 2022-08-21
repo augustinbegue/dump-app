@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-
 	import { auth, currentUser } from '$lib/modules/firebase/client';
 	import UserSearchBar from '../inputs/UserSearchBar.svelte';
 </script>
@@ -9,7 +8,7 @@
 	<div class="navbar-start">
 		<a class="btn btn-ghost uppercase font-bold" href="/">dump</a>
 	</div>
-	<div class="navbar-center">
+	<div class="hidden md:flex navbar-center">
 		<UserSearchBar
 			onclick={(user) => {
 				goto(`/${user.username}`);
@@ -18,7 +17,7 @@
 	</div>
 	<div class="navbar-end">
 		{#if $currentUser != null}
-			<a href="/new" class="btn btn-ghost text-base">publish</a>
+			<a href="/new" class="hidden md:flex btn btn-ghost text-base">publish</a>
 			<div class="dropdown dropdown-end">
 				<label tabindex="0" class="btn btn-ghost px-2 lowercase font-bold text-base" for="dropdown">
 					<div class="avatar">

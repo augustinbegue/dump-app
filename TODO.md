@@ -7,27 +7,31 @@ Photography oriented sharing app
 ### misc:
 
 - [ ] write the readme
+
 #### client
 
 - [ ] fully load images before displaying them
 - [ ] write a boilerplate on top of the fetch api for type safety + body parsing ect
+
 #### backend
 
-- [ ] move upload endpoints to a separate media server
-      OR move the upload logic to the client (🤮) (maybe this can be done properly using firebase rules)
-- [ ] refactor typing system w. custom typeguards to ensure type checking on inputs and outputs
+- [x] move upload endpoints to a separate media server
+- [x] refactor typing system w. custom typeguards to ensure type checking on inputs and outputs
+
 #### seo
 
 - [ ] Check which meta tags have to be used for embeds
+
 #### ui
 
-- [ ] check for responsiveness on mobile
+- [x] check for responsiveness on mobile
+- [ ] create daisyui theme for light and dark mode
 
 ### feature: auth
 
 - [x] use query params to redirect to specific page after login/register
-- [ ] check for password complexity
-- [ ] check for correct username
+- [x] check for password complexity
+- [x] check for correct username
 
 ### feature: profile edition
 
@@ -40,15 +44,18 @@ Photography oriented sharing app
 - [x] Allow a post to be created
 - [x] Allow a post to be edited
 - [x] Allow a post to be deleted
-- [ ] Download button
+- [x] Download button
 
 ### feature: collections
 
 - [x] Allow a collection to be created
 - [x] Allow a collection to be edited
 - [x] Allow a collection to be deleted
-- [ ] Post selection and removal
+- [x] Post selection
+- [x] Post download
+- [ ] Post removal
 - [ ] Add existing posts to a collection
+- [ ] Invite non existing users to a collection (link discord invite style)
 
 ### feature: feed
 

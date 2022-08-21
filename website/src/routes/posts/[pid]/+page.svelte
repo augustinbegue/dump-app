@@ -5,6 +5,7 @@
 	import ConfirmModal from '$lib/components/modals/ConfirmModal.svelte';
 
 	import type { PageData } from './$types';
+	import { downloadPostImage } from '$lib/modules/interaction/download';
 
 	export let data: PageData;
 
@@ -31,7 +32,33 @@
 
 <ConfirmModal title="Are you sure you want to delete this post?" bind:open={openDeleteModal} />
 <div class="flex flex-col md:flex-row gap-4 justify-center p-4">
-	<div>
+	<div class="min-w-max">
+		<div class="dropdown">
+			<label tabindex="0" for="" class="btn btn-ghost">
+				<span class="material-icons-outlined"> more_vert </span>
+			</label>
+			<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+				<li>
+					<button
+						on:click={() => {
+							downloadPostImage(post);
+						}}
+					>
+						download
+					</button>
+				</li>
+				{#if isAuthor}
+					<li>
+						<a href="{post.pid}/edit">edit</a>
+					</li>
+				{/if}
+				{#if isAuthor}
+					<li>
+						<btn class="text-error" on:click={() => deletePost()}>delete</btn>
+					</li>
+				{/if}
+			</ul>
+		</div>
 		<div class="card bg-base-200 min-w-max">
 			<div class="card-body gap-4">
 				<div class="flex flex-row justify-between gap-4">
@@ -41,23 +68,6 @@
 							<p>{post.title}</p>
 							<p class="text-sm">{new Date(post.createdAt).toLocaleDateString()}</p>
 						</div>
-					</div>
-					<div class="dropdown dropdown-end">
-						<label tabindex="0" for="" class="btn btn-ghost">
-							<span class="material-icons-outlined"> more_vert </span>
-						</label>
-						<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-							<li>
-								{#if isAuthor}
-									<a href="{post.pid}/edit">edit</a>
-								{/if}
-							</li>
-							<li>
-								{#if isAuthor}
-									<btn class="text-error" on:click={() => deletePost()}>delete</btn>
-								{/if}
-							</li>
-						</ul>
 					</div>
 				</div>
 				<p>{post.description}</p>
@@ -69,7 +79,9 @@
 			</div>
 		</div>
 	</div>
-	{#if post}
-		<img class="max-w-full max-h-[70vh]" src={post.imageUrl} alt={post.title} />
-	{/if}
+	<div class=" flex flex-row items-start justify-center">
+		{#if post}
+			<img class="max-w-full max-h-[70vh]" src={post.imageUrl} alt={post.title} />
+		{/if}
+	</div>
 </div>

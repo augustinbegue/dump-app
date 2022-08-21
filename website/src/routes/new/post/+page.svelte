@@ -143,7 +143,7 @@
 		<section>
 			<ImagePicker bind:file bind:dataUrl onchange={onfilechange} />
 		</section>
-		<section class="hidden">
+		<section style="display: none;">
 			<div class="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
 				<div class="card-body">
 					<div class="form-control">
@@ -171,7 +171,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="hidden">
+		<section style="display: none;">
 			<div class="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
 				<div class="card-body ">
 					{#each Array.from(metadata.keys()) as key}
@@ -206,7 +206,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="hidden">
+		<section style="display: none;">
 			<div class="card flex-shrink-0 w-full max-w-5xl shadow-2xl bg-base-300 m-4">
 				<div class="hero bg-base-300 p-4">
 					<div class="hero-content flex-col lg:flex-row">

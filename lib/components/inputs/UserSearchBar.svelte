@@ -3,6 +3,8 @@
 
 	export let onclick: (selected: User) => void;
 	export let closeOnSelect = false;
+	export let wfull = false;
+
 	let input: string;
 	let users: User[] = [];
 	let container: HTMLElement;
@@ -17,7 +19,7 @@
 	}
 </script>
 
-<div class="dropdown">
+<div class="dropdown" class:w-full={wfull}>
 	<label for="search" tabindex="0">
 		<form
 			class="form-control"
@@ -48,7 +50,9 @@
 	</label>
 	<ul
 		tabindex="0"
-		class="menu bg-base-200 dropdown-content p-2 shadow rounded-box w-52 mt-4"
+		class="menu bg-base-200 dropdown-content p-2 shadow rounded-box mt-4"
+		class:w-full={wfull}
+		class:w-52={!wfull}
 		class:hidden={users.length <= 0}
 	>
 		{#each users as user}
