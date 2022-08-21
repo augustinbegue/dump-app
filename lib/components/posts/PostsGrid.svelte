@@ -63,7 +63,7 @@
 			if (selectedPosts.filter((p) => p.pid === post.pid).length > 0) {
 				selectedPosts = selectedPosts.filter((p) => p.pid !== post.pid);
 			} else {
-				selectedPosts.push(post);
+				selectedPosts = [...selectedPosts, post];
 			}
 		}
 	};
