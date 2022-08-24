@@ -3,8 +3,11 @@ import { readFileSync } from 'fs';
 import 'dotenv/config';
 import express from 'express';
 import https from 'https';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
 
 app.get('/healthcheck', (req, res) => {
   res.end('ok');
@@ -20,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
   }, app).listen(port);
   console.log('cms-server: listening on port', port);
 } else {
-    app.listen(3000, () => {
-        console.log('cms-server: listening on port 3000');
-    });
+  app.listen(3000, () => {
+    console.log('cms-server: listening on port 3000');
+  });
 }
