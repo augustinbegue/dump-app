@@ -7,19 +7,11 @@ import cors from 'cors';
 
 const app = express();
 
-app.use(cors());
-
 app.get('/healthcheck', (req, res) => {
   res.end('ok');
 });
 
 app.use(handler);
-
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  console.log(JSON.stringify(res.getHeaders()));
-  next();
-});
 
 if (process.env.NODE_ENV === 'production') {
   let port = process.env.CMS_PORT || 3333;
