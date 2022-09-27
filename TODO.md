@@ -45,6 +45,7 @@ Photography oriented sharing app
 - [x] Allow a post to be edited
 - [x] Allow a post to be deleted
 - [x] Download button
+- [ ] Allow users to be tagged
 
 ### feature: collections
 
@@ -54,8 +55,8 @@ Photography oriented sharing app
 - [x] Post selection
 - [x] Post download
 - [ ] Post removal
-- [ ] Add existing posts to a collection
 - [ ] Invite non existing users to a collection (link discord invite style)
+- [ ] Invite users to a collaborate in a collection
 
 ### feature: feed
 
