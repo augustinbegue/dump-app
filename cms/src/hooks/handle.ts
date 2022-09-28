@@ -5,7 +5,7 @@ import { parse } from 'cookie';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	let token =
-		event.request.headers.get('authorization') ||
+		event.request.headers.get('X-Authorization') ||
 		parse(event.request.headers.get('cookie') || '')['authorization'];
 
 	if (token) {

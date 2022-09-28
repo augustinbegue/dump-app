@@ -23,7 +23,7 @@
 					...options,
 					headers: {
 						...options?.headers,
-						authorization: document.cookie.replace(/^.*authorization=([^;]*).*$/, '$1')
+						'X-Authorization': document.cookie.replace(/^.*authorization=([^;]*).*$/, '$1')
 					}
 				};
 				if (dev) {
